@@ -1,3 +1,4 @@
+import 'package:elearning/screens/boardselect_screen.dart';
 import 'package:elearning/widgets/category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,8 +62,16 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
                         isSelected: true,
                       ),
                     ),
-                    Category(
-                      index: 1,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => (BoardSelectScreen())));
+                      },
+                      child: Category(
+                        index: 1,
+                      ),
                     )
                   ],
                 ),
