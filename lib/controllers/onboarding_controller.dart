@@ -12,6 +12,13 @@ class OnboardingController extends ChangeNotifier {
     'assets/images/ob4.svg',
   ];
 
+  List<String> _name = ['Teacher', 'Learner', 'Schedule', ''];
+  List<String> _title = [
+    'I am a',
+    'I am a',
+    'Select a',
+    'Woohoo!\nYou are all set!'
+  ];
   List<Color> _btnclr = [
     Color(0xff3b6f7d),
     Color(0xffc55d54),
@@ -37,7 +44,8 @@ class OnboardingController extends ChangeNotifier {
   Color get btnsltclr => _btnsltclr[_index];
   Color get txtclr => _txtclr[_index];
   String get img => _img[_index];
-
+  String get name => _name[index];
+  String get title => _title[index];
   void nxt() {
     if (_index < 3) {
       _index = _index + 1;

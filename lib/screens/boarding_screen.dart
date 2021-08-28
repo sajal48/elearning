@@ -1,5 +1,8 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:elearning/controllers/onboarding_controller.dart';
+import 'package:elearning/screens/login_screen.dart';
+import 'package:elearning/screens/signup_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +22,7 @@ class _BoardingPageState extends State<BoardingPage> {
       body: AnimatedContainer(
         padding: EdgeInsets.all(10),
         duration: Duration(milliseconds: 500),
+        curve: Curves.linearToEaseOut,
         height: double.infinity,
         width: double.infinity,
         color: Provider.of<OnboardingController>(context).color,
@@ -27,176 +31,215 @@ class _BoardingPageState extends State<BoardingPage> {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       !last
-                          ? Text(
-                              'skip',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 16,
-                                  color: Colors.white),
+                          ? GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignUpScreen()));
+                              },
+                              child: Text(
+                                'Skip',
+                                style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 16,
+                                    color: Colors.white),
+                              ),
                             )
                           : Text(''),
                     ],
                   ),
                 ),
               ),
-              Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Align(
+              SizedBox(
+                height: 100.0,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(15, 30, 15, 20),
+                  child: Align(
+                    alignment: Alignment.topCenter,
                     child: SvgPicture.asset(
                       Provider.of<OnboardingController>(context).img,
+                      width: 500,
+                      allowDrawingOutsideViewBox: true,
                     ),
                   ),
-                  Align(
+                ),
+              ),
+              Column(
+                children: [
+                  Text(
+                    Provider.of<OnboardingController>(context).title,
+                    textAlign: TextAlign.center,
+                    style: !last
+                        ? TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 16,
+                            color: Provider.of<OnboardingController>(context)
+                                .txtclr)
+                        : TextStyle(
+                            fontFamily: 'Milliard',
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    Provider.of<OnboardingController>(context).name,
+                    style: TextStyle(
+                        fontFamily: 'Milliard',
+                        fontSize: 22,
+                        color: Colors.white,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 30),
+                  Provider.of<OnboardingController>(context).index == 2
+                      ? SvgPicture.asset('assets/images/Vector.svg')
+                      : SizedBox(
+                          height: 30.0,
+                        ),
+                  Text(
+                    (Provider.of<OnboardingController>(context).index < 2)
+                        ? 'Lorem Ipsum is simply dummy text of the\nprinting and typesetting industry.'
+                        : '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 16,
+                        color:
+                            Provider.of<OnboardingController>(context).txtclr),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  !last
+                      ? DotsIndicator(
+                          dotsCount: 3,
+                          position: Provider.of<OnboardingController>(context)
+                              .index
+                              .toDouble(),
+                          decorator: DotsDecorator(
+                            color: Colors.white,
+                            activeColor: Colors.white,
+                            size: const Size.square(5.0),
+                            activeSize: const Size(15.0, 5.0),
+                            activeShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                        )
+                      : SizedBox.shrink(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  GestureDetector(
+                    behavior: HitTestBehavior.deferToChild,
+                    onTap: () {
+                      if (Provider.of<OnboardingController>(context,
+                                  listen: false)
+                              .index ==
+                          3) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpScreen()),
+                        );
+                        // Navigator.pop(context);
+                      }
+                      Provider.of<OnboardingController>(context, listen: false)
+                          .nxt();
+                    },
                     child: Container(
-                      //padding: EdgeInsets.only(bottom: 50),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      width: 233,
+                      height: 47,
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                          color:
+                              Provider.of<OnboardingController>(context).btnclr,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'I am a',
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontSize: 16,
-                                color:
-                                    Provider.of<OnboardingController>(context)
-                                        .txtclr),
-                          ),
                           SizedBox(
-                            height: 3,
+                            width: 35,
                           ),
                           Text(
-                            'Learner',
+                            'NEXT',
                             style: TextStyle(
-                                fontFamily: 'Milliard',
-                                fontSize: 22,
                                 color: Colors.white,
-                                letterSpacing: 1.2,
-                                fontWeight: FontWeight.bold),
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.5,
+                                fontSize: 16),
                           ),
+                          CircleAvatar(
+                              radius: 17,
+                              backgroundColor:
+                                  Provider.of<OnboardingController>(context)
+                                      .btnsltclr,
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 20,
+                              ))
                         ],
                       ),
                     ),
                   ),
+                  SizedBox(height: 100.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: !last
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Welcome back! ',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginScreen()));
+                                  },
+                                  child: Text(
+                                    'Log in.',
+                                    style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color:
+                                            Provider.of<OnboardingController>(
+                                                    context)
+                                                .txtclr),
+                                  ),
+                                )
+                              ],
+                            )
+                          : SizedBox(
+                              height: 17,
+                            ),
+                    ),
+                  ),
                 ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                'b nkjdjk basdjkn wdblhjv dasldh sdkjb ',
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 16,
-                    color: Provider.of<OnboardingController>(context).txtclr),
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              Text(
-                'kbk nb skjbs ',
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 16,
-                    color: Provider.of<OnboardingController>(context).txtclr),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              !last
-                  ? DotsIndicator(
-                      dotsCount: 3,
-                      position: Provider.of<OnboardingController>(context)
-                          .index
-                          .toDouble(),
-                      decorator: DotsDecorator(
-                        color: Colors.white,
-                        activeColor: Colors.white,
-                        size: const Size.square(5.0),
-                        activeSize: const Size(15.0, 5.0),
-                        activeShape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                      ),
-                    )
-                  : SizedBox.shrink(),
-              SizedBox(
-                height: 10,
-              ),
-              GestureDetector(
-                behavior: HitTestBehavior.deferToChild,
-                onTap: () {
-                  Provider.of<OnboardingController>(context, listen: false)
-                      .nxt();
-                },
-                child: Container(
-                  width: 233,
-                  height: 47,
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                      color: Provider.of<OnboardingController>(context).btnclr,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 35,
-                      ),
-                      Text(
-                        'NEXT',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.5,
-                            fontSize: 16),
-                      ),
-                      CircleAvatar(
-                          radius: 17,
-                          backgroundColor:
-                              Provider.of<OnboardingController>(context)
-                                  .btnsltclr,
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 20,
-                          ))
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 25),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Welcome back! ',
-                        style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontSize: 16,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        'Log in.',
-                        style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Provider.of<OnboardingController>(context)
-                                .txtclr),
-                      )
-                    ],
-                  ),
-                ),
               ),
             ],
           ),
