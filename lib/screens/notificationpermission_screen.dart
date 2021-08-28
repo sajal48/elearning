@@ -30,7 +30,7 @@ class _NotificationPermissionScreenState
                       style: TextStyle(color: Color(0xffF4F5F9)),
                     ),
                     Text(
-                      'Notifications ',
+                      'Notifications',
                       style: TextStyle(
                           fontFamily: 'Milliard',
                           fontSize: 22,

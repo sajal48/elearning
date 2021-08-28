@@ -1,7 +1,7 @@
 import 'package:elearning/widgets/category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'board_and_class_screen.dart';
 
 class CatagoryScreen extends StatefulWidget {
   CatagoryScreen({Key? key}) : super(key: key);
@@ -49,9 +49,17 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Category(
-                      index: 0,
-                      isSelected: true,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BoardAndClassScreen()));
+                      },
+                      child: Category(
+                        index: 0,
+                        isSelected: true,
+                      ),
                     ),
                     Category(
                       index: 1,
