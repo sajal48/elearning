@@ -1,6 +1,6 @@
-import 'package:elearning/screens/languageselet_screen.dart';
+import 'package:elearning/widgets/board_and_class_grid.dart';
+import 'package:elearning/widgets/preparation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class BoardAndClassScreen extends StatefulWidget {
   BoardAndClassScreen({Key? key}) : super(key: key);
@@ -10,6 +10,21 @@ class BoardAndClassScreen extends StatefulWidget {
 }
 
 class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
+  List<String> number = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +32,7 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
         backgroundColor: Color(0xffF4F5F9),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+            padding: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
             child: Column(
               children: [
                 Text(
@@ -27,6 +42,9 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Color(0xff3D4C59)),
+                ),
+                SizedBox(
+                  height: 50,
                 ),
                 Expanded(
                     child: Center(
@@ -38,16 +56,16 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                         style: TextStyle(
                             fontFamily: 'Milliard',
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w800,
                             color: Color(0xff747A92)),
                       ),
                       SizedBox(
-                        height: 25.0,
+                        height: 20.0,
                       ),
                       Container(
                         height: 39,
-                        width: 275,
                         padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
+                        margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8.0)),
@@ -79,26 +97,26 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                       ),
                       Flexible(
                         child: GridView.builder(
-                            itemCount: 9,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: 12,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: (90 / 104),
                                     crossAxisCount: 3),
-                            itemBuilder: (_, context) {
-                              return Container(
-                                height: 104,
-                                width: 90,
-                                color: Colors.amber,
+                            itemBuilder: (_, index) {
+                              return BoardAndClassGrid(
+                                index: index,
                               );
                             }),
                       ),
                       GestureDetector(
-                        // onTap: () {
-                        //   Navigator.pushReplacement(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) =>
-                        //               LanguageSelectScreen()));
-                        // },
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return PreparationDialog();
+                              });
+                        },
                         child: Container(
                           height: 47,
                           width: 233,
@@ -133,6 +151,7 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                           ),
                         ),
                       ),
+                      SizedBox(height: 50)
                     ],
                   ),
                 )),
