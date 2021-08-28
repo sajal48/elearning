@@ -1,5 +1,6 @@
 import 'package:elearning/screens/boarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/onboarding_controller.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       theme: ThemeData(unselectedWidgetColor: Color(0xff5790FF)),
       debugShowCheckedModeBanner: false,

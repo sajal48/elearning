@@ -110,11 +110,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             formatInput: false,
                             maxLength: 11,
                             textStyle: TextStyle(
-                                color: Color(0xff747A92),
-                                fontFamily: 'Roboto',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                overflow: TextOverflow.ellipsis),
+                              color: Color(0xff747A92),
+                              fontFamily: 'Roboto',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
 
                             keyboardType: TextInputType.numberWithOptions(
                                 signed: true, decimal: true),

@@ -47,7 +47,7 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
                   height: 25,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Category(
                       index: 0,
@@ -62,7 +62,7 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
                   height: 25,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Category(
                       index: 2,
