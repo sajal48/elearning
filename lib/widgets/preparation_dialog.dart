@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:elearning/screens/board_and_class_screen.dart';
+import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -102,7 +102,7 @@ class PreparationDialog extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>

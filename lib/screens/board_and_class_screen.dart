@@ -1,6 +1,5 @@
-import 'package:elearning/screens/boardselect_screen.dart';
-import 'package:elearning/widgets/board_and_class_grid.dart';
-import 'package:elearning/widgets/preparation_dialog.dart';
+import 'package:elearning/screens/screens.dart';
+import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class BoardAndClassScreen extends StatefulWidget {
@@ -123,40 +122,13 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                         height: 25,
                       ),
                       GestureDetector(
-                        child: Container(
-                          height: 47,
-                          width: 233,
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          decoration: BoxDecoration(
-                              color: Color(0xff5790FF),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 35,
-                              ),
-                              Text(
-                                'CONTINUE',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 1.5,
-                                    fontSize: 16),
-                              ),
-                              CircleAvatar(
-                                  radius: 17,
-                                  backgroundColor: Color(0xff3C55F0),
-                                  child: Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ))
-                            ],
-                          ),
-                        ),
-                      ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => (HomeScreen())));
+                          },
+                          child: DefaultButton()),
                       SizedBox(height: 50)
                     ],
                   ),

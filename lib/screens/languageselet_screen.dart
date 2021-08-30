@@ -1,6 +1,7 @@
 import 'package:elearning/screens/catagory_screen.dart';
-import 'package:elearning/widgets/myItem.dart';
+import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LanguageSelectScreen extends StatefulWidget {
   LanguageSelectScreen({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               Wrap(
                 direction: Axis.horizontal,
                 children: exampleList.map((i) {
-                  return myItem(
+                  return MyItem(
                     index: i,
                     isSelected: (i == 0),
                   );

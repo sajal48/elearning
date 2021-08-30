@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class myItem extends StatelessWidget {
+class MyItem extends StatelessWidget {
   final List<String> languages = [
     "English",
     "Chiness",
@@ -12,7 +12,7 @@ class myItem extends StatelessWidget {
   ];
   final int index;
   final bool isSelected;
-  myItem({Key? key, this.index = 0, this.isSelected = false}) : super(key: key);
+  MyItem({Key? key, this.index = 0, this.isSelected = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

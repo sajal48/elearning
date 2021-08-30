@@ -1,5 +1,5 @@
-import 'package:elearning/widgets/boardselector.dart';
-import 'package:elearning/widgets/preparation_dialog.dart';
+import 'package:elearning/widgets/board_selector.dart';
+import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -74,48 +74,15 @@ class _BoardSelectScreenState extends State<BoardSelectScreen> {
                             );
                           })),
                   GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return PreparationDialog();
-                          });
-                    },
-                    child: Container(
-                      height: 47,
-                      width: 233,
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                          color: Color(0xff5790FF),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 35,
-                          ),
-                          Text(
-                            'CONTINUE',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 1.5,
-                                fontSize: 16),
-                          ),
-                          CircleAvatar(
-                              radius: 17,
-                              backgroundColor: Color(0xff3C55F0),
-                              child: Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                                size: 20,
-                              ))
-                        ],
-                      ),
-                    ),
-                  ),
+                      onTap: () {
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return PreparationDialog();
+                            });
+                      },
+                      child: DefaultButton()),
                 ],
               ),
             )),
