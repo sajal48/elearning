@@ -76,6 +76,7 @@ class _BoardSelectScreenState extends State<BoardSelectScreen> {
                   GestureDetector(
                     onTap: () {
                       showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (context) {
                             return PreparationDialog();

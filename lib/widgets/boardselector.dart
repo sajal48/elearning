@@ -11,7 +11,7 @@ class BoardSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -23,9 +23,12 @@ class BoardSelector extends StatelessWidget {
               ? Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child:
-                          Icon(Icons.check_circle, color: Color(0xff12ce8a))))
+                      padding: EdgeInsets.all(3),
+                      child: Icon(
+                        Icons.check_circle,
+                        color: Color(0xff12ce8a),
+                        size: 18,
+                      )))
               : SizedBox.shrink(),
           Center(
             child: Row(
