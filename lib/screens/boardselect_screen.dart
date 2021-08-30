@@ -1,4 +1,5 @@
 import 'package:elearning/widgets/boardselector.dart';
+import 'package:elearning/widgets/preparation_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -73,13 +74,13 @@ class _BoardSelectScreenState extends State<BoardSelectScreen> {
                             );
                           })),
                   GestureDetector(
-                    // onTap: () {
-                    //   Navigator.pushReplacement(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) =>
-                    //               LanguageSelectScreen()));
-                    // },
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PreparationDialog();
+                          });
+                    },
                     child: Container(
                       height: 47,
                       width: 233,

@@ -1,3 +1,4 @@
+import 'package:elearning/screens/boardselect_screen.dart';
 import 'package:elearning/widgets/board_and_class_grid.dart';
 import 'package:elearning/widgets/preparation_dialog.dart';
 import 'package:flutter/material.dart';
@@ -77,16 +78,25 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                               style: TextStyle(
                                   color: Color(0xff747A92), fontSize: 14),
                             ),
-                            Container(
-                              height: 29,
-                              width: 29,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff5467FF),
-                                  borderRadius: BorderRadius.circular(5)),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.expand_more,
-                                color: Colors.white,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BoardSelectScreen()));
+                              },
+                              child: Container(
+                                height: 29,
+                                width: 29,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff5467FF),
+                                    borderRadius: BorderRadius.circular(5)),
+                                alignment: Alignment.center,
+                                child: Icon(
+                                  Icons.expand_more,
+                                  color: Colors.white,
+                                ),
                               ),
                             )
                           ],
@@ -109,14 +119,10 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                               );
                             }),
                       ),
+                      SizedBox(
+                        height: 25,
+                      ),
                       GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return PreparationDialog();
-                              });
-                        },
                         child: Container(
                           height: 47,
                           width: 233,
