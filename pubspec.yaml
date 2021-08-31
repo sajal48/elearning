@@ -72,7 +72,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Bold.ttf
-        - asset: assets/fonts/Roboto-thin.ttf
+        - asset: assets/fonts/Roboto-Thin.ttf
     - family: Milliard
       fonts:
         - asset: assets/fonts/Milliard-Medium.otf
