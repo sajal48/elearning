@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -43,7 +44,15 @@ class LocatonDialogue extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 30),
-              DefaultButton(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NavScreen()));
+                },
+                child: DefaultButton(
+                  text: 'ENABLE',
+                ),
+              ),
             ]),
           ),
         ));

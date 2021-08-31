@@ -6,3 +6,5 @@ export 'default_button.dart';
 export 'category.dart';
 export 'board_selector.dart';
 export 'board_and_class_grid.dart';
+export 'custom_tab_bar.dart';
+export 'search_box.dart';

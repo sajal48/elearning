@@ -123,10 +123,11 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => (HomeScreen())));
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return LocatonDialogue();
+                                });
                           },
                           child: DefaultButton()),
                       SizedBox(height: 50)
