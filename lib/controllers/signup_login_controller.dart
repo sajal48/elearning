@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SignUpController extends ChangeNotifier {
+class SignUpLoginController extends ChangeNotifier {
   bool _passwordvisibility = true;
   TextEditingController name = new TextEditingController();
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
+  TextEditingController phno = new TextEditingController();
+  TextEditingController verificationcode = new TextEditingController();
 
   String? nameerro;
   String? emailerror;
   String? passworderror;
+  String? phnno;
 
   void validator() {
     if (name.text.isEmpty) {
@@ -38,5 +41,17 @@ class SignUpController extends ChangeNotifier {
     print(name.text);
     print(email.text);
     print(password.text);
+    name.clear();
+    email.clear();
+    password.clear();
+    notifyListeners();
+  }
+
+  void logIn() {
+    print(email.text);
+    print(password.text);
+    email.clear();
+    password.clear();
+    notifyListeners();
   }
 }

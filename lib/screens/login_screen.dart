@@ -1,9 +1,11 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/resetpassword_screen.dart';
 import 'package:elearning/screens/signup_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:elearning/widgets/login_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -111,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 LoginInputField(
                   labelText: "Email",
+                  error: Provider.of<SignUpLoginController>(context).emailerror,
                   type: TextInputType.emailAddress,
+                  controller: Provider.of<SignUpLoginController>(context).email,
                 ),
                 SizedBox(
                   height: 25.0,
@@ -119,6 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 LoginInputField(
                   labelText: "Password",
                   type: TextInputType.visiblePassword,
+                  isPassword: true,
+                  controller:
+                      Provider.of<SignUpLoginController>(context).password,
+                  error:
+                      Provider.of<SignUpLoginController>(context).passworderror,
                 ),
                 SizedBox(
                   height: 25.0,
@@ -166,7 +175,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<SignUpLoginController>(context, listen: false)
+                        .logIn();
+                  },
                   child: Container(
                     height: 56,
                     padding: EdgeInsets.symmetric(horizontal: 8),

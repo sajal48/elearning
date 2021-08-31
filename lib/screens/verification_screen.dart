@@ -1,7 +1,9 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/verified_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:provider/provider.dart';
 
 class VerificationScreen extends StatefulWidget {
   VerificationScreen({Key? key}) : super(key: key);
@@ -86,9 +88,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 border: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white))),
-                            onInputChanged: (PhoneNumber number) {
-                              print(number.phoneNumber);
-                            },
+                            onInputChanged: (PhoneNumber number) {},
                             onInputValidated: (bool value) {
                               print(value);
                             },
@@ -106,7 +106,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                             initialValue: phoneNumber,
-                            //textFieldController: controller,
+                            textFieldController:
+                                Provider.of<SignUpLoginController>(context)
+                                    .phno,
                             formatInput: false,
                             maxLength: 11,
                             textStyle: TextStyle(
@@ -115,7 +117,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
-
                             keyboardType: TextInputType.numberWithOptions(
                                 signed: true, decimal: true),
                             inputBorder: OutlineInputBorder(),

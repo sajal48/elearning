@@ -1,4 +1,4 @@
-import 'package:elearning/controllers/signup_controller.dart';
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _LoginInputFieldState extends State<LoginInputField> {
   Widget build(BuildContext context) {
     return TextFormField(
       onChanged: (v) {
-        Provider.of<SignUpController>(context, listen: false).validator();
+        Provider.of<SignUpLoginController>(context, listen: false).validator();
       },
       key: widget.key,
       keyboardType: widget.type,
@@ -38,26 +38,27 @@ class _LoginInputFieldState extends State<LoginInputField> {
           fontWeight: FontWeight.bold),
       controller: widget.controller,
       cursorColor: Color(0x4dE3E3E3),
-      obscureText: Provider.of<SignUpController>(context).passwordvisibility &&
-          widget.isPassword!,
+      obscureText:
+          Provider.of<SignUpLoginController>(context).passwordvisibility &&
+              widget.isPassword!,
       decoration: InputDecoration(
           errorText: widget.error,
           suffixIcon: widget.isPassword!
               ? IconButton(
                   onPressed: () {
-                    Provider.of<SignUpController>(context, listen: false)
+                    Provider.of<SignUpLoginController>(context, listen: false)
                         .changeVisibility();
                   },
-                  icon:
-                      Provider.of<SignUpController>(context).passwordvisibility
-                          ? Icon(
-                              Icons.visibility_off,
-                              color: Colors.white,
-                            )
-                          : Icon(
-                              Icons.visibility,
-                              color: Colors.white,
-                            ),
+                  icon: Provider.of<SignUpLoginController>(context)
+                          .passwordvisibility
+                      ? Icon(
+                          Icons.visibility_off,
+                          color: Colors.white,
+                        )
+                      : Icon(
+                          Icons.visibility,
+                          color: Colors.white,
+                        ),
                 )
               : Padding(padding: EdgeInsets.zero),
           labelText: widget.labelText,

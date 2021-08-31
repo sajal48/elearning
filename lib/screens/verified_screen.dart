@@ -1,7 +1,9 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/notificationpermission_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class VerifiedScreen extends StatefulWidget {
   VerifiedScreen({Key? key}) : super(key: key);
@@ -57,6 +59,9 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
                           child: PinCodeTextField(
+                            controller:
+                                Provider.of<SignUpLoginController>(context)
+                                    .verificationcode,
                             appContext: context,
                             pastedTextStyle: TextStyle(
                                 color: Colors.white,

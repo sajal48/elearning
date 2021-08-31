@@ -1,6 +1,7 @@
 import 'package:elearning/screens/languageselet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class NotificationPermissionScreen extends StatefulWidget {
   NotificationPermissionScreen({Key? key}) : super(key: key);
@@ -75,12 +76,16 @@ class _NotificationPermissionScreenState
                         height: 25.0,
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      LanguageSelectScreen()));
+                        onTap: () async {
+                          if (await Permission.accessNotificationPolicy
+                              .request()
+                              .isGranted) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LanguageSelectScreen()));
+                          }
                         },
                         child: Container(
                           height: 47,

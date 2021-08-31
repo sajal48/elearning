@@ -1,4 +1,4 @@
-import 'package:elearning/controllers/signup_controller.dart';
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/verification_screen.dart';
 import 'package:elearning/widgets/login_input_field.dart';
 import 'package:flutter/material.dart';
@@ -45,27 +45,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(height: 25.0),
                 LoginInputField(
-                  error: Provider.of<SignUpController>(context).nameerro,
+                  error: Provider.of<SignUpLoginController>(context).nameerro,
                   labelText: "Name",
-                  controller: Provider.of<SignUpController>(context).name,
+                  controller: Provider.of<SignUpLoginController>(context).name,
                 ),
                 SizedBox(
                   height: 25.0,
                 ),
                 LoginInputField(
                   labelText: "Email",
-                  error: Provider.of<SignUpController>(context).emailerror,
+                  error: Provider.of<SignUpLoginController>(context).emailerror,
                   type: TextInputType.emailAddress,
-                  controller: Provider.of<SignUpController>(context).email,
+                  controller: Provider.of<SignUpLoginController>(context).email,
                 ),
                 SizedBox(
                   height: 25.0,
                 ),
                 LoginInputField(
                   labelText: "Password",
-                  error: Provider.of<SignUpController>(context).passworderror,
+                  error:
+                      Provider.of<SignUpLoginController>(context).passworderror,
                   isPassword: true,
-                  controller: Provider.of<SignUpController>(context).password,
+                  controller:
+                      Provider.of<SignUpLoginController>(context).password,
                   type: TextInputType.visiblePassword,
                 ),
                 SizedBox(
@@ -74,7 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () {
-                    Provider.of<SignUpController>(context, listen: false)
+                    Provider.of<SignUpLoginController>(context, listen: false)
                         .signUp();
                     Navigator.pushReplacement(
                         context,
