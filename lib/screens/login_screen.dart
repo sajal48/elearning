@@ -119,10 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 LoginInputField(
                   labelText: "Password",
                   type: TextInputType.visiblePassword,
-                  icon: Icon(
-                    Icons.visibility_outlined,
-                    color: Colors.white,
-                  ),
                 ),
                 SizedBox(
                   height: 25.0,
