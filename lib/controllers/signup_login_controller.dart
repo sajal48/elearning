@@ -7,11 +7,25 @@ class SignUpLoginController extends ChangeNotifier {
   TextEditingController password = new TextEditingController();
   TextEditingController phno = new TextEditingController();
   TextEditingController verificationcode = new TextEditingController();
+  int _languageindex = 0;
+  int _catagoryindex = 0;
+
+  int get languageindex => _languageindex;
+  int get catagoryindex => _catagoryindex;
 
   String? nameerro;
   String? emailerror;
   String? passworderror;
   String? phnno;
+  void selectLaguage(int index) {
+    _languageindex = index;
+    notifyListeners();
+  }
+
+  void selectCatagory(int index) {
+    _catagoryindex = index;
+    notifyListeners();
+  }
 
   void validator() {
     if (name.text.isEmpty) {

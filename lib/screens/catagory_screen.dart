@@ -1,7 +1,9 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/boardselect_screen.dart';
 import 'package:elearning/widgets/category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'board_and_class_screen.dart';
 
 class CatagoryScreen extends StatefulWidget {
@@ -51,6 +53,8 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      Provider.of<SignUpLoginController>(context, listen: false)
+                          .selectCatagory(0);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -63,6 +67,8 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      Provider.of<SignUpLoginController>(context, listen: false)
+                          .selectCatagory(1);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -80,11 +86,23 @@ class _CatagoryScreenState extends State<CatagoryScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Category(
-                    index: 2,
+                  GestureDetector(
+                    onTap: () {
+                      Provider.of<SignUpLoginController>(context, listen: false)
+                          .selectCatagory(2);
+                    },
+                    child: Category(
+                      index: 2,
+                    ),
                   ),
-                  Category(
-                    index: 3,
+                  GestureDetector(
+                    onTap: () {
+                      Provider.of<SignUpLoginController>(context, listen: false)
+                          .selectCatagory(3);
+                    },
+                    child: Category(
+                      index: 3,
+                    ),
                   )
                 ],
               )
