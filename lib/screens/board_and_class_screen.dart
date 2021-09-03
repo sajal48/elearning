@@ -1,6 +1,8 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BoardAndClassScreen extends StatefulWidget {
   BoardAndClassScreen({Key? key}) : super(key: key);
@@ -73,7 +75,8 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Select Board',
+                              Provider.of<SignUpLoginController>(context)
+                                  .boardselectText,
                               style: TextStyle(
                                   color: Color(0xff747A92), fontSize: 14),
                             ),
@@ -113,8 +116,19 @@ class _BoardAndClassScreenState extends State<BoardAndClassScreen> {
                                     childAspectRatio: (90 / 104),
                                     crossAxisCount: 3),
                             itemBuilder: (_, index) {
-                              return BoardAndClassGrid(
-                                index: index,
+                              return GestureDetector(
+                                onTap: () {
+                                  Provider.of<SignUpLoginController>(context,
+                                          listen: false)
+                                      .classSelect(index);
+                                },
+                                child: BoardAndClassGrid(
+                                  isActive: Provider.of<SignUpLoginController>(
+                                              context)
+                                          .classSelectindex ==
+                                      index,
+                                  index: index,
+                                ),
                               );
                             }),
                       ),

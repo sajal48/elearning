@@ -9,14 +9,28 @@ class SignUpLoginController extends ChangeNotifier {
   TextEditingController verificationcode = new TextEditingController();
   int _languageindex = 0;
   int _catagoryindex = 0;
+  int _selectboard = 0;
+  int _preparationgoal = 0;
+  String _boardselectText = "Select Board";
+  int _classSelectindex = 0;
 
   int get languageindex => _languageindex;
   int get catagoryindex => _catagoryindex;
+  int get selectboard => _selectboard;
+  int get classSelectindex => _classSelectindex;
+  int get preparationgoal => _preparationgoal;
+  String get boardselectText => _boardselectText;
 
   String? nameerro;
   String? emailerror;
   String? passworderror;
   String? phnno;
+
+  void classSelect(int i) {
+    _classSelectindex = i;
+    notifyListeners();
+  }
+
   void selectLaguage(int index) {
     _languageindex = index;
     notifyListeners();
@@ -24,6 +38,21 @@ class SignUpLoginController extends ChangeNotifier {
 
   void selectCatagory(int index) {
     _catagoryindex = index;
+    notifyListeners();
+  }
+
+  void selectBoard(int index) {
+    _selectboard = index;
+    notifyListeners();
+  }
+
+  void selectpreparationgoal(int index) {
+    _preparationgoal = index;
+    notifyListeners();
+  }
+
+  void selectedBoard(String s) {
+    _boardselectText = s;
     notifyListeners();
   }
 
