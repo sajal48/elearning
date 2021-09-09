@@ -1,7 +1,9 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/widgets/board_selector.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BoardSelectScreen extends StatefulWidget {
   const BoardSelectScreen({Key? key}) : super(key: key);
@@ -67,10 +69,19 @@ class _BoardSelectScreenState extends State<BoardSelectScreen> {
                                   crossAxisCount: 2,
                                   childAspectRatio: (158 / 74)),
                           itemBuilder: (_, index) {
-                            return BoardSelector(
-                              index: index,
-                              boardname: boards[index],
-                              isSelected: (index == 4),
+                            return GestureDetector(
+                              onTap: () {
+                                Provider.of<SignUpLoginController>(context,
+                                        listen: false)
+                                    .selectBoard(index);
+                              },
+                              child: BoardSelector(
+                                index: index,
+                                boardname: boards[index],
+                                isSelected: (index ==
+                                    Provider.of<SignUpLoginController>(context)
+                                        .selectboard),
+                              ),
                             );
                           })),
                   GestureDetector(

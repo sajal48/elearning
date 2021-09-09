@@ -1,17 +1,31 @@
 import 'dart:ui';
 
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class PreparationDialog extends StatelessWidget {
-  const PreparationDialog({
+  PreparationDialog({
     Key? key,
   }) : super(key: key);
 
+  final List<String> boards = [
+    "CBSC",
+    "CISCE",
+    "CU",
+    "IB",
+    "IGCSE",
+    "SSC",
+    "State Board",
+    "NIOS"
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final i = Provider.of<SignUpLoginController>(context).selectboard;
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: Dialog(
@@ -58,9 +72,16 @@ class PreparationDialog extends StatelessWidget {
                                 ),
                                 leading: Radio(
                                   activeColor: Color(0xff12CE8A),
-                                  value: 1,
-                                  groupValue: 1,
-                                  onChanged: (a) {},
+                                  value: 0,
+                                  groupValue:
+                                      Provider.of<SignUpLoginController>(
+                                              context)
+                                          .preparationgoal,
+                                  onChanged: (int? a) {
+                                    Provider.of<SignUpLoginController>(context,
+                                            listen: false)
+                                        .selectpreparationgoal(a!);
+                                  },
                                 ),
                                 horizontalTitleGap: -8,
                               ),
@@ -73,11 +94,18 @@ class PreparationDialog extends StatelessWidget {
                                       fontFamily: 'Roboto'),
                                 ),
                                 leading: Radio(
-                                  activeColor: Color(0xff12CE8A),
-                                  value: 0,
-                                  groupValue: 1,
-                                  onChanged: (a) {},
-                                ),
+                                    activeColor: Color(0xff12CE8A),
+                                    value: 1,
+                                    groupValue:
+                                        Provider.of<SignUpLoginController>(
+                                                context)
+                                            .preparationgoal,
+                                    onChanged: (int? a) {
+                                      Provider.of<SignUpLoginController>(
+                                              context,
+                                              listen: false)
+                                          .selectpreparationgoal(a!);
+                                    }),
                                 horizontalTitleGap: -8,
                               ),
                               ListTile(
@@ -90,9 +118,16 @@ class PreparationDialog extends StatelessWidget {
                                 ),
                                 leading: Radio(
                                   activeColor: Color(0xff12CE8A),
-                                  value: 0,
-                                  groupValue: 1,
-                                  onChanged: (a) {},
+                                  value: 2,
+                                  groupValue:
+                                      Provider.of<SignUpLoginController>(
+                                              context)
+                                          .preparationgoal,
+                                  onChanged: (int? a) {
+                                    Provider.of<SignUpLoginController>(context,
+                                            listen: false)
+                                        .selectpreparationgoal(a!);
+                                  },
                                 ),
                                 horizontalTitleGap: -8,
                               ),
@@ -102,6 +137,9 @@ class PreparationDialog extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
+                            Provider.of<SignUpLoginController>(context,
+                                    listen: false)
+                                .selectedBoard(boards[i]);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

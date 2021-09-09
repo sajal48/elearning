@@ -1,7 +1,9 @@
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/catagory_screen.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class LanguageSelectScreen extends StatefulWidget {
   LanguageSelectScreen({Key? key}) : super(key: key);
@@ -55,9 +57,17 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               Wrap(
                 direction: Axis.horizontal,
                 children: exampleList.map((i) {
-                  return MyItem(
-                    index: i,
-                    isSelected: (i == 0),
+                  return GestureDetector(
+                    onTap: () {
+                      Provider.of<SignUpLoginController>(context, listen: false)
+                          .selectLaguage(i);
+                    },
+                    child: MyItem(
+                      index: i,
+                      isSelected: (i ==
+                          Provider.of<SignUpLoginController>(context)
+                              .languageindex),
+                    ),
                   );
                 }).toList(),
               ),
