@@ -1,3 +1,4 @@
+import 'package:elearning/widgets/live_class_card.dart';
 import 'package:elearning/widgets/search_box.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,67 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
+  List<String> tcTitle = [
+    'Pair of Linear Equations in Two Variables',
+    'Pair of Linear Equations in Two Variables'
+  ];
+  List<String> tcInstractor = ['Kerry Oaky', 'Gail Forcewind.'];
+  List<String> tcTime = ['4', '5'];
+  List<String> tcDuration = ['1 hours 40 min', '1 hours 20 min'];
+  List<String> cwpBanner = [
+    'assets/images/chem.png',
+    'assets/images/trigono.png'
+  ];
+  List<String> cwpTitle = [
+    'Introduction to\nTrigonometry',
+    'Acids Bases\nand Salts'
+  ];
+  List<String> cwpView = ['28,000', '40,000'];
+  List<String> cwpDuration = ['1 hours 40 min', '2 hours 40 min'];
+  List<String> cwpInstractor = ['Teri Dactyl', 'Allie Grater'];
+  List<String> cwpPrice = ['49.00', '55.00'];
+  List<String> cwpOfferPrice = ['99.00', '99.00'];
+  List<Color> cwpColor = [Colors.white, Colors.white];
+  List<String> cwpAvater = [
+    'assets/images/ins_avater1.png',
+    'assets/images/ins_avater2.png'
+  ];
+  List<String> avater = [
+    "0",
+    "1",
+    "2",
+    "3",
+  ];
+  List<String> name = [
+    "Zack Lee",
+    "Otto Matic",
+    "Saul T. Balls",
+    "Tara Zona",
+  ];
+  List<String> ins_title = [
+    "Specialist in math",
+    "Specialist in math",
+    "Specialist in physics",
+    "Specialist in biology",
+  ];
+  List<String> students = [
+    "1200",
+    "5000",
+    "2500",
+    "1340",
+  ];
+  final List<String> banner = [
+    'assets/images/biology_basic.svg',
+    'assets/images/physics.svg'
+  ];
+  final List<Color> color = [Color(0xff9EAFFF), Color(0xff8DCEB5)];
+  final List<String> title = ['Biology Basic', 'Physics'];
+  final List<String> subtitle = [
+    'Biology & The Scientific Method',
+    'Quantum \nPhysics'
+  ];
+  final List<String> hours = ['2-4', '3-4'];
+
   final List<String> categoryIcon = [
     'assets/images/physics_icon.svg',
     'assets/images/social_science_icon.svg',
@@ -32,10 +94,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<int> exampleList = [0, 1, 2, 3];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
+        alignment: Alignment.centerLeft,
         color: Color(0xffF4F5F9),
         height: double.infinity,
         width: double.infinity,
@@ -135,6 +199,219 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: widget.categoryTitle[i],
                       );
                     }),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Popular Courses in Education',
+                      style: TextStyle(
+                        fontFamily: 'Milliard',
+                        color: Color(0xff3D4C59),
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('View All',
+                        style: TextStyle(
+                          color: Color(0xff5467FF),
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Container(
+                height: 260,
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 2,
+                    itemBuilder: (context, i) {
+                      return CourseCard(
+                          banner: widget.banner[i],
+                          title: widget.title[i],
+                          subtitle: widget.subtitle[i],
+                          hours: widget.hours[i],
+                          color: widget.color[i]);
+                    }),
+              ),
+              SizedBox(
+                height: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Top Instructor',
+                      style: TextStyle(
+                        fontFamily: 'Milliard',
+                        color: Color(0xff3D4C59),
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('View All',
+                        style: TextStyle(
+                          color: Color(0xff5467FF),
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Container(
+                height: 73,
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (context, i) {
+                      return InstractorStat(
+                          avater: i,
+                          name: widget.name[i],
+                          title: widget.ins_title[i],
+                          students: widget.students[i]);
+                    }),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Featured Course',
+                      style: TextStyle(
+                        fontFamily: 'Milliard',
+                        color: Color(0xff3D4C59),
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('View All',
+                        style: TextStyle(
+                          color: Color(0xff5467FF),
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Container(
+                height: 320,
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 2,
+                    itemBuilder: (context, i) {
+                      return CourseWithPrice(
+                        price: widget.cwpPrice[i],
+                        duration: widget.cwpDuration[i],
+                        instractor: widget.cwpInstractor[i],
+                        offerPrice: widget.cwpOfferPrice[i],
+                        view: widget.cwpView[i],
+                        banner: widget.cwpBanner[i],
+                        title: widget.cwpTitle[i],
+                        color: widget.cwpColor[i],
+                        avater: widget.cwpAvater[i],
+                      );
+                    }),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Trending Course',
+                      style: TextStyle(
+                        fontFamily: 'Milliard',
+                        color: Color(0xff3D4C59),
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('View All',
+                        style: TextStyle(
+                          color: Color(0xff5467FF),
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              CourseStat(
+                  duration: widget.tcDuration[0],
+                  avater: 0,
+                  name: widget.tcTitle[0],
+                  title: widget.tcInstractor[0],
+                  time: widget.tcTime[0]),
+              SizedBox(
+                height: 17,
+              ),
+              CourseStat(
+                  duration: widget.tcDuration[1],
+                  avater: 1,
+                  name: widget.tcTitle[1],
+                  title: widget.tcInstractor[1],
+                  time: widget.tcTime[1]),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Live Clases',
+                      style: TextStyle(
+                        fontFamily: 'Milliard',
+                        color: Color(0xff3D4C59),
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('View All',
+                        style: TextStyle(
+                          color: Color(0xff5467FF),
+                        ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33),
+                child: LiveClassCard(),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 33),
+                child: LiveClassCard(),
+              ),
+              SizedBox(
+                height: 17,
               )
             ],
           ),
