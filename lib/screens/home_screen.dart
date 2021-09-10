@@ -45,7 +45,7 @@ class HomeScreen extends StatefulWidget {
     "Saul T. Balls",
     "Tara Zona",
   ];
-  List<String> ins_title = [
+  List<String> insTitle = [
     "Specialist in math",
     "Specialist in math",
     "Specialist in physics",
@@ -279,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return InstractorStat(
                           avater: i,
                           name: widget.name[i],
-                          title: widget.ins_title[i],
+                          title: widget.insTitle[i],
                           students: widget.students[i]);
                     }),
               ),
