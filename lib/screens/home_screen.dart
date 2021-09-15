@@ -1,3 +1,4 @@
+import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/live_class_card.dart';
 import 'package:elearning/widgets/search_box.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   List<String> tcTitle = [
@@ -189,17 +191,45 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 height: 75,
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    itemBuilder: (context, i) {
-                      return TopicCard(
-                        color: widget.categoryColor[i],
-                        icon: widget.categoryIcon[i],
-                        title: widget.categoryTitle[i],
+                child: FutureBuilder(
+                  future:
+                      Provider.of<HomepageController>(context).getCategory(),
+                  builder: (context, data) {
+                    if (data.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }),
+                    } else {
+                      return Consumer<HomepageController>(
+                        builder: (context, orderData, child) =>
+                            ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    orderData.courseCategory.result.length,
+                                itemBuilder: (context, i) {
+                                  return TopicCard(
+                                    color: widget.categoryColor[1],
+                                    icon: widget.categoryIcon[1],
+                                    title: orderData
+                                        .courseCategory.result[i].categoryName,
+                                  );
+                                }),
+                      );
+                    }
+                  },
+                ),
+                // child: ListView.builder(
+                //     physics: BouncingScrollPhysics(),
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: 4,
+                //     itemBuilder: (context, i) {
+                //       return TopicCard(
+                //         color: widget.categoryColor[i],
+                //         icon: widget.categoryIcon[i],
+                //         title: widget.categoryTitle[i],
+                //       );
+                //     }),
               ),
               SizedBox(
                 height: 50,

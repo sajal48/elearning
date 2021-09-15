@@ -1,3 +1,4 @@
+import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/boarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => OnboardingController()),
-      ChangeNotifierProvider(create: (context) => SignUpLoginController())
+      ChangeNotifierProvider(create: (context) => SignUpLoginController()),
+      ChangeNotifierProvider(create: (context) => HomepageController()),
     ],
     child: MyApp(),
   ));
