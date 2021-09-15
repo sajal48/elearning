@@ -1,3 +1,4 @@
+import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/live_class_card.dart';
 import 'package:elearning/widgets/search_box.dart';
 import 'package:elearning/widgets/widgets.dart';
@@ -234,12 +235,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     itemCount: 2,
                     itemBuilder: (context, i) {
-                      return CourseCard(
-                          banner: widget.banner[i],
-                          title: widget.title[i],
-                          subtitle: widget.subtitle[i],
-                          hours: widget.hours[i],
-                          color: widget.color[i]);
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CoursePage()));
+                        },
+                        child: CourseCard(
+                            banner: widget.banner[i],
+                            title: widget.title[i],
+                            subtitle: widget.subtitle[i],
+                            hours: widget.hours[i],
+                            color: widget.color[i]),
+                      );
                     }),
               ),
               SizedBox(
@@ -381,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Live Clases',
+                      'My courses',
                       style: TextStyle(
                         fontFamily: 'Milliard',
                         color: Color(0xff3D4C59),

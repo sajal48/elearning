@@ -11,3 +11,4 @@ export 'boarding_screen.dart';
 export 'board_and_class_screen.dart';
 export 'home_screen.dart';
 export 'nav_screen.dart';
+export 'course_page.dart';
