@@ -1,5 +1,6 @@
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/coursecategory.dart';
+import 'package:elearning/Data/featuredpaidcourses.dart';
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/resetpassword_screen.dart';
 import 'package:elearning/screens/signup_screen.dart';
@@ -180,9 +181,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () async {
                     // Provider.of<SignUpLoginController>(context, listen: false)
                     //     .logIn();
-                    CourseCategory a = await Services.getCourseCategory();
-                    print("btm press ended");
-                    print(a.result[0].categoryName);
+                    // CourseCategory a = await Services.getCourseCategory();
+                    // print("btm press ended");
+                    // print(a.result[0].categoryName);
+                    // FeaturedPaidCourses f = await Services.getFeaturedCourses();
+                    // print(f.result[8].courseName);
                   },
                   child: Container(
                     height: 56,

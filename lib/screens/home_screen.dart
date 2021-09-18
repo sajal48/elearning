@@ -165,10 +165,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 33, vertical: 20),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 40,
-                      ),
-                      SearchBox(),
+                      // SizedBox(
+                      //   height: 40,
+                      // ),
+                      // SearchBox(),
                       SizedBox(
                         height: 50,
                       ),
@@ -209,8 +209,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     orderData.courseCategory.result.length,
                                 itemBuilder: (context, i) {
                                   return TopicCard(
+                                    quantity: 1,
+
                                     color: widget.categoryColor[1],
-                                    icon: widget.categoryIcon[1],
+                                    // icon: widget.categoryIcon[1],
                                     title: orderData
                                         .courseCategory.result[i].categoryName,
                                   );
@@ -234,97 +236,97 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 50,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Popular Courses in Education',
-                      style: TextStyle(
-                        fontFamily: 'Milliard',
-                        color: Color(0xff3D4C59),
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text('View All',
-                        style: TextStyle(
-                          color: Color(0xff5467FF),
-                        ))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 17,
-              ),
-              Container(
-                height: 260,
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 2,
-                    itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CoursePage()));
-                        },
-                        child: CourseCard(
-                            banner: widget.banner[i],
-                            title: widget.title[i],
-                            subtitle: widget.subtitle[i],
-                            hours: widget.hours[i],
-                            color: widget.color[i]),
-                      );
-                    }),
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Top Instructor',
-                      style: TextStyle(
-                        fontFamily: 'Milliard',
-                        color: Color(0xff3D4C59),
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text('View All',
-                        style: TextStyle(
-                          color: Color(0xff5467FF),
-                        ))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 17,
-              ),
-              Container(
-                height: 73,
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    itemBuilder: (context, i) {
-                      return InstractorStat(
-                          avater: i,
-                          name: widget.name[i],
-                          title: widget.insTitle[i],
-                          students: widget.students[i]);
-                    }),
-              ),
-              SizedBox(
-                height: 50,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 33),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         'Popular Courses in Education',
+              //         style: TextStyle(
+              //           fontFamily: 'Milliard',
+              //           color: Color(0xff3D4C59),
+              //           fontSize: 21,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       Text('View All',
+              //           style: TextStyle(
+              //             color: Color(0xff5467FF),
+              //           ))
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 17,
+              // ),
+              // Container(
+              //   height: 260,
+              //   child: ListView.builder(
+              //       physics: BouncingScrollPhysics(),
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: 2,
+              //       itemBuilder: (context, i) {
+              //         return GestureDetector(
+              //           onTap: () {
+              //             Navigator.push(
+              //                 context,
+              //                 MaterialPageRoute(
+              //                     builder: (context) => CoursePage()));
+              //           },
+              //           child: CourseCard(
+              //               banner: widget.banner[i],
+              //               title: widget.title[i],
+              //               subtitle: widget.subtitle[i],
+              //               hours: widget.hours[i],
+              //               color: widget.color[i]),
+              //         );
+              //       }),
+              // ),
+              // SizedBox(
+              //   height: 60,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 33.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         'Top Instructor',
+              //         style: TextStyle(
+              //           fontFamily: 'Milliard',
+              //           color: Color(0xff3D4C59),
+              //           fontSize: 21,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       Text('View All',
+              //           style: TextStyle(
+              //             color: Color(0xff5467FF),
+              //           ))
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 17,
+              // ),
+              // Container(
+              //   height: 73,
+              //   child: ListView.builder(
+              //       physics: BouncingScrollPhysics(),
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: 4,
+              //       itemBuilder: (context, i) {
+              //         return InstractorStat(
+              //             avater: i,
+              //             name: widget.name[i],
+              //             title: widget.insTitle[i],
+              //             students: widget.students[i]);
+              //       }),
+              // ),
+              // SizedBox(
+              //   height: 50,
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 33.0),
                 child: Row(
@@ -350,24 +352,68 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 17,
               ),
               Container(
-                height: 320,
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 2,
-                    itemBuilder: (context, i) {
-                      return CourseWithPrice(
-                        price: widget.cwpPrice[i],
-                        duration: widget.cwpDuration[i],
-                        instractor: widget.cwpInstractor[i],
-                        offerPrice: widget.cwpOfferPrice[i],
-                        view: widget.cwpView[i],
-                        banner: widget.cwpBanner[i],
-                        title: widget.cwpTitle[i],
-                        color: widget.cwpColor[i],
-                        avater: widget.cwpAvater[i],
+                height: 180,
+                child: FutureBuilder(
+                  future:
+                      Provider.of<HomepageController>(context).getfpcourse(),
+                  builder: (context, data) {
+                    if (data.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }),
+                    } else {
+                      return Consumer<HomepageController>(
+                        builder: (context, orderData, child) =>
+                            ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    orderData.featuredPaidCourses.result.length,
+                                itemBuilder: (context, i) {
+                                  var data =
+                                      orderData.featuredPaidCourses.result[i];
+                                  // print('\n');
+                                  return CourseWithPrice(
+                                    price: data.price,
+                                    level: data.competency
+                                        .toString()
+                                        .substring(11)
+                                        .toLowerCase(),
+                                    duration: data.startDate
+                                        .toString()
+                                        .substring(0, 10),
+                                    module: data.noOfModules.toString(),
+
+                                    // instractor: widget.cwpInstractor[i],
+                                    // offerPrice: widget.cwpOfferPrice[i],
+                                    // view: widget.cwpView[i],
+                                    banner: data.courseImage.toString(),
+                                    title: data.courseName,
+                                    // color: widget.cwpColor[i],
+                                    // avater: widget.cwpAvater[i],
+                                  );
+                                }),
+                      );
+                    }
+                  },
+                ),
+                // child: ListView.builder(
+                //     physics: BouncingScrollPhysics(),
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: 2,
+                //     itemBuilder: (context, i) {
+                //       return CourseWithPrice(
+                //         price: widget.cwpPrice[i],
+                //         duration: widget.cwpDuration[i],
+                //         instractor: widget.cwpInstractor[i],
+                //         offerPrice: widget.cwpOfferPrice[i],
+                //         view: widget.cwpView[i],
+                //         banner: widget.cwpBanner[i],
+                //         title: widget.cwpTitle[i],
+                //         color: widget.cwpColor[i],
+                //         avater: widget.cwpAvater[i],
+                //       );
+                //     }),
               ),
               SizedBox(
                 height: 50,
@@ -396,21 +442,48 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 17,
               ),
-              CourseStat(
-                  duration: widget.tcDuration[0],
-                  avater: 0,
-                  name: widget.tcTitle[0],
-                  title: widget.tcInstractor[0],
-                  time: widget.tcTime[0]),
-              SizedBox(
-                height: 17,
+
+              Container(
+                height: 180,
+                child: FutureBuilder(
+                  future:
+                      Provider.of<HomepageController>(context).getfpcourse(),
+                  builder: (context, data) {
+                    if (data.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return Consumer<HomepageController>(
+                        builder: (context, orderData, child) =>
+                            ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    orderData.featuredPaidCourses.result.length,
+                                itemBuilder: (context, i) {
+                                  var data =
+                                      orderData.featuredPaidCourses.result[i];
+                                  // print('\n');
+                                  return CourseWithPrice(
+                                    price: data.price,
+                                    level: data.competency
+                                        .toString()
+                                        .substring(11)
+                                        .toLowerCase(),
+                                    duration: data.startDate
+                                        .toString()
+                                        .substring(0, 10),
+                                    module: data.noOfModules.toString(),
+                                    banner: data.courseImage.toString(),
+                                    title: data.courseName,
+                                  );
+                                }),
+                      );
+                    }
+                  },
+                ),
               ),
-              CourseStat(
-                  duration: widget.tcDuration[1],
-                  avater: 1,
-                  name: widget.tcTitle[1],
-                  title: widget.tcInstractor[1],
-                  time: widget.tcTime[1]),
               SizedBox(
                 height: 50,
               ),
@@ -438,17 +511,65 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 17,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33),
-                child: LiveClassCard(),
+              Container(
+                height: 180,
+                child: FutureBuilder(
+                  future:
+                      Provider.of<HomepageController>(context).getfpcourse(),
+                  builder: (context, data) {
+                    if (data.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return Consumer<HomepageController>(
+                        builder: (context, orderData, child) =>
+                            ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    orderData.featuredPaidCourses.result.length,
+                                itemBuilder: (context, i) {
+                                  var data =
+                                      orderData.featuredPaidCourses.result[i];
+                                  // print('\n');
+                                  return CourseWithPrice(
+                                    price: data.price,
+                                    level: data.competency
+                                        .toString()
+                                        .substring(11)
+                                        .toLowerCase(),
+                                    duration: data.startDate
+                                        .toString()
+                                        .substring(0, 10),
+                                    module: data.noOfModules.toString(),
+
+                                    // instractor: widget.cwpInstractor[i],
+                                    // offerPrice: widget.cwpOfferPrice[i],
+                                    // view: widget.cwpView[i],
+                                    banner: data.courseImage.toString(),
+                                    title: data.courseName,
+                                    // color: widget.cwpColor[i],
+                                    // avater: widget.cwpAvater[i],
+                                  );
+                                }),
+                      );
+                    }
+                  },
+                ),
               ),
-              SizedBox(
-                height: 17,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33),
-                child: LiveClassCard(),
-              ),
+
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 33),
+              //   child: LiveClassCard(),
+              // ),
+              // SizedBox(
+              //   height: 17,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 33),
+              //   child: LiveClassCard(),
+              // ),
               SizedBox(
                 height: 17,
               )
