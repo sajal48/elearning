@@ -1,3 +1,6 @@
+import 'package:elearning/Api/apiservices.dart';
+import 'package:elearning/Data/loginresponse.dart';
+import 'package:elearning/Data/registerdata.dart';
 import 'package:flutter/material.dart';
 
 class SignUpLoginController extends ChangeNotifier {
@@ -7,6 +10,8 @@ class SignUpLoginController extends ChangeNotifier {
   TextEditingController password = new TextEditingController();
   TextEditingController phno = new TextEditingController();
   TextEditingController verificationcode = new TextEditingController();
+  late Registerdata registerdata;
+  late LoginResponse loginResponse;
   int _languageindex = 0;
   int _catagoryindex = 0;
   int _selectboard = 0;
@@ -90,11 +95,16 @@ class SignUpLoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logIn() {
+  void logIn() async {
     print(email.text);
     print(password.text);
+    loginResponse = await log_in(email.text, password.text);
     email.clear();
     password.clear();
     notifyListeners();
+  }
+
+  Future<LoginResponse> log_in(String email, String password) async {
+    return await Services.login(email, password);
   }
 }
