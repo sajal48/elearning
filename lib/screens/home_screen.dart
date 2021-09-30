@@ -373,24 +373,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                   var data =
                                       orderData.featuredPaidCourses.result[i];
                                   // print('\n');
-                                  return CourseWithPrice(
-                                    price: data.price,
-                                    level: data.competency
-                                        .toString()
-                                        .substring(11)
-                                        .toLowerCase(),
-                                    duration: data.startDate
-                                        .toString()
-                                        .substring(0, 10),
-                                    module: data.noOfModules.toString(),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CourseDetailsScreen(
+                                                    result: orderData
+                                                        .featuredPaidCourses
+                                                        .result[i],
+                                                  )));
+                                    },
+                                    child: CourseWithPrice(
+                                      price: data.price,
+                                      level: data.competency
+                                          .toString()
+                                          .substring(11)
+                                          .toLowerCase(),
+                                      duration: data.startDate
+                                          .toString()
+                                          .substring(0, 10),
+                                      module: data.noOfModules.toString(),
 
-                                    // instractor: widget.cwpInstractor[i],
-                                    // offerPrice: widget.cwpOfferPrice[i],
-                                    // view: widget.cwpView[i],
-                                    banner: data.courseImage.toString(),
-                                    title: data.courseName,
-                                    // color: widget.cwpColor[i],
-                                    // avater: widget.cwpAvater[i],
+                                      // instractor: widget.cwpInstractor[i],
+                                      // offerPrice: widget.cwpOfferPrice[i],
+                                      // view: widget.cwpView[i],
+                                      banner: data.courseImage.toString(),
+                                      title: data.courseName,
+                                      // color: widget.cwpColor[i],
+                                      // avater: widget.cwpAvater[i],
+                                    ),
                                   );
                                 }),
                       );

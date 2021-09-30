@@ -12,35 +12,21 @@ class CoursePage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           color: Color(0xffF3F5F9),
-          padding: EdgeInsets.symmetric(vertical: 20),
           child: SingleChildScrollView(
             physics: ScrollPhysics(),
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 33),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.arrow_back,
-                        color: Color(0xff5467FF),
-                      ),
-                      Text(
-                        'All Courses',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: 'Milliard',
-                            color: Color(0xff3D4C59),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      CircleAvatar(
-                        radius: 14,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage:
-                            AssetImage('assets/images/ins_avater1.png'),
-                      )
-                    ],
+                  padding: EdgeInsets.symmetric(horizontal: 33, vertical: 25),
+                  child: Center(
+                    child: Text(
+                      'All Courses',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'Milliard',
+                          color: Color(0xff3D4C59),
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
                 SizedBox(

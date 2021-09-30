@@ -30,10 +30,11 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     final box = GetStorage();
+
     return MaterialApp(
       theme: ThemeData(unselectedWidgetColor: Color(0xff5790FF)),
       debugShowCheckedModeBanner: false,
-      home: box.read('boarding') ? BoardingPage() : LoginScreen(),
+      home: box.read('boarding') == null ? BoardingPage() : LoginScreen(),
     );
   }
 }

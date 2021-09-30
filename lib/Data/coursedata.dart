@@ -2,17 +2,15 @@
 //
 //     final featuredPaidCourses = featuredPaidCoursesFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-FeaturedPaidCourses featuredPaidCoursesFromJson(String str) =>
-    FeaturedPaidCourses.fromJson(json.decode(str));
+CourseData featuredPaidCoursesFromJson(String str) =>
+    CourseData.fromJson(json.decode(str));
 
-String featuredPaidCoursesToJson(FeaturedPaidCourses data) =>
-    json.encode(data.toJson());
+String featuredPaidCoursesToJson(CourseData data) => json.encode(data.toJson());
 
-class FeaturedPaidCourses {
-  FeaturedPaidCourses({
+class CourseData {
+  CourseData({
     required this.statuscode,
     required this.message,
     required this.result,
@@ -22,8 +20,7 @@ class FeaturedPaidCourses {
   final String message;
   final List<Result> result;
 
-  factory FeaturedPaidCourses.fromJson(Map<String, dynamic> json) =>
-      FeaturedPaidCourses(
+  factory CourseData.fromJson(Map<String, dynamic> json) => CourseData(
         statuscode: json["statuscode"],
         message: json["message"],
         result:
@@ -86,7 +83,7 @@ class Result {
   final String skillsYouLearn;
   final Category category;
   final String university;
-  final CourseType courseType;
+  final String courseType;
   final String courseImage;
   final DateTime startDate;
   final DateTime endDate;
@@ -99,9 +96,9 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) => Result(
         coursePaid: json["course_paid"],
         courseFeatured: json["course_featured"],
-        students: List<String>.from(json["students"].map((x) => x)),
+        students: List<String>.from(json["students"]!.map((x) => x)),
         modules:
-            List<Module>.from(json["modules"].map((x) => Module.fromJson(x))),
+            List<Module>.from(json["modules"]!.map((x) => Module.fromJson(x))),
         quizPresent: json["quiz_present"],
         isPrivate: json["is_private"],
         id: json["_id"],
@@ -116,16 +113,15 @@ class Result {
         skillsYouLearn: json["skills_you_learn"],
         category: categoryValues.map[json["category"]]!,
         university: json["university"],
-        courseType: courseTypeValues.map[json["course_type"]]!,
+        courseType: json["course_type"],
         courseImage: json["course_image"],
         startDate: DateTime.parse(json["start_date"]),
         endDate: DateTime.parse(json["end_date"]),
         timeDuration: json["time_duration"],
         price: json["price"],
-        noOfModules:
-            json["no_of_modules"] == null ? null : json["no_of_modules"],
+        noOfModules: json["no_of_modules"] ?? 0,
         v: json["__v"],
-        quizId: json["quiz_id"] == null ? null : json["quiz_id"],
+        quizId: json["quiz_id"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,9 +149,9 @@ class Result {
         "end_date": endDate.toIso8601String(),
         "time_duration": timeDuration,
         "price": price,
-        "no_of_modules": noOfModules == null ? null : noOfModules,
+        "no_of_modules": noOfModules,
         "__v": v,
-        "quiz_id": quizId == null ? null : quizId,
+        "quiz_id": quizId,
       };
 }
 
@@ -177,14 +173,14 @@ enum CourseType { CATEGORY_2 }
 final courseTypeValues = EnumValues({"Category 2": CourseType.CATEGORY_2});
 
 class Module {
-  Module({
-    required this.moduleName,
-    required this.moduleDate,
-    required this.timeLimit,
-    required this.moduleReminder,
-    required this.moduleType,
-    required this.zoomLink,
-  });
+  Module(
+      {required this.moduleName,
+      required this.moduleDate,
+      required this.timeLimit,
+      required this.moduleReminder,
+      required this.moduleType,
+      required this.zoomLink,
+      required this.resources});
 
   final String moduleName;
   final DateTime moduleDate;
@@ -192,6 +188,7 @@ class Module {
   final String moduleReminder;
   final ModuleType moduleType;
   final String zoomLink;
+  final String resources;
 
   factory Module.fromJson(Map<String, dynamic> json) => Module(
         moduleName: json["module_name"],
@@ -199,7 +196,8 @@ class Module {
         timeLimit: json["time_limit"],
         moduleReminder: json["module_reminder"],
         moduleType: moduleTypeValues.map[json["module_type"]]!,
-        zoomLink: json["zoom_link"] == null ? null : json["zoom_link"],
+        zoomLink: json["zoom_link"] ?? "",
+        resources: json["resources"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -209,7 +207,7 @@ class Module {
         "time_limit": timeLimit,
         "module_reminder": moduleReminder,
         "module_type": moduleTypeValues.reverse[moduleType],
-        "zoom_link": zoomLink == null ? null : zoomLink,
+        "zoom_link": zoomLink,
       };
 }
 

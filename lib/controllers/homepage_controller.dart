@@ -1,11 +1,11 @@
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/coursecategory.dart';
-import 'package:elearning/Data/featuredpaidcourses.dart';
+import 'package:elearning/Data/coursedata.dart';
 import 'package:flutter/widgets.dart';
 
 class HomepageController extends ChangeNotifier {
   late CourseCategory courseCategory;
-  late FeaturedPaidCourses featuredPaidCourses;
+  late CourseData featuredPaidCourses;
 
   Future<CourseCategory> getCategory() async {
     courseCategory = await Services.getCourseCategory();
@@ -13,7 +13,7 @@ class HomepageController extends ChangeNotifier {
     return courseCategory;
   }
 
-  Future<FeaturedPaidCourses> getfpcourse() async {
+  Future<CourseData> getfpcourse() async {
     featuredPaidCourses = await Services.getFeaturedCourses();
     ChangeNotifier();
     return featuredPaidCourses;

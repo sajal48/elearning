@@ -14,3 +14,4 @@ export 'instractor_stat.dart';
 export 'course_with_price.dart';
 export 'trendinng_course.dart';
 export 'live_class_card.dart';
+export 'course_details_info.dart';

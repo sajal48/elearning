@@ -1,8 +1,10 @@
 import 'package:elearning/styles/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnboardingController extends ChangeNotifier {
   int _index = 0;
+  final box = GetStorage();
 
   List<Color> _bg = [bg1, bg2, bg3, Color(0xff2a324a)];
   List<String> _img = [
@@ -56,6 +58,7 @@ class OnboardingController extends ChangeNotifier {
 
   bool islast() {
     if (_index == 3) {
+      box.write("boarding", false);
       return true;
     } else
       return false;
