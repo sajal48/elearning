@@ -92,13 +92,13 @@ class CoursePage extends StatelessWidget {
                                           vertical: 5.0),
                                       child: CourseWithPrice(
                                         price: data.price,
-                                        level: data.competency
-                                            .toString()
-                                            .substring(11)
-                                            .toLowerCase(),
-                                        duration: data.startDate
-                                            .toString()
-                                            .substring(0, 10),
+                                        // level: data.competency
+                                        //     .toString()
+                                        //     .substring(11)
+                                        //     .toLowerCase(),
+                                        // duration: data.startDate
+                                        //     .toString()
+                                        //     .substring(0, 10),
                                         module: data.noOfModules.toString(),
                                         banner: data.courseImage.toString(),
                                         title: data.courseName,

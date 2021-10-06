@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:elearning/Data/coursecategory.dart';
-import 'package:elearning/Data/featuredcourse.dart';
-import 'package:elearning/Data/featurenpaidcourse.dart';
+import 'package:elearning/Data/coursedata.dart';
+
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
 
@@ -41,17 +41,17 @@ class Services {
     }
   }
 
-  static Future<FeaturedPaidCourse> getFeaturedPaidCourses() async {
+  static Future<CourseData> getFeaturedPaidCourses() async {
     print("getFeaturedPaidCourses called");
     Response response;
     try {
       response = await Dio().get(GET_FEATUREDPAIDCOURSES);
       //print(response.data);
 
-      return FeaturedPaidCourse.fromJson(response.data);
+      return CourseData.fromJson(response.data);
     } catch (e) {
-      print(e);
-      return FeaturedPaidCourse(
+      print("on fpc = $e");
+      return CourseData(
         message: "error",
         statuscode: 0,
         result: [],
@@ -59,17 +59,17 @@ class Services {
     }
   }
 
-  static Future<FeaturedCourse> getFeaturedCourses() async {
-    print("getFeaturedPaidCourses called");
+  static Future<CourseData> getCourseDatas() async {
+    print("getCourseDatas called");
     Response response;
     try {
       response = await Dio().get(GET_FEATUREDCOURSES);
       //print(response.data);
 
-      return FeaturedCourse.fromJson(response.data);
+      return CourseData.fromJson(response.data);
     } catch (e) {
-      print(e);
-      return FeaturedCourse(
+      print("on fc = $e");
+      return CourseData(
         message: "error",
         statuscode: 0,
         result: [],

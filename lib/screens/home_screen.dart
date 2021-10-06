@@ -361,6 +361,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: CircularProgressIndicator(),
                       );
                     } else {
+                      print(Provider.of<HomepageController>(context)
+                          .featuredCourse
+                          .result
+                          .length);
                       return Consumer<HomepageController>(
                         builder: (context, orderData, child) =>
                             ListView.builder(
@@ -385,13 +389,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     child: CourseWithPrice(
                                       price: data.price,
-                                      level: data.competency
-                                          .toString()
-                                          .substring(11)
-                                          .toLowerCase(),
-                                      duration: data.startDate
-                                          .toString()
-                                          .substring(0, 10),
+                                      // level: data.competency
+                                      //     .toString()
+                                      //     .substring(11)
+                                      //     .toLowerCase(),
+                                      // duration: data.startDate
+                                      //     .toString()
+                                      //     .substring(0, 10),
                                       module: data.noOfModules.toString(),
 
                                       // instractor: widget.cwpInstractor[i],
@@ -465,6 +469,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: CircularProgressIndicator(),
                       );
                     } else {
+                      print(Provider.of<HomepageController>(context)
+                          .featuredPaidCourses
+                          .result
+                          .length);
                       return Consumer<HomepageController>(
                         builder: (context, orderData, child) =>
                             ListView.builder(

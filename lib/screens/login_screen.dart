@@ -1,6 +1,6 @@
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/coursecategory.dart';
-import 'package:elearning/Data/featurenpaidcourse.dart';
+
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/resetpassword_screen.dart';
 import 'package:elearning/screens/signup_screen.dart';
