@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:elearning/Data/coursecategory.dart';
-import 'package:elearning/Data/coursedata.dart';
+import 'package:elearning/Data/featuredcourse.dart';
+import 'package:elearning/Data/featurenpaidcourse.dart';
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
 
@@ -11,6 +12,8 @@ class Services {
   static const String BASE_URL = "https://rivguru-course.herokuapp.com";
   static const String GET_CATEGORYLIST = BASE_URL + "/category";
   static const String GET_FEATUREDPAIDCOURSES =
+      BASE_URL + "/course?course_paid=true&course_featured=true";
+  static const String GET_FEATUREDCOURSES =
       BASE_URL + "/course?course_paid=false&course_featured=true";
   static const String LOGIN_URL =
       "https://rivguru-university.herokuapp.com/user/login";
@@ -38,17 +41,35 @@ class Services {
     }
   }
 
-  static Future<CourseData> getFeaturedCourses() async {
-    print("getFeaturedCourses called");
+  static Future<FeaturedPaidCourse> getFeaturedPaidCourses() async {
+    print("getFeaturedPaidCourses called");
     Response response;
     try {
       response = await Dio().get(GET_FEATUREDPAIDCOURSES);
       //print(response.data);
 
-      return CourseData.fromJson(response.data);
+      return FeaturedPaidCourse.fromJson(response.data);
     } catch (e) {
       print(e);
-      return CourseData(
+      return FeaturedPaidCourse(
+        message: "error",
+        statuscode: 0,
+        result: [],
+      );
+    }
+  }
+
+  static Future<FeaturedCourse> getFeaturedCourses() async {
+    print("getFeaturedPaidCourses called");
+    Response response;
+    try {
+      response = await Dio().get(GET_FEATUREDCOURSES);
+      //print(response.data);
+
+      return FeaturedCourse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return FeaturedCourse(
         message: "error",
         statuscode: 0,
         result: [],

@@ -4,13 +4,14 @@
 
 import 'dart:convert';
 
-CourseData featuredPaidCoursesFromJson(String str) =>
-    CourseData.fromJson(json.decode(str));
+FeaturedPaidCourse featuredPaidCoursesFromJson(String str) =>
+    FeaturedPaidCourse.fromJson(json.decode(str));
 
-String featuredPaidCoursesToJson(CourseData data) => json.encode(data.toJson());
+String featuredPaidCoursesToJson(FeaturedPaidCourse data) =>
+    json.encode(data.toJson());
 
-class CourseData {
-  CourseData({
+class FeaturedPaidCourse {
+  FeaturedPaidCourse({
     required this.statuscode,
     required this.message,
     required this.result,
@@ -18,13 +19,14 @@ class CourseData {
 
   final int statuscode;
   final String message;
-  final List<Result> result;
+  final List<FeaturedPaidResult> result;
 
-  factory CourseData.fromJson(Map<String, dynamic> json) => CourseData(
+  factory FeaturedPaidCourse.fromJson(Map<String, dynamic> json) =>
+      FeaturedPaidCourse(
         statuscode: json["statuscode"],
         message: json["message"],
-        result:
-            List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
+        result: List<FeaturedPaidResult>.from(
+            json["result"].map((x) => FeaturedPaidResult.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,8 +36,8 @@ class CourseData {
       };
 }
 
-class Result {
-  Result({
+class FeaturedPaidResult {
+  FeaturedPaidResult({
     required this.coursePaid,
     required this.courseFeatured,
     required this.students,
@@ -93,7 +95,8 @@ class Result {
   final int v;
   final String quizId;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory FeaturedPaidResult.fromJson(Map<String, dynamic> json) =>
+      FeaturedPaidResult(
         coursePaid: json["course_paid"],
         courseFeatured: json["course_featured"],
         students: List<String>.from(json["students"]!.map((x) => x)),

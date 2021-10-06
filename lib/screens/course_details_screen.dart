@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:elearning/Data/coursedata.dart';
+import 'package:elearning/Data/featuredcourse.dart';
+
 import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/widgets/widgets.dart';
 
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
-  final Result result;
+  final FeaturedResult result;
 
   const CourseDetailsScreen({Key? key, required this.result}) : super(key: key);
 

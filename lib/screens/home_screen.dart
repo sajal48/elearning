@@ -354,8 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 180,
                 child: FutureBuilder(
-                  future:
-                      Provider.of<HomepageController>(context).getfpcourse(),
+                  future: Provider.of<HomepageController>(context).getfcourse(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -368,10 +367,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemCount:
-                                    orderData.featuredPaidCourses.result.length,
+                                    orderData.featuredCourse.result.length,
                                 itemBuilder: (context, i) {
-                                  var data =
-                                      orderData.featuredPaidCourses.result[i];
+                                  var data = orderData.featuredCourse.result[i];
                                   // print('\n');
                                   return GestureDetector(
                                     onTap: () {
@@ -381,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               builder: (context) =>
                                                   CourseDetailsScreen(
                                                     result: orderData
-                                                        .featuredPaidCourses
+                                                        .featuredCourse
                                                         .result[i],
                                                   )));
                                     },
