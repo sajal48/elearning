@@ -354,7 +354,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 180,
                 child: FutureBuilder(
-                  future: Provider.of<HomepageController>(context).getfcourse(),
+                  future: Provider.of<HomepageController>(context)
+                      .getfeaturedcourse(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -362,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     } else {
                       print(Provider.of<HomepageController>(context)
-                          .featuredCourse
+                          .featuredCourses
                           .result
                           .length);
                       return Consumer<HomepageController>(
@@ -371,9 +372,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemCount:
-                                    orderData.featuredCourse.result.length,
+                                    orderData.featuredCourses.result.length,
                                 itemBuilder: (context, i) {
-                                  var data = orderData.featuredCourse.result[i];
+                                  var data =
+                                      orderData.featuredCourses.result[i];
                                   // print('\n');
                                   return GestureDetector(
                                     onTap: () {
@@ -383,19 +385,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                               builder: (context) =>
                                                   CourseDetailsScreen(
                                                     result: orderData
-                                                        .featuredCourse
+                                                        .featuredCourses
                                                         .result[i],
                                                   )));
                                     },
                                     child: CourseWithPrice(
                                       price: data.price,
-                                      // level: data.competency
-                                      //     .toString()
-                                      //     .substring(11)
-                                      //     .toLowerCase(),
-                                      // duration: data.startDate
-                                      //     .toString()
-                                      //     .substring(0, 10),
+                                      level: data.competency,
+                                      duration: data.startDate
+                                          .toString()
+                                          .substring(0, 10),
                                       module: data.noOfModules.toString(),
 
                                       // instractor: widget.cwpInstractor[i],
@@ -462,7 +461,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 child: FutureBuilder(
                   future:
-                      Provider.of<HomepageController>(context).getfpcourse(),
+                      Provider.of<HomepageController>(context).getfreecourse(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -470,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     } else {
                       print(Provider.of<HomepageController>(context)
-                          .featuredPaidCourses
+                          .freeCourses
                           .result
                           .length);
                       return Consumer<HomepageController>(
@@ -478,18 +477,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
-                                itemCount:
-                                    orderData.featuredPaidCourses.result.length,
+                                itemCount: orderData.freeCourses.result.length,
                                 itemBuilder: (context, i) {
-                                  var data =
-                                      orderData.featuredPaidCourses.result[i];
+                                  var data = orderData.freeCourses.result[i];
                                   // print('\n');
                                   return CourseWithPrice(
                                     price: data.price,
-                                    level: data.competency
-                                        .toString()
-                                        .substring(11)
-                                        .toLowerCase(),
+                                    level: data.competency,
                                     duration: data.startDate
                                         .toString()
                                         .substring(0, 10),
@@ -534,7 +528,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 child: FutureBuilder(
                   future:
-                      Provider.of<HomepageController>(context).getfpcourse(),
+                      Provider.of<HomepageController>(context).getallcourse(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -546,11 +540,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
-                                itemCount:
-                                    orderData.featuredPaidCourses.result.length,
+                                itemCount: orderData.allCourses.result.length,
                                 itemBuilder: (context, i) {
-                                  var data =
-                                      orderData.featuredPaidCourses.result[i];
+                                  var data = orderData.allCourses.result[i];
                                   // print('\n');
                                   return CourseWithPrice(
                                     price: data.price,

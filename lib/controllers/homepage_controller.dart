@@ -6,8 +6,9 @@ import 'package:flutter/widgets.dart';
 
 class HomepageController extends ChangeNotifier {
   late CourseCategory courseCategory;
-  late CourseData featuredPaidCourses;
-  late CourseData featuredCourse;
+  late CourseData freeCourses;
+  late CourseData featuredCourses;
+  late CourseData allCourses;
 
   Future<CourseCategory> getCategory() async {
     courseCategory = await Services.getCourseCategory();
@@ -15,15 +16,21 @@ class HomepageController extends ChangeNotifier {
     return courseCategory;
   }
 
-  Future<CourseData> getfpcourse() async {
-    featuredPaidCourses = await Services.getFeaturedPaidCourses();
+  Future<CourseData> getfeaturedcourse() async {
+    featuredCourses = await Services.getFeaturedCourses();
     ChangeNotifier();
-    return featuredPaidCourses;
+    return featuredCourses;
   }
 
-  Future<CourseData> getfcourse() async {
-    featuredCourse = await Services.getCourseDatas();
+  Future<CourseData> getfreecourse() async {
+    freeCourses = await Services.getFreeCourses();
     ChangeNotifier();
-    return featuredCourse;
+    return freeCourses;
+  }
+
+  Future<CourseData> getallcourse() async {
+    allCourses = await Services.getAllCourses();
+    ChangeNotifier();
+    return allCourses;
   }
 }

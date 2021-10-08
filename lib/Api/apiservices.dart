@@ -11,10 +11,11 @@ import 'package:elearning/Data/registerdata.dart';
 class Services {
   static const String BASE_URL = "https://rivguru-course.herokuapp.com";
   static const String GET_CATEGORYLIST = BASE_URL + "/category";
-  static const String GET_FEATUREDPAIDCOURSES =
-      BASE_URL + "/course?course_paid=true&course_featured=true";
   static const String GET_FEATUREDCOURSES =
+      BASE_URL + "/course?course_featured=true";
+  static const String GET_FREECOURSES =
       BASE_URL + "/course?course_paid=false&course_featured=true";
+  static const String GET_ALLCOURSES = BASE_URL + "/course";
   static const String LOGIN_URL =
       "https://rivguru-university.herokuapp.com/user/login";
 
@@ -41,16 +42,16 @@ class Services {
     }
   }
 
-  static Future<CourseData> getFeaturedPaidCourses() async {
+  static Future<CourseData> getFeaturedCourses() async {
     print("getFeaturedPaidCourses called");
     Response response;
     try {
-      response = await Dio().get(GET_FEATUREDPAIDCOURSES);
+      response = await Dio().get(GET_FEATUREDCOURSES);
       //print(response.data);
 
       return CourseData.fromJson(response.data);
     } catch (e) {
-      print("on fpc = $e");
+      print(e);
       return CourseData(
         message: "error",
         statuscode: 0,
@@ -59,16 +60,34 @@ class Services {
     }
   }
 
-  static Future<CourseData> getCourseDatas() async {
-    print("getCourseDatas called");
+  static Future<CourseData> getFreeCourses() async {
+    print("getFeaturedPaidCourses called");
     Response response;
     try {
-      response = await Dio().get(GET_FEATUREDCOURSES);
+      response = await Dio().get(GET_FREECOURSES);
       //print(response.data);
 
       return CourseData.fromJson(response.data);
     } catch (e) {
-      print("on fc = $e");
+      print(e);
+      return CourseData(
+        message: "error",
+        statuscode: 0,
+        result: [],
+      );
+    }
+  }
+
+  static Future<CourseData> getAllCourses() async {
+    print("getFeaturedPaidCourses called");
+    Response response;
+    try {
+      response = await Dio().get(GET_ALLCOURSES);
+      //print(response.data);
+
+      return CourseData.fromJson(response.data);
+    } catch (e) {
+      print(e);
       return CourseData(
         message: "error",
         statuscode: 0,

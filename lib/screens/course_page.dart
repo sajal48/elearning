@@ -68,7 +68,7 @@ class CoursePage extends StatelessWidget {
                 Container(
                   child: FutureBuilder(
                     future:
-                        Provider.of<HomepageController>(context).getfpcourse(),
+                        Provider.of<HomepageController>(context).getallcourse(),
                     builder: (context, data) {
                       if (data.connectionState == ConnectionState.waiting) {
                         return Center(
@@ -81,24 +81,19 @@ class CoursePage extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
-                                  itemCount: orderData
-                                      .featuredPaidCourses.result.length,
+                                  itemCount: orderData.allCourses.result.length,
                                   itemBuilder: (context, i) {
-                                    var data =
-                                        orderData.featuredPaidCourses.result[i];
+                                    var data = orderData.allCourses.result[i];
                                     // print('\n');
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5.0),
                                       child: CourseWithPrice(
                                         price: data.price,
-                                        // level: data.competency
-                                        //     .toString()
-                                        //     .substring(11)
-                                        //     .toLowerCase(),
-                                        // duration: data.startDate
-                                        //     .toString()
-                                        //     .substring(0, 10),
+                                        level: data.competency,
+                                        duration: data.startDate
+                                            .toString()
+                                            .substring(0, 10),
                                         module: data.noOfModules.toString(),
                                         banner: data.courseImage.toString(),
                                         title: data.courseName,
