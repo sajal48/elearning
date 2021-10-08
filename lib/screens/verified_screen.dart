@@ -15,6 +15,7 @@ class VerifiedScreen extends StatefulWidget {
 class _VerifiedScreenState extends State<VerifiedScreen> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xffF4F5F9),
@@ -181,7 +182,7 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 150,
+                  height: size.height * .10,
                 )
               ],
             ),
