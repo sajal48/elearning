@@ -17,3 +17,19 @@ List<Color> catagorycolor = [
   Color(0xff3C3B91),
   Color(0xffFD8593)
 ];
+const TextStyle normal = TextStyle(
+    color: Colors.white,
+    fontSize: 15.0,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.normal);
+const TextStyle labelTextStyle = TextStyle(
+    color: Colors.white,
+    fontFamily: 'Roboto',
+    fontSize: 22.0,
+    fontWeight: FontWeight.w400);
+
+const TextStyle textfeild = TextStyle(
+    color: Colors.white,
+    fontSize: 22.0,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.bold);

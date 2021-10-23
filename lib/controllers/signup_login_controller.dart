@@ -30,9 +30,21 @@ class SignUpLoginController extends ChangeNotifier {
   String? emailerror;
   String? passworderror;
   String? phnno;
+  String? gender;
+  DateTime? bod;
 
   void classSelect(int i) {
     _classSelectindex = i;
+    notifyListeners();
+  }
+
+  void selectBod(DateTime d) {
+    bod = d;
+    notifyListeners();
+  }
+
+  void selectGender(String value) {
+    gender = value;
     notifyListeners();
   }
 
