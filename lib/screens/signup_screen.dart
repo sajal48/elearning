@@ -1,10 +1,12 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:elearning/controllers/signup_login_controller.dart';
+import 'package:elearning/screens/home_screen.dart';
 import 'package:elearning/screens/verification_screen.dart';
 import 'package:elearning/styles/styles.dart';
 import 'package:elearning/widgets/login_input_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:provider/provider.dart';
 
 import 'login_screen.dart';
@@ -51,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 LoginInputField(
                   error: signupCont.nameerro,
                   labelText: "User Name",
-                  controller: signupCont.name,
+                  controller: signupCont.username,
                 ),
                 SizedBox(
                   height: 25.0,
@@ -161,9 +163,6 @@ class SignUpNext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final signupCont = Provider.of<SignUpLoginController>(context);
-    void setDate(DateTime d) {
-      Provider.of<SignUpLoginController>(context, listen: false).selectBod(d);
-    }
 
     return Container(
       decoration: BoxDecoration(
@@ -183,19 +182,22 @@ class SignUpNext extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(child: SizedBox.shrink()),
-                SizedBox(height: 25.0),
+                SizedBox(height: 20.0),
                 LoginInputField(
-                  error: signupCont.nameerro,
+                  error: signupCont.firstnameerror,
                   labelText: "First Name",
-                  controller: signupCont.name,
-                ),
-                LoginInputField(
-                  error: signupCont.nameerro,
-                  labelText: "Last Name",
-                  controller: signupCont.name,
+                  controller: signupCont.firstname,
                 ),
                 SizedBox(
-                  height: 25.0,
+                  height: 20.0,
+                ),
+                LoginInputField(
+                  error: signupCont.lasttnameerror,
+                  labelText: "Last Name",
+                  controller: signupCont.lastname,
+                ),
+                SizedBox(
+                  height: 20.0,
                 ),
                 DateTimePicker(
                   type: DateTimePickerType.date,
@@ -203,6 +205,7 @@ class SignUpNext extends StatelessWidget {
                   firstDate: DateTime(1950),
                   lastDate: DateTime.now(),
                   style: textfeild,
+                  controller: signupCont.dateofbirth,
                   decoration: InputDecoration(
                     label: Text("Date of Birth"),
                     labelStyle: labelTextStyle,
@@ -261,10 +264,10 @@ class SignUpNext extends StatelessWidget {
                   height: 25.0,
                 ),
                 LoginInputField(
-                  labelText: "Phn",
-                  error: signupCont.passworderror,
+                  labelText: "Phone",
+                  error: signupCont.phnnoerror,
                   isPassword: false,
-                  controller: signupCont.password,
+                  controller: signupCont.phn,
                   type: TextInputType.visiblePassword,
                 ),
                 SizedBox(
@@ -272,11 +275,37 @@ class SignUpNext extends StatelessWidget {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    CustomProgressDialog? progressDialog = CustomProgressDialog(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => VerificationScreen()));
+                        blur: 10,
+                        dismissable:
+                            false); //You can set Loading Widget using this function
+                    progressDialog.setLoadingWidget(CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.blue)));
+                    progressDialog.show();
+                    var a = await signupCont.register();
+                    progressDialog.dismiss();
+                    if (a.result!.message != null) {
+                      NAlertDialog(
+                        title: Text("Error"),
+                        content: Text(a.result!.message!),
+                        blur: 2,
+                      ).show(context,
+                          transitionType: DialogTransitionType.Bubble);
+                    } else {
+                      signupCont.clearController();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    }
+
+                    // Navigator.push(
+
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => VerificationScreen()));
                   },
                   child: Container(
                     height: 56,
@@ -291,7 +320,7 @@ class SignUpNext extends StatelessWidget {
                           width: 35,
                         ),
                         Text(
-                          'Next ',
+                          'Sign Up ',
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Roboto',

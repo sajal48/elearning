@@ -134,7 +134,7 @@ class Services {
       //print(response.data);
       return RegisterRespons.fromJson(response.data);
     } catch (e) {
-      print('Error');
+      print(e.toString());
       return RegisterRespons(
         message: "error",
         statuscode: 0,

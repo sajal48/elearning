@@ -1,5 +1,6 @@
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/coursecategory.dart';
+import 'package:elearning/Data/loginresponse.dart';
 
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/resetpassword_screen.dart';
@@ -8,7 +9,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:elearning/widgets/login_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:provider/provider.dart';
+
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -115,10 +119,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   endIndent: 127.0,
                 ),
                 LoginInputField(
-                  labelText: "Email",
-                  error: Provider.of<SignUpLoginController>(context).emailerror,
+                  labelText: "User Name",
+                  error: Provider.of<SignUpLoginController>(context).nameerro,
                   type: TextInputType.emailAddress,
-                  controller: Provider.of<SignUpLoginController>(context).email,
+                  controller:
+                      Provider.of<SignUpLoginController>(context).loginUsername,
                 ),
                 SizedBox(
                   height: 25.0,
@@ -128,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   type: TextInputType.visiblePassword,
                   isPassword: true,
                   controller:
-                      Provider.of<SignUpLoginController>(context).password,
+                      Provider.of<SignUpLoginController>(context).loginPassword,
                   error:
                       Provider.of<SignUpLoginController>(context).passworderror,
                 ),
@@ -179,8 +184,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () async {
-                    // Provider.of<SignUpLoginController>(context, listen: false)
-                    //     .logIn();
+                    CustomProgressDialog? progressDialog = CustomProgressDialog(
+                        context,
+                        blur: 10,
+                        dismissable:
+                            false); //You can set Loading Widget using this function
+                    progressDialog.setLoadingWidget(CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.blue)));
+                    progressDialog.show();
+
+                    LoginResponse a = await Provider.of<SignUpLoginController>(
+                            context,
+                            listen: false)
+                        .logIn();
+                    progressDialog.dismiss();
+                    if (a.statuscode == 500) {
+                      NAlertDialog(
+                        title: Text("Error"),
+                        content: Text("Login Failed"),
+                        blur: 2,
+                      ).show(context,
+                          transitionType: DialogTransitionType.Bubble);
+                    } else {
+                      Provider.of<SignUpLoginController>(context)
+                          .clearController();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    }
+
                     // CourseCategory a = await Services.getCourseCategory();
                     // print("btm press ended");
                     // print(a.result[0].categoryName);

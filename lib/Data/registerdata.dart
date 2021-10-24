@@ -164,7 +164,7 @@ class RegisterRespons {
 
   final int statuscode;
   final String? message;
-  final result;
+  final Result? result;
 
   factory RegisterRespons.fromJson(Map<String, dynamic> json) =>
       RegisterRespons(
@@ -176,7 +176,7 @@ class RegisterRespons {
   Map<String, dynamic> toJson() => {
         "statuscode": statuscode,
         "message": message,
-        "result": result.toJson(),
+        "result": result!.toJson(),
       };
 }
 

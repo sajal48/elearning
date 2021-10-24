@@ -2,13 +2,21 @@ import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 
 class SignUpLoginController extends ChangeNotifier {
   bool _passwordvisibility = true;
-  TextEditingController name = new TextEditingController();
+  TextEditingController username = new TextEditingController();
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
-  TextEditingController phno = new TextEditingController();
+  TextEditingController firstname = new TextEditingController();
+  TextEditingController lastname = new TextEditingController();
+  TextEditingController phn = new TextEditingController();
+  TextEditingController dateofbirth = new TextEditingController();
+  TextEditingController loginUsername = new TextEditingController();
+  TextEditingController loginPassword = new TextEditingController();
+  bool loading = false;
+
   TextEditingController verificationcode = new TextEditingController();
   late Registerdata registerdata;
   late LoginResponse loginResponse;
@@ -27,19 +35,32 @@ class SignUpLoginController extends ChangeNotifier {
   String get boardselectText => _boardselectText;
 
   String? nameerro;
+  String? firstnameerror;
+  String? lasttnameerror;
   String? emailerror;
   String? passworderror;
-  String? phnno;
+  String? phnnoerror;
   String? gender;
-  DateTime? bod;
+  DateTime? boderror;
+
+  void clearController() {
+    username.clear();
+    password.clear();
+    email.clear();
+    firstname.clear();
+    lastname.clear();
+    dateofbirth.clear();
+    loginPassword.clear();
+    loginUsername.clear();
+  }
 
   void classSelect(int i) {
     _classSelectindex = i;
     notifyListeners();
   }
 
-  void selectBod(DateTime d) {
-    bod = d;
+  void setloading(bool b) {
+    loading = b;
     notifyListeners();
   }
 
@@ -74,16 +95,39 @@ class SignUpLoginController extends ChangeNotifier {
   }
 
   void validator() {
-    if (name.text.isEmpty) {
-      nameerro = "Name error";
+    if (username.text.isEmpty) {
+      nameerro = "Empty";
     } else
       nameerro = null;
     if (email.text.isEmpty) {
-      emailerror = "email error";
+      emailerror = "Emptyr";
     } else
       emailerror = null;
     if (password.text.isEmpty) {
-      passworderror = "password error";
+      passworderror = "Empty";
+    } else {
+      passworderror = null;
+    }
+    if (firstname.text.isEmpty) {
+      firstnameerror = "Empty";
+    } else
+      firstnameerror = null;
+    if (lastname.text.isEmpty) {
+      lasttnameerror = "Empty";
+    } else
+      lasttnameerror = null;
+    if (phn.text.isEmpty) {
+      phnnoerror = "Empty";
+    } else {
+      phnnoerror = null;
+    }
+    if (loginUsername.text.isEmpty) {
+      nameerro = "Empty";
+    } else {
+      nameerro = null;
+    }
+    if (loginPassword.text.isEmpty) {
+      passworderror = "Empty";
     } else {
       passworderror = null;
     }
@@ -98,25 +142,34 @@ class SignUpLoginController extends ChangeNotifier {
   }
 
   void signUp() {
-    print(name.text);
+    print(username.text);
     print(email.text);
     print(password.text);
-    name.clear();
+    username.clear();
     email.clear();
     password.clear();
     notifyListeners();
   }
 
-  void logIn() async {
-    print(email.text);
-    print(password.text);
-    loginResponse = await log_in(email.text, password.text);
-    email.clear();
-    password.clear();
-    notifyListeners();
+  Future<LoginResponse> logIn() async {
+    return await Services.login(email.text, password.text);
   }
 
-  Future<LoginResponse> log_in(String email, String password) async {
-    return await Services.login(email, password);
+  Future<RegisterRespons> register() async {
+    RegisterRespons registerRespons;
+    Registerdata a = Registerdata(
+        firstName: firstname.text,
+        lastName: lastname.text,
+        username: username.text,
+        password: password.text,
+        dateOfBirth: DateTime.tryParse(dateofbirth.text)!,
+        joiningDate: DateTime.now(),
+        gender: gender!,
+        phone: phn.text,
+        email: email.text);
+
+    return registerRespons = await Services.register(a);
+
+    //print(a.toJson());
   }
 }

@@ -107,8 +107,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             ),
                             initialValue: phoneNumber,
                             textFieldController:
-                                Provider.of<SignUpLoginController>(context)
-                                    .phno,
+                                Provider.of<SignUpLoginController>(context).phn,
                             formatInput: false,
                             maxLength: 11,
                             textStyle: TextStyle(
