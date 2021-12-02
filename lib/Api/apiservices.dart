@@ -8,6 +8,8 @@ import 'package:elearning/Data/coursedata.dart';
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
 
+import 'package:http/http.dart' as http;
+
 class Services {
   static const String BASE_URL = "https://rivguru-course.herokuapp.com";
   static const String GET_CATEGORYLIST = BASE_URL + "/category";
@@ -97,46 +99,59 @@ class Services {
   }
 
   static Future<LoginResponse> login(String username, String password) async {
-    print("login called");
-    Response response;
-    var params = {"username": username, "password": password};
+    var params = {"username": "$username", "password": "$password"};
+    print(jsonEncode(params));
     try {
-      response = await Dio().post(
-        LOGIN_URL,
-        data: jsonEncode(params),
-        options: Options(headers: {
-          HttpHeaders.contentTypeHeader: "application/json",
-        }),
-      );
-      //print(response.data);
-      return LoginResponse.fromJson(response.data);
+      final response = await http.post(Uri.parse(LOGIN_URL), body: params);
+
+      if (response.statusCode == 201) {
+        LoginResponse ls = LoginResponse.fromJson(jsonDecode(response.body));
+        return ls;
+      } else {
+        return LoginResponse(
+          message: "Login failed",
+          statuscode: 0,
+        );
+      }
     } catch (e) {
-      print('Error');
+      print('Error :' + e.toString());
       return LoginResponse(
-        message: "error",
+        message: "Server error",
         statuscode: 0,
       );
     }
   }
 
   static Future<RegisterRespons> register(Registerdata registerdata) async {
+    print(registerdata.address + registerdata.city + registerdata.email);
+    var a = json.encode(registerdata);
     print("Register called");
-    Response response;
 
     try {
-      response = await Dio().post(
-        REGISTER_URL,
-        data: registerdata.toJson(),
-        options: Options(headers: {
-          HttpHeaders.contentTypeHeader: "application/json",
-        }),
+      final response = await http.post(
+        Uri.parse(REGISTER_URL),
+        body: a,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       );
-      //print(response.data);
-      return RegisterRespons.fromJson(response.data);
+      print(response.body);
+      if (response.statusCode == 201) {
+        RegisterRespons rs =
+            RegisterRespons.fromJson(jsonDecode(response.body));
+        print("if ------" + response.body);
+        return rs;
+      } else {
+        print("else ------" + response.body);
+        return RegisterRespons(
+          message: "Registration failed",
+          statuscode: 0,
+        );
+      }
     } catch (e) {
       print(e.toString());
       return RegisterRespons(
-        message: "error",
+        message: "Server error",
         statuscode: 0,
       );
     }

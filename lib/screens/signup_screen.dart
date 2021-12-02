@@ -1,6 +1,8 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:elearning/Data/registerdata.dart';
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/home_screen.dart';
+import 'package:elearning/screens/screens.dart';
 import 'package:elearning/screens/verification_screen.dart';
 import 'package:elearning/styles/styles.dart';
 import 'package:elearning/widgets/login_input_field.dart';
@@ -162,8 +164,6 @@ class SignUpNext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signupCont = Provider.of<SignUpLoginController>(context);
-
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xff14181D),
@@ -184,17 +184,21 @@ class SignUpNext extends StatelessWidget {
                 Expanded(child: SizedBox.shrink()),
                 SizedBox(height: 20.0),
                 LoginInputField(
-                  error: signupCont.firstnameerror,
+                  error: Provider.of<SignUpLoginController>(context)
+                      .firstnameerror,
                   labelText: "First Name",
-                  controller: signupCont.firstname,
+                  controller:
+                      Provider.of<SignUpLoginController>(context).firstname,
                 ),
                 SizedBox(
                   height: 20.0,
                 ),
                 LoginInputField(
-                  error: signupCont.lasttnameerror,
+                  error: Provider.of<SignUpLoginController>(context)
+                      .lasttnameerror,
                   labelText: "Last Name",
-                  controller: signupCont.lastname,
+                  controller:
+                      Provider.of<SignUpLoginController>(context).lastname,
                 ),
                 SizedBox(
                   height: 20.0,
@@ -205,7 +209,8 @@ class SignUpNext extends StatelessWidget {
                   firstDate: DateTime(1950),
                   lastDate: DateTime.now(),
                   style: textfeild,
-                  controller: signupCont.dateofbirth,
+                  controller:
+                      Provider.of<SignUpLoginController>(context).dateofbirth,
                   decoration: InputDecoration(
                     label: Text("Date of Birth"),
                     labelStyle: labelTextStyle,
@@ -228,7 +233,8 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Male",
-                        groupValue: signupCont.gender,
+                        groupValue:
+                            Provider.of<SignUpLoginController>(context).gender,
                         onChanged: (v) {
                           Provider.of<SignUpLoginController>(context,
                                   listen: false)
@@ -240,7 +246,8 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Female",
-                        groupValue: signupCont.gender,
+                        groupValue:
+                            Provider.of<SignUpLoginController>(context).gender,
                         onChanged: (v) {
                           Provider.of<SignUpLoginController>(context,
                                   listen: false)
@@ -252,7 +259,8 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Other",
-                        groupValue: signupCont.gender,
+                        groupValue:
+                            Provider.of<SignUpLoginController>(context).gender,
                         onChanged: (v) {
                           Provider.of<SignUpLoginController>(context,
                                   listen: false)
@@ -265,9 +273,9 @@ class SignUpNext extends StatelessWidget {
                 ),
                 LoginInputField(
                   labelText: "Phone",
-                  error: signupCont.phnnoerror,
+                  error: Provider.of<SignUpLoginController>(context).phnnoerror,
                   isPassword: false,
-                  controller: signupCont.phn,
+                  controller: Provider.of<SignUpLoginController>(context).phn,
                   type: TextInputType.visiblePassword,
                 ),
                 SizedBox(
@@ -284,9 +292,12 @@ class SignUpNext extends StatelessWidget {
                     progressDialog.setLoadingWidget(CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation(Colors.blue)));
                     progressDialog.show();
-                    var a = await signupCont.register();
+                    RegisterRespons a =
+                        await Provider.of<SignUpLoginController>(context,
+                                listen: false)
+                            .register();
                     progressDialog.dismiss();
-                    if (a.result!.message != null) {
+                    if (a.result!.status != null) {
                       NAlertDialog(
                         title: Text("Error"),
                         content: Text(a.result!.message!),
@@ -294,11 +305,10 @@ class SignUpNext extends StatelessWidget {
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);
                     } else {
-                      signupCont.clearController();
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      // Provider.of<SignUpLoginController>(context, listen: false)
+                      //     .clearController();
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => NavScreen()));
                     }
 
                     // Navigator.push(

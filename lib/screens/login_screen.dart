@@ -3,6 +3,7 @@ import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/loginresponse.dart';
 
 import 'package:elearning/controllers/signup_login_controller.dart';
+import 'package:elearning/screens/nav_screen.dart';
 import 'package:elearning/screens/resetpassword_screen.dart';
 import 'package:elearning/screens/signup_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -198,20 +199,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             listen: false)
                         .logIn();
                     progressDialog.dismiss();
-                    if (a.statuscode == 500) {
+
+                    if (a.statuscode == 0) {
                       NAlertDialog(
                         title: Text("Error"),
-                        content: Text("Login Failed"),
+                        content: Text(a.message),
                         blur: 2,
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);
-                    } else {
-                      Provider.of<SignUpLoginController>(context)
+                    } else if (a.statuscode == 200) {
+                      Provider.of<SignUpLoginController>(context, listen: false)
                           .clearController();
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => NavScreen()));
                     }
 
                     // CourseCategory a = await Services.getCourseCategory();

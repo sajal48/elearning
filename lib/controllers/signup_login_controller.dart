@@ -152,7 +152,7 @@ class SignUpLoginController extends ChangeNotifier {
   }
 
   Future<LoginResponse> logIn() async {
-    return await Services.login(email.text, password.text);
+    return await Services.login(loginUsername.text, loginPassword.text);
   }
 
   Future<RegisterRespons> register() async {
