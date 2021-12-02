@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
 import 'package:flutter/material.dart';
 import 'package:ndialog/ndialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpLoginController extends ChangeNotifier {
   bool _passwordvisibility = true;
@@ -18,8 +21,8 @@ class SignUpLoginController extends ChangeNotifier {
   bool loading = false;
 
   TextEditingController verificationcode = new TextEditingController();
-  late Registerdata registerdata;
   late LoginResponse loginResponse;
+  late RegisterRespons registerRespons;
   int _languageindex = 0;
   int _catagoryindex = 0;
   int _selectboard = 0;
@@ -152,11 +155,14 @@ class SignUpLoginController extends ChangeNotifier {
   }
 
   Future<LoginResponse> logIn() async {
-    return await Services.login(loginUsername.text, loginPassword.text);
+    loginResponse =
+        await Services.login(loginUsername.text, loginPassword.text);
+    ChangeNotifier();
+    storeUserData(loginResponse.result!.userId);
+    return loginResponse;
   }
 
   Future<RegisterRespons> register() async {
-    RegisterRespons registerRespons;
     Registerdata a = Registerdata(
         firstName: firstname.text,
         lastName: lastname.text,
@@ -168,8 +174,20 @@ class SignUpLoginController extends ChangeNotifier {
         phone: phn.text,
         email: email.text);
 
-    return registerRespons = await Services.register(a);
+    registerRespons = await Services.register(a);
+    ChangeNotifier();
+    storeUserData(registerRespons.result!.id!);
+    return registerRespons;
+  }
 
-    //print(a.toJson());
+  Future<void> storeUserData(String userID) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    prefs.setString('RivguruUser', userID);
+  }
+
+  Future<void> logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

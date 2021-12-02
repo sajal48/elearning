@@ -1,9 +1,13 @@
 import 'dart:convert';
 
-CourseData featuredCourseFromJson(String str) =>
+import 'package:intl/intl.dart';
+
+CourseData courseDataFromJson(String str) =>
     CourseData.fromJson(json.decode(str));
 
-String featuredCourseToJson(CourseData data) => json.encode(data.toJson());
+String courseDataToJson(CourseData data) => json.encode(data.toJson());
+
+final DateFormat df = DateFormat('yyyy-MM-dd');
 
 class CourseData {
   CourseData({
@@ -14,196 +18,228 @@ class CourseData {
 
   final int statuscode;
   final String message;
-  final List<Result> result;
+  final List<Result>? result;
 
   factory CourseData.fromJson(Map<String, dynamic> json) => CourseData(
-        statuscode: json["statuscode"],
-        message: json["message"],
-        result:
-            List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
+        statuscode: json["statuscode"] == null ? null : json["statuscode"],
+        message: json["message"] == null ? null : json["message"],
+        result: json["result"] == null
+            ? null
+            : List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "statuscode": statuscode,
-        "message": message,
-        "result": List<dynamic>.from(result.map((x) => x.toJson())),
+        "statuscode": statuscode == null ? null : statuscode,
+        "message": message == null ? null : message,
+        "result": result == null
+            ? null
+            : List<dynamic>.from(result!.map((x) => x.toJson())),
       };
 }
 
 class Result {
   Result({
-    required this.coursePaid,
-    required this.courseFeatured,
-    required this.students,
-    required this.modules,
-    required this.quizPresent,
-    required this.isPrivate,
-    required this.id,
-    required this.courseName,
-    required this.trainer,
-    required this.competency,
-    required this.description,
-    required this.aboutThisCourse,
-    required this.whoThisCourseIsFor,
-    required this.requirements,
-    required this.whyToLearn,
-    required this.skillsYouLearn,
-    required this.category,
-    required this.university,
-    required this.courseType,
-    required this.courseImage,
-    required this.startDate,
-    required this.endDate,
-    required this.timeDuration,
-    required this.price,
-    required this.noOfModules,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.quizId,
-    required this.v,
+    this.coursePaid,
+    this.courseFeatured,
+    this.students,
+    this.modules,
+    this.quizPresent,
+    this.isPrivate,
+    this.id,
+    this.courseName,
+    this.trainer,
+    this.competency,
+    this.description,
+    this.youtubeLink,
+    this.aboutThisCourse,
+    this.whoThisCourseIsFor,
+    this.requirements,
+    this.whyToLearn,
+    this.skillsYouLearn,
+    this.category,
+    this.university,
+    this.courseType,
+    this.courseImage,
+    this.startDate,
+    this.endDate,
+    this.timeDuration,
+    this.price,
+    this.noOfModules,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.quizId,
   });
 
-  final bool coursePaid;
-  final bool courseFeatured;
-  final List<dynamic> students;
-  final List<Module> modules;
-  final bool quizPresent;
-  final bool isPrivate;
-  final String id;
-  final String courseName;
-  final String trainer;
-  final String competency;
-  final String description;
-  final String aboutThisCourse;
-  final String whoThisCourseIsFor;
-  final String requirements;
-  final String whyToLearn;
-  final String skillsYouLearn;
-  final String category;
-  final String university;
-  final String courseType;
-  final String courseImage;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String timeDuration;
-  final String price;
-  final int noOfModules;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final int v;
-  final String quizId;
+  final bool? coursePaid;
+  final bool? courseFeatured;
+  final List<String>? students;
+  final List<dynamic>? modules;
+  final bool? quizPresent;
+  final bool? isPrivate;
+  final String? id;
+  final String? courseName;
+  final String? trainer;
+  final String? competency;
+  final String? description;
+  final String? youtubeLink;
+  final String? aboutThisCourse;
+  final String? whoThisCourseIsFor;
+  final String? requirements;
+  final String? whyToLearn;
+  final String? skillsYouLearn;
+  final String? category;
+  final String? university;
+  final String? courseType;
+  final String? courseImage;
+  final String? startDate;
+  final String? endDate;
+  final String? timeDuration;
+  final String? price;
+  final int? noOfModules;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
+  final String? quizId;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        coursePaid: json["course_paid"],
-        courseFeatured: json["course_featured"],
-        students: List<dynamic>.from(json["students"].map((x) => x)),
-        modules:
-            List<Module>.from(json["modules"].map((x) => Module.fromJson(x))),
-        quizPresent: json["quiz_present"],
-        isPrivate: json["is_private"],
-        id: json["_id"],
-        courseName: json["course_name"] ?? "not defined",
-        trainer: json["trainer"] ?? "not defined",
-        competency: json["competency"] ?? "not defined",
-        description: json["description"] ?? "not defined",
-        aboutThisCourse: json["about_this_course"] ?? "not defined",
-        whoThisCourseIsFor: json["who_this_course_is_for"] ?? "not defined",
-        requirements: json["requirements"] ?? "not defined",
-        whyToLearn: json["why_to_learn"] ?? "not defined",
-        skillsYouLearn: json["skills_you_learn"] ?? "not defined",
-        category: json["category"] ?? "not defined",
-        university: json["university"] ?? "not defined",
-        courseType: json["course_type"] ?? "not defined",
-        courseImage: json["course_image"] ?? "not defined",
-        startDate: nullchecker(json["start_date"]),
-        endDate: nullchecker(json["end_date"]),
-        timeDuration: json["time_duration"] ?? "not defined",
-        price: json["price"] ?? "not defined",
-        noOfModules: json["no_of_modules"] ?? 0,
-        createdAt: nullchecker(json["created_at"]),
-        updatedAt: nullchecker(json["updated_at"]),
-        v: json["__v"] ?? 0,
-        quizId: json["quiz_id"] ?? "not defined",
+        coursePaid: json["course_paid"] == null ? null : json["course_paid"],
+        courseFeatured:
+            json["course_featured"] == null ? null : json["course_featured"],
+        students: json["students"] == null
+            ? null
+            : List<String>.from(json["students"].map((x) => x)),
+        modules: json["modules"] == null
+            ? null
+            : List<dynamic>.from(json["modules"].map((x) => x)),
+        quizPresent: json["quiz_present"] == null ? null : json["quiz_present"],
+        isPrivate: json["is_private"] == null ? null : json["is_private"],
+        id: json["_id"] == null ? null : json["_id"],
+        courseName: json["course_name"] == null ? null : json["course_name"],
+        trainer: json["trainer"] == null ? null : json["trainer"],
+        competency: json["competency"] == null ? null : json["competency"],
+        description: json["description"] == null ? null : json["description"],
+        youtubeLink: json["youtube_link"] == null ? null : json["youtube_link"],
+        aboutThisCourse: json["about_this_course"] == null
+            ? null
+            : json["about_this_course"],
+        whoThisCourseIsFor: json["who_this_course_is_for"] == null
+            ? null
+            : json["who_this_course_is_for"],
+        requirements:
+            json["requirements"] == null ? null : json["requirements"],
+        whyToLearn: json["why_to_learn"] == null ? null : json["why_to_learn"],
+        skillsYouLearn:
+            json["skills_you_learn"] == null ? null : json["skills_you_learn"],
+        category: json["category"] == null ? null : json["category"],
+        university: json["university"] == null ? null : json["university"],
+        courseType: json["course_type"] == null ? null : json["course_type"],
+        courseImage: json["course_image"] == null ? null : json["course_image"],
+        startDate: json["start_date"] == null
+            ? null
+            : df.format(DateTime.parse(json["start_date"])),
+        endDate: json["end_date"] == null
+            ? null
+            : df.format(DateTime.parse(json["end_date"])),
+        timeDuration:
+            json["time_duration"] == null ? null : json["time_duration"],
+        price: json["price"] == null ? null : json["price"],
+        noOfModules:
+            json["no_of_modules"] == null ? null : json["no_of_modules"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        v: json["__v"] == null ? null : json["__v"],
+        quizId: json["quiz_id"] == null ? null : json["quiz_id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "quiz_id": quizId,
-        "course_paid": coursePaid,
-        "course_featured": courseFeatured,
-        "students": List<dynamic>.from(students.map((x) => x)),
-        "modules": List<dynamic>.from(modules.map((x) => x.toJson())),
-        "quiz_present": quizPresent,
-        "is_private": isPrivate,
-        "_id": id,
-        "course_name": courseName,
-        "trainer": trainer,
-        "competency": competency,
-        "description": description,
-        "about_this_course": aboutThisCourse,
-        "who_this_course_is_for": whoThisCourseIsFor,
-        "requirements": requirements,
-        "why_to_learn": whyToLearn,
-        "skills_you_learn": skillsYouLearn,
-        "category": category,
-        "university": university,
-        "course_type": courseType,
-        "course_image": courseImage,
-        "start_date": startDate.toIso8601String(),
-        "end_date": endDate.toIso8601String(),
-        "time_duration": timeDuration,
-        "price": price,
-        "no_of_modules": noOfModules,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "__v": v,
+        "course_paid": coursePaid == null ? null : coursePaid,
+        "course_featured": courseFeatured == null ? null : courseFeatured,
+        "students": students == null
+            ? null
+            : List<dynamic>.from(students!.map((x) => x)),
+        "modules":
+            modules == null ? null : List<dynamic>.from(modules!.map((x) => x)),
+        "quiz_present": quizPresent == null ? null : quizPresent,
+        "is_private": isPrivate == null ? null : isPrivate,
+        "_id": id == null ? null : id,
+        "course_name": courseName == null ? null : courseName,
+        "trainer": trainer == null ? null : trainer,
+        "competency": competency == null ? null : competency,
+        "description": description == null ? null : description,
+        "youtube_link": youtubeLink == null ? null : youtubeLink,
+        "about_this_course": aboutThisCourse == null ? null : aboutThisCourse,
+        "who_this_course_is_for":
+            whoThisCourseIsFor == null ? null : whoThisCourseIsFor,
+        "requirements": requirements == null ? null : requirements,
+        "why_to_learn": whyToLearn == null ? null : whyToLearn,
+        "skills_you_learn": skillsYouLearn == null ? null : skillsYouLearn,
+        "category": category == null ? null : category,
+        "university": university == null ? null : university,
+        "course_type": courseType == null ? null : courseType,
+        "course_image": courseImage == null ? null : courseImage,
+        "start_date": startDate == null ? null : startDate,
+        "end_date": endDate == null ? null : endDate,
+        "time_duration": timeDuration == null ? null : timeDuration,
+        "price": price == null ? null : price,
+        "no_of_modules": noOfModules == null ? null : noOfModules,
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
+        "__v": v == null ? null : v,
+        "quiz_id": quizId == null ? null : quizId,
       };
 }
 
-class Module {
-  Module(
-      {required this.moduleName,
-      required this.moduleDate,
-      required this.timeLimit,
-      required this.moduleReminder,
-      required this.moduleType,
-      required this.zoomLink,
-      required this.resources});
+class ModuleClass {
+  ModuleClass({
+    this.moduleName,
+    this.moduleDate,
+    this.timeLimit,
+    this.moduleReminder,
+    this.resources,
+    this.uploadLecture,
+    this.zoomLink,
+    this.moduleType,
+    this.moduleId,
+  });
 
-  final String moduleName;
-  final DateTime moduleDate;
-  final String timeLimit;
-  final DateTime moduleReminder;
-  final String moduleType;
-  final String zoomLink;
-  final String resources;
+  final String? moduleName;
+  final String? moduleDate;
+  final String? timeLimit;
+  final String? moduleReminder;
+  final String? resources;
+  final String? uploadLecture;
+  final String? zoomLink;
+  final String? moduleType;
+  final int? moduleId;
 
-  factory Module.fromJson(Map<String, dynamic> json) => Module(
-        moduleName: json["module_name"] ?? "not defined",
-        moduleDate: nullchecker(json["module_date"]),
-        timeLimit: json["time_limit"] == ""
-            ? "2021-10-30T00:00:00.000Z"
-            : json["time_limit"],
-        moduleReminder: nullchecker(json["module_reminder"]),
-        moduleType: json["module_type"],
-        zoomLink: json["zoom_link"] ?? "Not defined",
-        resources: json["resources"] ?? "Not defined",
+  factory ModuleClass.fromJson(Map<String, dynamic> json) => ModuleClass(
+        moduleName: json["module_name"] == null ? null : json["module_name"],
+        moduleDate: json["module_date"] == null ? null : json["module_date"],
+        timeLimit: json["time_limit"] == null ? null : json["time_limit"],
+        moduleReminder:
+            json["module_reminder"] == null ? null : json["module_reminder"],
+        resources: json["resources"] == null ? null : json["resources"],
+        uploadLecture:
+            json["upload_lecture"] == null ? null : json["upload_lecture"],
+        zoomLink: json["zoom_link"] == null ? null : json["zoom_link"],
+        moduleType: json["module_type"] == null ? null : json["module_type"],
+        moduleId: json["module_id"] == null ? null : json["module_id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "module_name": moduleName,
-        "module_date":
-            "${moduleDate.year.toString().padLeft(4, '0')}-${moduleDate.month.toString().padLeft(2, '0')}-${moduleDate.day.toString().padLeft(2, '0')}",
-        "time_limit": timeLimit,
-        "module_reminder": moduleReminder,
-        "module_type": moduleType,
-        "zoom_link": zoomLink,
+        "module_name": moduleName == null ? null : moduleName,
+        "module_date": moduleDate == null ? null : moduleDate,
+        "time_limit": timeLimit == null ? null : timeLimit,
+        "module_reminder": moduleReminder == null ? null : moduleReminder,
+        "resources": resources == null ? null : resources,
+        "upload_lecture": uploadLecture == null ? null : uploadLecture,
+        "zoom_link": zoomLink == null ? null : zoomLink,
+        "module_type": moduleType == null ? null : moduleType,
+        "module_id": moduleId == null ? null : moduleId,
       };
-}
-
-DateTime nullchecker(String? d) {
-  if (d == null || d == "") {
-    return DateTime.parse("2021-10-30T00:00:00.000Z");
-  } else {
-    return DateTime.parse(d);
-  }
 }

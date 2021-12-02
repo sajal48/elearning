@@ -3,6 +3,8 @@ import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'course_details_screen.dart';
+
 class CoursePage extends StatelessWidget {
   const CoursePage({Key? key}) : super(key: key);
 
@@ -81,22 +83,34 @@ class CoursePage extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
-                                  itemCount: orderData.allCourses.result.length,
+                                  itemCount:
+                                      orderData.allCourses.result!.length,
                                   itemBuilder: (context, i) {
-                                    var data = orderData.allCourses.result[i];
+                                    var data = orderData.allCourses.result![i];
                                     // print('\n');
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 5.0),
-                                      child: CourseWithPrice(
-                                        price: data.price,
-                                        level: data.competency,
-                                        duration: data.startDate
-                                            .toString()
-                                            .substring(0, 10),
-                                        module: data.noOfModules.toString(),
-                                        banner: data.courseImage.toString(),
-                                        title: data.courseName,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CourseDetailsScreen(
+                                                        result: orderData
+                                                            .allCourses
+                                                            .result![i],
+                                                      )));
+                                        },
+                                        child: CourseWithPrice(
+                                          price: data.price!,
+                                          level: data.competency!,
+                                          duration: data.startDate.toString(),
+                                          module: data.noOfModules.toString(),
+                                          banner: data.courseImage.toString(),
+                                          title: data.courseName!,
+                                        ),
                                       ),
                                     );
                                   }),

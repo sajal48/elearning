@@ -42,7 +42,6 @@ class CourseDetailsScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 14,
                   backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage('assets/images/ins_avater1.png'),
                 )
               ],
             ),
@@ -52,7 +51,7 @@ class CourseDetailsScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  result.courseName,
+                  result.courseName!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 24,
@@ -83,24 +82,24 @@ class CourseDetailsScreen extends StatelessWidget {
             child: Column(
               children: [
                 CourseDetailsInfo(
-                    title: 'Overview', description: result.description),
+                    title: 'Overview', description: result.description!),
                 CourseDetailsInfo(
                     title: 'About This Course',
-                    description: result.aboutThisCourse),
+                    description: result.aboutThisCourse!),
                 CourseDetailsInfo(
                     title: 'Who this course is for',
-                    description: result.whoThisCourseIsFor),
+                    description: result.whoThisCourseIsFor!),
                 CourseDetailsInfo(
                   title: 'Requirements',
-                  description: result.requirements,
+                  description: result.requirements!,
                 ),
                 CourseDetailsInfo(
                   title: 'Why You Should Learn This Course',
-                  description: result.whyToLearn,
+                  description: result.whyToLearn!,
                 ),
                 CourseDetailsInfo(
                     title: 'Skills You Will Learn',
-                    description: result.whoThisCourseIsFor)
+                    description: result.whoThisCourseIsFor!)
               ],
             ),
           )

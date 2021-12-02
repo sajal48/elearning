@@ -364,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else {
                       print(Provider.of<HomepageController>(context)
                           .featuredCourses
-                          .result
+                          .result!
                           .length);
                       return Consumer<HomepageController>(
                         builder: (context, orderData, child) =>
@@ -372,10 +372,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 itemCount:
-                                    orderData.featuredCourses.result.length,
+                                    orderData.featuredCourses.result!.length,
                                 itemBuilder: (context, i) {
                                   var data =
-                                      orderData.featuredCourses.result[i];
+                                      orderData.featuredCourses.result![i];
                                   // print('\n');
                                   return GestureDetector(
                                     onTap: () {
@@ -386,22 +386,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   CourseDetailsScreen(
                                                     result: orderData
                                                         .featuredCourses
-                                                        .result[i],
+                                                        .result![i],
                                                   )));
                                     },
                                     child: CourseWithPrice(
-                                      price: data.price,
-                                      level: data.competency,
-                                      duration: data.startDate
-                                          .toString()
-                                          .substring(0, 10),
+                                      price: data.price!,
+                                      level: data.competency!,
+                                      duration: data.startDate.toString(),
+
                                       module: data.noOfModules.toString(),
 
                                       // instractor: widget.cwpInstractor[i],
                                       // offerPrice: widget.cwpOfferPrice[i],
                                       // view: widget.cwpView[i],
                                       banner: data.courseImage.toString(),
-                                      title: data.courseName,
+                                      title: data.courseName!,
                                       // color: widget.cwpColor[i],
                                       // avater: widget.cwpAvater[i],
                                     ),
@@ -470,26 +469,36 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else {
                       print(Provider.of<HomepageController>(context)
                           .freeCourses
-                          .result
+                          .result!
                           .length);
                       return Consumer<HomepageController>(
                         builder: (context, orderData, child) =>
                             ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
-                                itemCount: orderData.freeCourses.result.length,
+                                itemCount: orderData.freeCourses.result!.length,
                                 itemBuilder: (context, i) {
-                                  var data = orderData.freeCourses.result[i];
+                                  var data = orderData.freeCourses.result![i];
                                   // print('\n');
-                                  return CourseWithPrice(
-                                    price: data.price,
-                                    level: data.competency,
-                                    duration: data.startDate
-                                        .toString()
-                                        .substring(0, 10),
-                                    module: data.noOfModules.toString(),
-                                    banner: data.courseImage.toString(),
-                                    title: data.courseName,
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CourseDetailsScreen(
+                                                    result: orderData
+                                                        .freeCourses.result![i],
+                                                  )));
+                                    },
+                                    child: CourseWithPrice(
+                                      price: data.price!,
+                                      level: data.competency!,
+                                      duration: data.startDate!,
+                                      module: data.noOfModules.toString(),
+                                      banner: data.courseImage.toString(),
+                                      title: data.courseName!,
+                                    ),
                                   );
                                 }),
                       );
@@ -540,28 +549,35 @@ class _HomeScreenState extends State<HomeScreen> {
                             ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
-                                itemCount: orderData.allCourses.result.length,
+                                itemCount: orderData.allCourses.result!.length,
                                 itemBuilder: (context, i) {
-                                  var data = orderData.allCourses.result[i];
+                                  var data = orderData.allCourses.result![i];
                                   // print('\n');
-                                  return CourseWithPrice(
-                                    price: data.price,
-                                    level: data.competency
-                                        .toString()
-                                        .substring(11)
-                                        .toLowerCase(),
-                                    duration: data.startDate
-                                        .toString()
-                                        .substring(0, 10),
-                                    module: data.noOfModules.toString(),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CourseDetailsScreen(
+                                                    result: orderData
+                                                        .allCourses.result![i],
+                                                  )));
+                                    },
+                                    child: CourseWithPrice(
+                                      price: data.price!,
+                                      level: data.competency.toString(),
+                                      duration: data.startDate.toString(),
+                                      module: data.noOfModules.toString(),
 
-                                    // instractor: widget.cwpInstractor[i],
-                                    // offerPrice: widget.cwpOfferPrice[i],
-                                    // view: widget.cwpView[i],
-                                    banner: data.courseImage.toString(),
-                                    title: data.courseName,
-                                    // color: widget.cwpColor[i],
-                                    // avater: widget.cwpAvater[i],
+                                      // instractor: widget.cwpInstractor[i],
+                                      // offerPrice: widget.cwpOfferPrice[i],
+                                      // view: widget.cwpView[i],
+                                      banner: data.courseImage.toString(),
+                                      title: data.courseName!,
+                                      // color: widget.cwpColor[i],
+                                      // avater: widget.cwpAvater[i],
+                                    ),
                                   );
                                 }),
                       );

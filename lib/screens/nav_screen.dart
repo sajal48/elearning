@@ -12,23 +12,23 @@ class NavScreen extends StatefulWidget {
 class _NavScreenState extends State<NavScreen> {
   final List<Widget> _screens = [
     HomeScreen(),
-    Scaffold(),
+    // Scaffold(),
     CoursePage(),
     Scaffold(),
-    Scaffold(),
+    // Scaffold(),
   ];
   final List<String> _icons = const [
     'assets/images/home_icon.svg',
-    'assets/images/notification_icon.svg',
+    // 'assets/images/notification_icon.svg',
     'assets/images/courses_icon.svg',
-    'assets/images/chat_icon.svg',
+    // 'assets/images/chat_icon.svg',
     'assets/images/profile_icon.svg'
   ];
   final List<String> _label = const [
     'Home',
-    'Notification',
+    // 'Notification',
     'Courses',
-    'Chat',
+    // 'Chat',
     'Profile'
   ];
   int _selectedIndex = 0;

@@ -53,7 +53,7 @@ class Services {
 
       return CourseData.fromJson(response.data);
     } catch (e) {
-      print(e);
+      print("getFeaturedCourses error : $e");
       return CourseData(
         message: "error",
         statuscode: 0,
@@ -71,7 +71,7 @@ class Services {
 
       return CourseData.fromJson(response.data);
     } catch (e) {
-      print(e);
+      print("getFreeCourses error : $e");
       return CourseData(
         message: "error",
         statuscode: 0,
@@ -89,7 +89,7 @@ class Services {
 
       return CourseData.fromJson(response.data);
     } catch (e) {
-      print(e);
+      print("getAllCourses error : $e");
       return CourseData(
         message: "error",
         statuscode: 0,

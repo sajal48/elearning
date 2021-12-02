@@ -44,6 +44,8 @@ dependencies:
   date_time_picker: ^2.1.0
   ndialog: ^4.1.0
   http: ^0.13.4
+  intl: ^0.17.0
+  shared_preferences: ^2.0.9
 
 dev_dependencies:
   flutter_test:
