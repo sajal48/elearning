@@ -21,7 +21,6 @@ class HomepageController extends ChangeNotifier {
   }
 
   Future<UserDetails> getUserDetails() async {
-    print("Get Userdetails called");
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     String? id = pref.getString("RivguruUser");
