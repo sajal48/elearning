@@ -21,7 +21,15 @@ void main() async {
       ChangeNotifierProvider(create: (context) => SignUpLoginController()),
       ChangeNotifierProvider(create: (context) => HomepageController()),
     ],
-    child: MyApp(prefs),
+    child: MaterialApp(
+      theme: ThemeData(unselectedWidgetColor: Color(0xff5790FF)),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyApp(prefs),
+        '/home': (context) => NavScreen(),
+      },
+    ),
   ));
 }
 
@@ -36,9 +44,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     final box = GetStorage();
-    String? userId = pref.getString("RivguruUser");
 
     Widget check() {
+      String? userId = pref.getString("RivguruUser");
       if (box.read('boarding') == null) {
         return BoardingPage();
       } else {
@@ -50,10 +58,6 @@ class MyApp extends StatelessWidget {
       }
     }
 
-    return MaterialApp(
-      theme: ThemeData(unselectedWidgetColor: Color(0xff5790FF)),
-      debugShowCheckedModeBanner: false,
-      home: check(),
-    );
+    return check();
   }
 }

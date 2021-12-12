@@ -5,6 +5,7 @@ import 'package:elearning/screens/signup_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 class BoardingPage extends StatefulWidget {
@@ -40,6 +41,8 @@ class _BoardingPageState extends State<BoardingPage> {
                       !last
                           ? GestureDetector(
                               onTap: () {
+                                final box = GetStorage();
+                                box.write("boarding", false);
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -214,6 +217,8 @@ class _BoardingPageState extends State<BoardingPage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    final box = GetStorage();
+                                    box.write("boarding", false);
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(

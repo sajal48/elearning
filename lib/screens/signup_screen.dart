@@ -307,8 +307,7 @@ class SignUpNext extends StatelessWidget {
                     } else {
                       // Provider.of<SignUpLoginController>(context, listen: false)
                       //     .clearController();
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => NavScreen()));
+                      Navigator.popAndPushNamed(context, '/home');
                     }
 
                     // Navigator.push(

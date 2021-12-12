@@ -7,6 +7,7 @@ import 'package:elearning/Data/coursedata.dart';
 
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
+import 'package:elearning/Data/userdetails.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -23,6 +24,9 @@ class Services {
 
   static const String REGISTER_URL =
       "https://rivguru-university.herokuapp.com/user";
+
+  static const String GET_USER_DETAILS_URL =
+      "https://rivguru-university.herokuapp.com/user/";
 
   static Future<CourseCategory> getCourseCategory() async {
     print("getCourseCategory called");
@@ -59,6 +63,22 @@ class Services {
         statuscode: 0,
         result: [],
       );
+    }
+  }
+
+  static Future<UserDetails> getUserData(String userId) async {
+    final url = Uri.parse("$GET_USER_DETAILS_URL$userId");
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        return UserDetails.fromJson(jsonDecode(response.body));
+      } else {
+        return UserDetails(statuscode: 400, message: "no data");
+      }
+    } catch (e) {
+      return UserDetails(statuscode: 500, message: "api error");
     }
   }
 

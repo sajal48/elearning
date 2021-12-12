@@ -1,6 +1,8 @@
+import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NavScreen extends StatefulWidget {
   NavScreen({Key? key}) : super(key: key);
@@ -10,28 +12,41 @@ class NavScreen extends StatefulWidget {
 }
 
 class _NavScreenState extends State<NavScreen> {
+  HomepageController hm = new HomepageController();
   final List<Widget> _screens = [
     HomeScreen(),
     // Scaffold(),
     CoursePage(),
-    Scaffold(),
-    // Scaffold(),
+    MyCourseScreen(),
+    MyProfileScreen(),
   ];
   final List<String> _icons = const [
     'assets/images/home_icon.svg',
     // 'assets/images/notification_icon.svg',
     'assets/images/courses_icon.svg',
-    // 'assets/images/chat_icon.svg',
+    'assets/images/chat_icon.svg',
     'assets/images/profile_icon.svg'
   ];
   final List<String> _label = const [
     'Home',
     // 'Notification',
-    'Courses',
-    // 'Chat',
+    'All Courses',
+    'My Courses',
     'Profile'
   ];
   int _selectedIndex = 0;
+
+  @override
+  initState() {
+    super.initState();
+    // Add listeners to this class
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

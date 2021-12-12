@@ -13,3 +13,5 @@ export 'home_screen.dart';
 export 'nav_screen.dart';
 export 'course_page.dart';
 export 'course_details_screen.dart';
+export 'my_profile_screen.dart';
+export 'my_courses_screen.dart';

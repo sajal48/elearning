@@ -158,7 +158,11 @@ class SignUpLoginController extends ChangeNotifier {
     loginResponse =
         await Services.login(loginUsername.text, loginPassword.text);
     ChangeNotifier();
-    storeUserData(loginResponse.result!.userId);
+    if (loginResponse.result != null) {
+      storeUserData(loginResponse.result!.userId);
+      print("in if user id from login ${loginResponse.result!.userId}");
+    }
+    print("user id from login ${loginResponse.result!.userId}");
     return loginResponse;
   }
 
@@ -176,14 +180,17 @@ class SignUpLoginController extends ChangeNotifier {
 
     registerRespons = await Services.register(a);
     ChangeNotifier();
-    storeUserData(registerRespons.result!.id!);
+    if (registerRespons.result != null) {
+      storeUserData(registerRespons.result!.id!);
+    }
+
     return registerRespons;
   }
 
   Future<void> storeUserData(String userID) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    prefs.setString('RivguruUser', userID);
+    await prefs.setString('RivguruUser', userID);
   }
 
   Future<void> logOut() async {
