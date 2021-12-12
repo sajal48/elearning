@@ -32,7 +32,7 @@ class CoursePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
                 Container(
                   height: 75,

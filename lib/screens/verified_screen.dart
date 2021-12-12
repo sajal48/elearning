@@ -72,10 +72,8 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
                             length: 4,
                             obscureText: true,
                             obscuringCharacter: '*',
-
                             blinkWhenObscuring: true,
                             animationType: AnimationType.fade,
-
                             pinTheme: PinTheme(
                               inactiveColor: Color(0xffC9CCD7),
                               disabledColor: Colors.white,
@@ -93,7 +91,6 @@ class _VerifiedScreenState extends State<VerifiedScreen> {
                             animationDuration: Duration(milliseconds: 300),
                             enableActiveFill: true,
                             keyboardType: TextInputType.number,
-
                             onCompleted: (v) {
                               print("Completed");
                             },

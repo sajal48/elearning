@@ -210,8 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else if (a.statuscode == 200) {
                       Provider.of<SignUpLoginController>(context, listen: false)
                           .clearController();
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => NavScreen()));
+                      Navigator.popAndPushNamed(context, '/home');
                     }
 
                     // CourseCategory a = await Services.getCourseCategory();

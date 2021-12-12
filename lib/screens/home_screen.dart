@@ -98,6 +98,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<int> exampleList = [0, 1, 2, 3];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -399,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       // instractor: widget.cwpInstractor[i],
                                       // offerPrice: widget.cwpOfferPrice[i],
                                       // view: widget.cwpView[i],
-                                      banner: data.courseImage.toString(),
+                                      banner: data.courseImage!.toString(),
                                       title: data.courseName!,
                                       // color: widget.cwpColor[i],
                                       // avater: widget.cwpAvater[i],
@@ -494,86 +495,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: CourseWithPrice(
                                       price: data.price!,
                                       level: data.competency!,
-                                      duration: data.startDate!,
-                                      module: data.noOfModules.toString(),
-                                      banner: data.courseImage.toString(),
-                                      title: data.courseName!,
-                                    ),
-                                  );
-                                }),
-                      );
-                    }
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'My courses',
-                      style: TextStyle(
-                        fontFamily: 'Milliard',
-                        color: Color(0xff3D4C59),
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text('View All',
-                        style: TextStyle(
-                          color: Color(0xff5467FF),
-                        ))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 17,
-              ),
-              Container(
-                height: 180,
-                child: FutureBuilder(
-                  future:
-                      Provider.of<HomepageController>(context).getallcourse(),
-                  builder: (context, data) {
-                    if (data.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return Consumer<HomepageController>(
-                        builder: (context, orderData, child) =>
-                            ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: orderData.allCourses.result!.length,
-                                itemBuilder: (context, i) {
-                                  var data = orderData.allCourses.result![i];
-                                  // print('\n');
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CourseDetailsScreen(
-                                                    result: orderData
-                                                        .allCourses.result![i],
-                                                  )));
-                                    },
-                                    child: CourseWithPrice(
-                                      price: data.price!,
-                                      level: data.competency.toString(),
                                       duration: data.startDate.toString(),
+
                                       module: data.noOfModules.toString(),
 
                                       // instractor: widget.cwpInstractor[i],
                                       // offerPrice: widget.cwpOfferPrice[i],
                                       // view: widget.cwpView[i],
-                                      banner: data.courseImage.toString(),
+                                      banner: data.courseImage!.toString(),
                                       title: data.courseName!,
                                       // color: widget.cwpColor[i],
                                       // avater: widget.cwpAvater[i],
@@ -585,6 +514,86 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
+              SizedBox(
+                height: 17,
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 33.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         'My courses',
+              //         style: TextStyle(
+              //           fontFamily: 'Milliard',
+              //           color: Color(0xff3D4C59),
+              //           fontSize: 21,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       Text('View All',
+              //           style: TextStyle(
+              //             color: Color(0xff5467FF),
+              //           ))
+              //     ],
+              //   ),
+              // ),
+
+              SizedBox(
+                height: 17,
+              ),
+              // Container(
+              //   height: 180,
+              //   child: FutureBuilder(
+              //     future:
+              //         Provider.of<HomepageController>(context).getallcourse(),
+              //     builder: (context, data) {
+              //       if (data.connectionState == ConnectionState.waiting) {
+              //         return Center(
+              //           child: CircularProgressIndicator(),
+              //         );
+              //       } else {
+              //         return Consumer<HomepageController>(
+              //           builder: (context, orderData, child) =>
+              //               ListView.builder(
+              //                   physics: BouncingScrollPhysics(),
+              //                   scrollDirection: Axis.horizontal,
+              //                   itemCount: orderData.allCourses.result!.length,
+              //                   itemBuilder: (context, i) {
+              //                     var data = orderData.allCourses.result![i];
+              //                     // print('\n');
+              //                     return GestureDetector(
+              //                       onTap: () {
+              //                         Navigator.push(
+              //                             context,
+              //                             MaterialPageRoute(
+              //                                 builder: (context) =>
+              //                                     CourseDetailsScreen(
+              //                                       result: orderData
+              //                                           .allCourses.result![i],
+              //                                     )));
+              //                       },
+              //                       child: CourseWithPrice(
+              //                         price: data.price!,
+              //                         level: data.competency!.toString(),
+              //                         duration: data.startDate!.toString(),
+              //                         module: data.noOfModules!.toString(),
+
+              //                         // instractor: widget.cwpInstractor[i],
+              //                         // offerPrice: widget.cwpOfferPrice[i],
+              //                         // view: widget.cwpView[i],
+              //                         banner: data.courseImage.toString(),
+              //                         title: data.courseName!,
+              //                         // color: widget.cwpColor[i],
+              //                         // avater: widget.cwpAvater[i],
+              //                       ),
+              //                     );
+              //                   }),
+              //         );
+              //       }
+              //     },
+              //   ),
+              // ),
 
               // Padding(
               //   padding: const EdgeInsets.symmetric(horizontal: 33),
@@ -597,9 +606,9 @@ class _HomeScreenState extends State<HomeScreen> {
               //   padding: const EdgeInsets.symmetric(horizontal: 33),
               //   child: LiveClassCard(),
               // ),
-              SizedBox(
-                height: 17,
-              )
+              // SizedBox(
+              //   height: 17,
+              // )
             ],
           ),
         ),
