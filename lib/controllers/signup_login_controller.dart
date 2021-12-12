@@ -4,7 +4,6 @@ import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
 import 'package:flutter/material.dart';
-import 'package:ndialog/ndialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpLoginController extends ChangeNotifier {
@@ -160,9 +159,8 @@ class SignUpLoginController extends ChangeNotifier {
     ChangeNotifier();
     if (loginResponse.result != null) {
       storeUserData(loginResponse.result!.userId);
-      print("in if user id from login ${loginResponse.result!.userId}");
     }
-    print("user id from login ${loginResponse.result!.userId}");
+
     return loginResponse;
   }
 
@@ -183,18 +181,17 @@ class SignUpLoginController extends ChangeNotifier {
     if (registerRespons.result != null) {
       storeUserData(registerRespons.result!.id!);
     }
-
     return registerRespons;
   }
 
   Future<void> storeUserData(String userID) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
     await prefs.setString('RivguruUser', userID);
   }
 
-  Future<void> logOut() async {
+  Future<bool> logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    return true;
   }
 }

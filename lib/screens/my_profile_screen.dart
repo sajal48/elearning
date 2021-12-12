@@ -107,6 +107,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           await Provider.of<SignUpLoginController>(context,
                                   listen: false)
                               .logOut();
+                          Navigator.popAndPushNamed(context, '/');
                         },
                       ),
                     ),
