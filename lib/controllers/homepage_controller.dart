@@ -2,6 +2,7 @@ import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/coursedata.dart' as coursedata;
 import 'package:elearning/Data/userdetails.dart';
+import 'package:elearning/screens/my_courses_screen.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ class HomepageController extends ChangeNotifier {
   late coursedata.CourseData allCourses;
   late List<coursedata.Result> myCourses = [];
   late UserDetails userDetails;
+  String? userid;
 
   Future<CourseCategory> getCategory() async {
     courseCategory = await Services.getCourseCategory();
@@ -51,9 +53,19 @@ class HomepageController extends ChangeNotifier {
     return allCourses;
   }
 
+  bool CoursePaid(String id) {
+    bool temp = false;
+    for (int i = 0; i < myCourses.length; i++) {
+      if (myCourses[i].id == id) {
+        temp = true;
+      }
+    }
+
+    return temp;
+  }
+
   Future<List<coursedata.Result>> getMyCourse() async {
     await getallcourse();
-    myCourses = [];
     print("getMyCourse called");
     if (myCourses.length > 0) {
       myCourses.clear();
@@ -61,6 +73,7 @@ class HomepageController extends ChangeNotifier {
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? id = prefs.getString("RivguruUser");
+    userid = id;
     print("id = $id");
     for (int i = 0; i < allCourses.result!.length; i++) {
       if (allCourses.result![i].students!.contains(id)) {

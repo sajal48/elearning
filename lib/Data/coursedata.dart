@@ -218,28 +218,26 @@ class ModuleClass {
   final int? moduleId;
 
   factory ModuleClass.fromJson(Map<String, dynamic> json) => ModuleClass(
-        moduleName: json["module_name"] == null ? null : json["module_name"],
-        moduleDate: json["module_date"] == null ? null : json["module_date"],
-        timeLimit: json["time_limit"] == null ? null : json["time_limit"],
-        moduleReminder:
-            json["module_reminder"] == null ? null : json["module_reminder"],
-        resources: json["resources"] == null ? null : json["resources"],
-        uploadLecture:
-            json["upload_lecture"] == null ? null : json["upload_lecture"],
-        zoomLink: json["zoom_link"] == null ? null : json["zoom_link"],
-        moduleType: json["module_type"] == null ? null : json["module_type"],
-        moduleId: json["module_id"] == null ? null : json["module_id"],
+        moduleName: json["module_name"] ?? null,
+        moduleDate: json["module_date"] ?? null,
+        timeLimit: json["time_limit"] ?? null,
+        moduleReminder: json["module_reminder"] ?? null,
+        resources: json["resources"] ?? null,
+        uploadLecture: json["upload_lecture"] ?? null,
+        zoomLink: json["zoom_link"] ?? null,
+        moduleType: json["module_type"] ?? null,
+        moduleId: json["module_id"] ?? null,
       );
 
   Map<String, dynamic> toJson() => {
-        "module_name": moduleName == null ? null : moduleName,
-        "module_date": moduleDate == null ? null : moduleDate,
-        "time_limit": timeLimit == null ? null : timeLimit,
-        "module_reminder": moduleReminder == null ? null : moduleReminder,
-        "resources": resources == null ? null : resources,
-        "upload_lecture": uploadLecture == null ? null : uploadLecture,
-        "zoom_link": zoomLink == null ? null : zoomLink,
-        "module_type": moduleType == null ? null : moduleType,
-        "module_id": moduleId == null ? null : moduleId,
+        "module_name": moduleName ?? null,
+        "module_date": moduleDate ?? null,
+        "time_limit": timeLimit ?? null,
+        "module_reminder": moduleReminder ?? null,
+        "resources": resources ?? null,
+        "upload_lecture": uploadLecture ?? null,
+        "zoom_link": zoomLink ?? null,
+        "module_type": moduleType ?? null,
+        "module_id": moduleId ?? null,
       };
 }

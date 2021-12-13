@@ -37,8 +37,8 @@ class MyCourseScreen extends StatelessWidget {
                 ),
                 Container(
                   child: FutureBuilder(
-                    future: Provider.of<HomepageController>(context)
-                        .getUserDetails(),
+                    future:
+                        Provider.of<HomepageController>(context).getMyCourse(),
                     builder: (context, data) {
                       if (data.connectionState == ConnectionState.waiting) {
                         return Container(

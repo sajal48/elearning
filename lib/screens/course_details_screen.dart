@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elearning/Data/coursedata.dart';
+import 'package:elearning/controllers/homepage_controller.dart';
 
 import 'package:elearning/widgets/widgets.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
   final Result result;
@@ -12,6 +16,8 @@ class CourseDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPurchased =
+        Provider.of<HomepageController>(context).CoursePaid(result.id!);
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(
@@ -91,7 +97,8 @@ class CourseDetailsScreen extends StatelessWidget {
                     description: result.whoThisCourseIsFor!),
                 CourseDetailsInfo(
                   title: 'Requirements',
-                  description: result.requirements!,
+                  description:
+                      result.requirements ?? "Anyone can join this course.",
                 ),
                 CourseDetailsInfo(
                   title: 'Why You Should Learn This Course',
@@ -99,10 +106,51 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
                 CourseDetailsInfo(
                     title: 'Skills You Will Learn',
-                    description: result.whoThisCourseIsFor!)
+                    description: result.whoThisCourseIsFor!),
+                SizedBox(
+                  height: 20,
+                ),
+                CourseDetailsInfo(title: "Modules"),
+                Container(
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: result.noOfModules,
+                      itemBuilder: (context, index) {
+                        ModuleClass? module =
+                            ModuleClass.fromJson(result.modules![index]);
+
+                        return ModuleSection(
+                            moduleTitle: module.moduleName!,
+                            isPurchased: isPurchased);
+                      }),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                isPurchased
+                    ? SizedBox.shrink()
+                    : Container(
+                        height: 60,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            color: Colors.red[100],
+                            borderRadius: BorderRadius.circular(10)),
+                        child: TextButton(
+                          child: Text(
+                            "Buy this course",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'Milliard',
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {},
+                        ),
+                      )
               ],
             ),
-          )
+          ),
         ]),
       ),
     ));
