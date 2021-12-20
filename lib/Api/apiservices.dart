@@ -6,6 +6,7 @@ import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/coursedata.dart';
 
 import 'package:elearning/Data/loginresponse.dart';
+import 'package:elearning/Data/purchase_response.dart';
 import 'package:elearning/Data/registerdata.dart';
 import 'package:elearning/Data/userdetails.dart';
 
@@ -19,6 +20,8 @@ class Services {
   static const String GET_FREECOURSES =
       BASE_URL + "/course?course_paid=false&course_featured=true";
   static const String GET_ALLCOURSES = BASE_URL + "/course";
+  static const String PURCHASE =
+      "https://unidatabase.rivguru.com/payment/xendit-payment";
   static const String LOGIN_URL =
       "https://rivguru-university.herokuapp.com/user/login";
 
@@ -114,6 +117,38 @@ class Services {
         message: "error",
         statuscode: 0,
         result: [],
+      );
+    }
+  }
+
+  static Future<dynamic> purchase(String amount, String description,
+      String email, String name, String externalid) async {
+    var params = {
+      "amount": amount,
+      "description": description,
+      "customer_email": email,
+      "customer_name": name,
+      "external_id": externalid,
+    };
+
+    try {
+      final response = await http.post(Uri.parse(PURCHASE), body: params);
+
+      if (response.statusCode == 201) {
+        PurchaseResponse ps =
+            PurchaseResponse.fromJson(jsonDecode(response.body));
+        return ps;
+      } else {
+        return PurchaseResponse(
+          message: "Login failed",
+          statuscode: 0,
+        );
+      }
+    } catch (e) {
+      print('Error :' + e.toString());
+      return PurchaseResponse(
+        message: "Server error",
+        statuscode: 0,
       );
     }
   }

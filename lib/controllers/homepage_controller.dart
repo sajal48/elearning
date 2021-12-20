@@ -1,6 +1,7 @@
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/coursedata.dart' as coursedata;
+import 'package:elearning/Data/purchase_response.dart';
 import 'package:elearning/Data/userdetails.dart';
 import 'package:elearning/screens/my_courses_screen.dart';
 
@@ -62,6 +63,21 @@ class HomepageController extends ChangeNotifier {
     }
 
     return temp;
+  }
+
+  Future<PurchaseResponse> purchase(
+      String amount,
+      String description,
+      String email,
+      String name,
+      String course_id,
+      String user_id,
+      String course_name) async {
+    String externalid =
+        "uid_" + user_id + "_cid_" + course_id + "_cn_" + course_name;
+    PurchaseResponse pr =
+        await Services.purchase(amount, description, email, name, externalid);
+    return pr;
   }
 
   Future<List<coursedata.Result>> getMyCourse() async {

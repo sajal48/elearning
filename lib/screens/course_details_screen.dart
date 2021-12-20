@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elearning/Data/coursedata.dart';
 import 'package:elearning/controllers/homepage_controller.dart';
+import 'package:elearning/screens/paymentmethod_screen.dart';
 
 import 'package:elearning/widgets/widgets.dart';
 
@@ -145,7 +146,16 @@ class CourseDetailsScreen extends StatelessWidget {
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PaymentMethodScreen(
+                                          course_id: result.id!,
+                                          course_name: result.courseName!,
+                                          course_price: result.price!,
+                                        )));
+                          },
                         ),
                       )
               ],
