@@ -53,72 +53,72 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 25.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xff4869D4),
-                      ),
-                      height: 57.0,
-                      width: 130.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.facebookF,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Sign in with Facebook",
-                            style: TextStyle(
-                                fontFamily: "Roboto",
-                                fontSize: 11,
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 57.0,
-                      width: 130.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xffEB4132),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FaIcon(
-                            FontAwesomeIcons.google,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Sign in with Google",
-                            style: TextStyle(
-                                fontFamily: "Roboto",
-                                fontSize: 11,
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Container(
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         color: Color(0xff4869D4),
+                //       ),
+                //       height: 57.0,
+                //       width: 130.0,
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           FaIcon(
+                //             FontAwesomeIcons.facebookF,
+                //             size: 15,
+                //             color: Colors.white,
+                //           ),
+                //           SizedBox(
+                //             width: 5,
+                //           ),
+                //           Text(
+                //             "Sign in with Facebook",
+                //             style: TextStyle(
+                //                 fontFamily: "Roboto",
+                //                 fontSize: 11,
+                //                 color: Colors.white),
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //     Container(
+                //       height: 57.0,
+                //       width: 130.0,
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         color: Color(0xffEB4132),
+                //       ),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           FaIcon(
+                //             FontAwesomeIcons.google,
+                //             size: 15,
+                //             color: Colors.white,
+                //           ),
+                //           SizedBox(
+                //             width: 5,
+                //           ),
+                //           Text(
+                //             "Sign in with Google",
+                //             style: TextStyle(
+                //                 fontFamily: "Roboto",
+                //                 fontSize: 11,
+                //                 color: Colors.white),
+                //           )
+                //         ],
+                //       ),
+                //     )
+                //   ],
+                // ),
                 SizedBox(height: 25.0),
-                Divider(
-                  color: Color(0x4dffffff),
-                  endIndent: 127.0,
-                ),
+                // Divider(
+                //   color: Color(0x4dffffff),
+                //   endIndent: 127.0,
+                // ),
                 LoginInputField(
                   labelText: "User Name",
                   error: Provider.of<SignUpLoginController>(context).nameerro,
@@ -185,39 +185,45 @@ class _LoginScreenState extends State<LoginScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () async {
-                    CustomProgressDialog? progressDialog = CustomProgressDialog(
-                        context,
-                        blur: 10,
-                        dismissable:
-                            false); //You can set Loading Widget using this function
-                    progressDialog.setLoadingWidget(CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.blue)));
-                    progressDialog.show();
-
-                    LoginResponse a = await Provider.of<SignUpLoginController>(
-                            context,
+                    if (Provider.of<SignUpLoginController>(context,
                             listen: false)
-                        .logIn();
-                    progressDialog.dismiss();
+                        .validator_Login()) {
+                      CustomProgressDialog? progressDialog = CustomProgressDialog(
+                          context,
+                          blur: 10,
+                          dismissable:
+                              false); //You can set Loading Widget using this function
+                      progressDialog.setLoadingWidget(CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.blue)));
+                      progressDialog.show();
 
-                    if (a.statuscode == 0) {
+                      LoginResponse a =
+                          await Provider.of<SignUpLoginController>(context,
+                                  listen: false)
+                              .logIn();
+                      progressDialog.dismiss();
+
+                      if (a.statuscode == 0) {
+                        NAlertDialog(
+                          title: Text("Error"),
+                          content: Text(a.message),
+                          blur: 2,
+                        ).show(context,
+                            transitionType: DialogTransitionType.Bubble);
+                      } else if (a.statuscode == 200) {
+                        Provider.of<SignUpLoginController>(context,
+                                listen: false)
+                            .clearController();
+                        Navigator.popAndPushNamed(context, '/home');
+                      }
+                    } else {
                       NAlertDialog(
                         title: Text("Error"),
-                        content: Text(a.message),
+                        content: Text("Empty Fields"),
                         blur: 2,
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);
-                    } else if (a.statuscode == 200) {
-                      Provider.of<SignUpLoginController>(context, listen: false)
-                          .clearController();
-                      Navigator.popAndPushNamed(context, '/home');
                     }
-
-                    // CourseCategory a = await Services.getCourseCategory();
-                    // print("btm press ended");
-                    // print(a.result[0].categoryName);
-                    // FeaturedPaidCourse f = await Services.getFeaturedPaidCourses();
-                    // print(f.result[8].courseName);
                   },
                   child: Container(
                     height: 56,

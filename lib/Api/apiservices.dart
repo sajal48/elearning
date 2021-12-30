@@ -16,7 +16,7 @@ class Services {
   static const String BASE_URL = "https://rivguru-course.herokuapp.com";
   static const String GET_CATEGORYLIST = BASE_URL + "/category";
   static const String GET_FEATUREDCOURSES =
-      BASE_URL + "/course?course_featured=true";
+      BASE_URL + "/course?course_paid=true";
   static const String GET_FREECOURSES =
       BASE_URL + "/course?course_paid=false&course_featured=true";
   static const String GET_ALLCOURSES = BASE_URL + "/course";
@@ -162,6 +162,11 @@ class Services {
       if (response.statusCode == 201) {
         LoginResponse ls = LoginResponse.fromJson(jsonDecode(response.body));
         return ls;
+      } else if (response.statusCode == 502) {
+        return LoginResponse(
+          message: "No Internet",
+          statuscode: 0,
+        );
       } else {
         return LoginResponse(
           message: "Login failed",
@@ -194,10 +199,13 @@ class Services {
       if (response.statusCode == 201) {
         RegisterRespons rs =
             RegisterRespons.fromJson(jsonDecode(response.body));
-        print("if ------" + response.body);
         return rs;
+      } else if (response.statusCode == 502) {
+        return RegisterRespons(
+          message: "No Internet",
+          statuscode: 0,
+        );
       } else {
-        print("else ------" + response.body);
         return RegisterRespons(
           message: "Registration failed",
           statuscode: 0,

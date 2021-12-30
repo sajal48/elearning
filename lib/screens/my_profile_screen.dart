@@ -54,13 +54,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 50,
                               ),
                               Container(
                                 child: Text(
                                   "Username : ${cont.userDetails.result!.firstName}",
                                   style: TextStyle(
-                                      fontSize: 24,
+                                      fontSize: 18,
                                       fontFamily: 'Milliard',
                                       color: Color(0xff3D4C59),
                                       fontWeight: FontWeight.bold),
@@ -73,7 +73,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 child: Text(
                                   "Email : ${cont.userDetails.result!.email} ",
                                   style: TextStyle(
-                                      fontSize: 24,
+                                      fontSize: 18,
                                       fontFamily: 'Milliard',
                                       color: Color(0xff3D4C59),
                                       fontWeight: FontWeight.bold),
@@ -86,7 +86,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 child: Text(
                                   "Phone : ${cont.userDetails.result!.phone}",
                                   style: TextStyle(
-                                      fontSize: 24,
+                                      fontSize: 18,
                                       fontFamily: 'Milliard',
                                       color: Color(0xff3D4C59),
                                       fontWeight: FontWeight.bold),
@@ -101,7 +101,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   Expanded(
                     child: Container(
                       alignment: Alignment.bottomCenter,
-                      child: TextButton(
+                      child: ElevatedButton(
                         child: Text('LOG OUT'),
                         onPressed: () async {
                           await Provider.of<SignUpLoginController>(context,

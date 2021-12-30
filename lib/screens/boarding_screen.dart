@@ -2,7 +2,6 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:elearning/controllers/onboarding_controller.dart';
 import 'package:elearning/screens/login_screen.dart';
 import 'package:elearning/screens/signup_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_storage/get_storage.dart';
@@ -114,7 +113,7 @@ class _BoardingPageState extends State<BoardingPage> {
                         ),
                   Text(
                     (Provider.of<OnboardingController>(context).index < 2)
-                        ? 'Lorem Ipsum is simply dummy text of the\nprinting and typesetting industry.'
+                        ? ''
                         : '',
                     textAlign: TextAlign.center,
                     style: TextStyle(

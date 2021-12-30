@@ -1,6 +1,7 @@
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginInputField extends StatefulWidget {
   final String? labelText;
@@ -26,9 +27,8 @@ class _LoginInputFieldState extends State<LoginInputField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: (v) {
-        Provider.of<SignUpLoginController>(context, listen: false).validator();
-      },
+      autovalidateMode: AutovalidateMode.always,
+      validator: RequiredValidator(errorText: 'this field is required'),
       key: widget.key,
       keyboardType: widget.type,
       style: TextStyle(
@@ -42,7 +42,6 @@ class _LoginInputFieldState extends State<LoginInputField> {
           Provider.of<SignUpLoginController>(context).passwordvisibility &&
               widget.isPassword!,
       decoration: InputDecoration(
-          errorText: widget.error,
           suffixIcon: widget.isPassword!
               ? IconButton(
                   onPressed: () {

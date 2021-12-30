@@ -96,44 +96,24 @@ class SignUpLoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void validator() {
-    if (username.text.isEmpty) {
-      nameerro = "Empty";
+  bool validator_Login() {
+    if (loginUsername.text.isEmpty || loginPassword.text.isEmpty) {
+      return false;
     } else
-      nameerro = null;
-    if (email.text.isEmpty) {
-      emailerror = "Emptyr";
+      return true;
+  }
+
+  bool validator_Signup() {
+    if (username.text.isEmpty ||
+        email.text.isEmpty ||
+        password.text.isEmpty ||
+        firstname.text.isEmpty ||
+        lastname.text.isEmpty ||
+        dateofbirth.text.isEmpty ||
+        gender!.isEmpty) {
+      return false;
     } else
-      emailerror = null;
-    if (password.text.isEmpty) {
-      passworderror = "Empty";
-    } else {
-      passworderror = null;
-    }
-    if (firstname.text.isEmpty) {
-      firstnameerror = "Empty";
-    } else
-      firstnameerror = null;
-    if (lastname.text.isEmpty) {
-      lasttnameerror = "Empty";
-    } else
-      lasttnameerror = null;
-    if (phn.text.isEmpty) {
-      phnnoerror = "Empty";
-    } else {
-      phnnoerror = null;
-    }
-    if (loginUsername.text.isEmpty) {
-      nameerro = "Empty";
-    } else {
-      nameerro = null;
-    }
-    if (loginPassword.text.isEmpty) {
-      passworderror = "Empty";
-    } else {
-      passworderror = null;
-    }
-    notifyListeners();
+      return true;
   }
 
   bool get passwordvisibility => _passwordvisibility;
@@ -143,15 +123,20 @@ class SignUpLoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void signUp() {
-    print(username.text);
-    print(email.text);
-    print(password.text);
-    username.clear();
-    email.clear();
-    password.clear();
-    notifyListeners();
-  }
+  // void signUp_Clear() {
+  //   firstname.clear();
+  //   lastname.clear();
+  //   username.clear();
+  //   email.clear();
+  //   password.clear();
+  //   notifyListeners();
+  // }
+
+  // void login_Clear() {
+  //   loginUsername.clear();
+  //   loginPassword.clear();
+  //   notifyListeners();
+  // }
 
   Future<LoginResponse> logIn() async {
     loginResponse =
@@ -160,6 +145,8 @@ class SignUpLoginController extends ChangeNotifier {
     if (loginResponse.result != null) {
       storeUserData(loginResponse.result!.userId);
     }
+
+    //login_Clear();
 
     return loginResponse;
   }
@@ -181,6 +168,7 @@ class SignUpLoginController extends ChangeNotifier {
     if (registerRespons.result != null) {
       storeUserData(registerRespons.result!.id!);
     }
+    //signUp_Clear();
     return registerRespons;
   }
 

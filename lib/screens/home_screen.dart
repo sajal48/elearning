@@ -1,60 +1,55 @@
 import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/screens/screens.dart';
-import 'package:elearning/widgets/live_class_card.dart';
-import 'package:elearning/widgets/search_box.dart';
 import 'package:elearning/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  List<String> tcTitle = [
+  final List<String> tcTitle = [
     'Pair of Linear Equations in Two Variables',
     'Pair of Linear Equations in Two Variables'
   ];
-  List<String> tcInstractor = ['Kerry Oaky', 'Gail Forcewind.'];
-  List<String> tcTime = ['4', '5'];
-  List<String> tcDuration = ['1 hours 40 min', '1 hours 20 min'];
-  List<String> cwpBanner = [
+  final List<String> tcInstractor = ['Kerry Oaky', 'Gail Forcewind.'];
+  final List<String> tcTime = ['4', '5'];
+  final List<String> tcDuration = ['1 hours 40 min', '1 hours 20 min'];
+  final List<String> cwpBanner = [
     'assets/images/chem.png',
     'assets/images/trigono.png'
   ];
-  List<String> cwpTitle = [
+  final List<String> cwpTitle = [
     'Introduction to\nTrigonometry',
     'Acids Bases\nand Salts'
   ];
-  List<String> cwpView = ['28,000', '40,000'];
-  List<String> cwpDuration = ['1 hours 40 min', '2 hours 40 min'];
-  List<String> cwpInstractor = ['Teri Dactyl', 'Allie Grater'];
-  List<String> cwpPrice = ['49.00', '55.00'];
-  List<String> cwpOfferPrice = ['99.00', '99.00'];
-  List<Color> cwpColor = [Colors.white, Colors.white];
-  List<String> cwpAvater = [
+  final List<String> cwpView = ['28,000', '40,000'];
+  final List<String> cwpDuration = ['1 hours 40 min', '2 hours 40 min'];
+  final List<String> cwpInstractor = ['Teri Dactyl', 'Allie Grater'];
+  final List<String> cwpPrice = ['49.00', '55.00'];
+  final List<String> cwpOfferPrice = ['99.00', '99.00'];
+  final List<Color> cwpColor = [Colors.white, Colors.white];
+  final List<String> cwpAvater = [
     'assets/images/ins_avater1.png',
     'assets/images/ins_avater2.png'
   ];
-  List<String> avater = [
+  final List<String> avater = [
     "0",
     "1",
     "2",
     "3",
   ];
-  List<String> name = [
+  final List<String> name = [
     "Zack Lee",
     "Otto Matic",
     "Saul T. Balls",
     "Tara Zona",
   ];
-  List<String> insTitle = [
+  final List<String> insTitle = [
     "Specialist in math",
     "Specialist in math",
     "Specialist in physics",
     "Specialist in biology",
   ];
-  List<String> students = [
+  final List<String> students = [
     "1200",
     "5000",
     "2500",
@@ -110,58 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Positioned(
-                      child: Container(
-                    color: Color(0xff3D4C59),
-                    child: Image.asset('assets/images/banner_home.png'),
-                  )),
-                  Positioned(
-                      left: 33,
-                      top: 25,
-                      child: SvgPicture.asset(
-                        'assets/images/settings_icon.svg',
-                        width: 20,
-                        height: 20,
-                      )),
-                  Positioned(
-                      left: 33,
-                      top: 100,
-                      child: Text(
-                        'Online\nEducation\nPlatform',
-                        style: TextStyle(
-                            fontFamily: 'Milliard',
-                            color: Colors.white,
-                            fontSize: 33,
-                            fontWeight: FontWeight.bold),
-                      )),
-                  Positioned(
-                      left: 118,
-                      top: 80,
-                      child: SvgPicture.asset('assets/images/trial_icon.svg')),
-                  Positioned(
-                      left: 33,
-                      top: 220,
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Color(0xff5467FF),
-                            borderRadius: BorderRadius.circular(3)),
-                        height: 35,
-                        width: 96,
-                        child: Text(
-                          'START NOW',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Milliard',
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: .7),
-                        ),
-                      ))
-                ],
-              ),
+              HomePageHeader(),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 33, vertical: 20),
                   child: Column(
@@ -334,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Featured Course',
+                      'Paid Courses',
                       style: TextStyle(
                         fontFamily: 'Milliard',
                         color: Color(0xff3D4C59),
@@ -342,10 +286,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('View All',
-                        style: TextStyle(
-                          color: Color(0xff5467FF),
-                        ))
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CoursePage()));
+                      },
+                      child: Text('View All',
+                          style: TextStyle(
+                            color: Color(0xff5467FF),
+                          )),
+                    )
                   ],
                 ),
               ),
@@ -438,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Trending Course',
+                      'Free Courses',
                       style: TextStyle(
                         fontFamily: 'Milliard',
                         color: Color(0xff3D4C59),
@@ -446,10 +398,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('View All',
-                        style: TextStyle(
-                          color: Color(0xff5467FF),
-                        ))
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<HomepageController>(context, listen: false)
+                            .set_PageIndex(1);
+                      },
+                      child: Text('View All',
+                          style: TextStyle(
+                            color: Color(0xff5467FF),
+                          )),
+                    )
                   ],
                 ),
               ),
@@ -613,6 +571,68 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class HomePageHeader extends StatelessWidget {
+  const HomePageHeader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned(
+            child: Container(
+          color: Colors.white,
+          child: Image.asset('assets/images/banner_home.png'),
+        )),
+        // Positioned(
+        //     left: 33,
+        //     top: 25,
+        //     child: SvgPicture.asset(
+        //       'assets/images/profile_icon.svg',
+        //       width: 20,
+        //       height: 20,
+        //     )),
+        Positioned(
+            left: 33,
+            top: 100,
+            child: Text(
+              'Online\nEducation\nPlatform',
+              style: TextStyle(
+                  fontFamily: 'Milliard',
+                  color: Colors.white,
+                  fontSize: 33,
+                  fontWeight: FontWeight.bold),
+            )),
+        Positioned(
+            left: 118,
+            top: 80,
+            child: SvgPicture.asset('assets/images/trial_icon.svg')),
+        Positioned(
+            left: 33,
+            top: 220,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Color(0xff5467FF),
+                  borderRadius: BorderRadius.circular(3)),
+              height: 35,
+              width: 96,
+              child: Text(
+                'START NOW',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Milliard',
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: .7),
+              ),
+            ))
+      ],
     );
   }
 }

@@ -16,6 +16,13 @@ class HomepageController extends ChangeNotifier {
   late List<coursedata.Result> myCourses = [];
   late UserDetails userDetails;
   String? userid;
+  int page_index = 0;
+
+  void set_PageIndex(int a) {
+    page_index = a;
+    print('page index $page_index');
+    ChangeNotifier();
+  }
 
   Future<CourseCategory> getCategory() async {
     courseCategory = await Services.getCourseCategory();

@@ -38,20 +38,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           child: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Colors.greenAccent,
+        color: Colors.white,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: Text("Cousrse Name : ${widget.course_name}"),
+              padding: EdgeInsets.symmetric(horizontal: 33),
+              child: Text(
+                "Cousrse Name: ${widget.course_name}",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             Container(
-              child: Text("Cousrse price : ${widget.course_price}"),
+              child: Text(
+                "Cousrse price : ${widget.course_price}",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             ElevatedButton(
                 onPressed: () async {

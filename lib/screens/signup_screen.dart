@@ -284,37 +284,43 @@ class SignUpNext extends StatelessWidget {
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () async {
-                    CustomProgressDialog? progressDialog = CustomProgressDialog(
-                        context,
-                        blur: 10,
-                        dismissable:
-                            false); //You can set Loading Widget using this function
-                    progressDialog.setLoadingWidget(CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.blue)));
-                    progressDialog.show();
-                    RegisterRespons a =
-                        await Provider.of<SignUpLoginController>(context,
+                    if (Provider.of<SignUpLoginController>(context,
+                            listen: false)
+                        .validator_Signup()) {
+                      CustomProgressDialog? progressDialog = CustomProgressDialog(
+                          context,
+                          blur: 10,
+                          dismissable:
+                              false); //You can set Loading Widget using this function
+                      progressDialog.setLoadingWidget(CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.blue)));
+                      progressDialog.show();
+                      RegisterRespons a =
+                          await Provider.of<SignUpLoginController>(context,
+                                  listen: false)
+                              .register();
+                      progressDialog.dismiss();
+                      if (a.statuscode == 0) {
+                        NAlertDialog(
+                          title: Text("Error"),
+                          content: Text(a.message!),
+                          blur: 2,
+                        ).show(context,
+                            transitionType: DialogTransitionType.Bubble);
+                      } else if (a.statuscode == 200) {
+                        Provider.of<SignUpLoginController>(context,
                                 listen: false)
-                            .register();
-                    progressDialog.dismiss();
-                    if (a.result!.status != null) {
+                            .clearController();
+                        Navigator.popAndPushNamed(context, '/home');
+                      }
+                    } else {
                       NAlertDialog(
                         title: Text("Error"),
-                        content: Text(a.result!.message!),
+                        content: Text("Empty Fields"),
                         blur: 2,
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);
-                    } else {
-                      // Provider.of<SignUpLoginController>(context, listen: false)
-                      //     .clearController();
-                      Navigator.popAndPushNamed(context, '/home');
                     }
-
-                    // Navigator.push(
-
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => VerificationScreen()));
                   },
                   child: Container(
                     height: 56,

@@ -69,10 +69,10 @@ class CourseDetailsScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
-                  '4.0 (1 rating)',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
+                // Text(
+                //   '4.0 (1 rating)',
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                // )
               ],
             ),
           ),
@@ -122,8 +122,7 @@ class CourseDetailsScreen extends StatelessWidget {
                             ModuleClass.fromJson(result.modules![index]);
 
                         return ModuleSection(
-                            moduleTitle: module.moduleName!,
-                            isPurchased: isPurchased);
+                            moduleData: module, isPurchased: isPurchased);
                       }),
                 ),
                 SizedBox(
@@ -135,7 +134,7 @@ class CourseDetailsScreen extends StatelessWidget {
                         height: 60,
                         width: 150,
                         decoration: BoxDecoration(
-                            color: Colors.red[100],
+                            color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(10)),
                         child: TextButton(
                           child: Text(
@@ -143,7 +142,7 @@ class CourseDetailsScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'Milliard',
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
