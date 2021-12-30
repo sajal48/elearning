@@ -17,8 +17,7 @@ class Services {
   static const String GET_CATEGORYLIST = BASE_URL + "/category";
   static const String GET_FEATUREDCOURSES =
       BASE_URL + "/course?course_paid=true";
-  static const String GET_FREECOURSES =
-      BASE_URL + "/course?course_paid=false&course_featured=true";
+  static const String GET_FREECOURSES = BASE_URL + "/course?course_paid=false";
   static const String GET_ALLCOURSES = BASE_URL + "/course";
   static const String PURCHASE =
       "https://unidatabase.rivguru.com/payment/xendit-payment";

@@ -50,10 +50,11 @@ class MyApp extends StatelessWidget {
         return BoardingPage();
       } else {
         if (userId != null) {
-          return NavScreen();
+          Provider.of<SignUpLoginController>(context).setloginstatus(true);
         } else {
-          return LoginScreen();
+          Provider.of<SignUpLoginController>(context).setloginstatus(false);
         }
+        return NavScreen();
       }
     }
 

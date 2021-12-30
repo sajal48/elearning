@@ -8,12 +8,14 @@ class CourseCard extends StatelessWidget {
   final String subtitle;
   final String hours;
   final Color color;
+  final bool isFree;
   const CourseCard(
       {Key? key,
       required this.banner,
       required this.title,
       required this.subtitle,
       required this.hours,
+      required this.isFree,
       required this.color})
       : super(key: key);
 

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import 'course_page_catagorywise.dart';
+
 class HomeScreen extends StatefulWidget {
   final List<String> tcTitle = [
     'Pair of Linear Equations in Two Variables',
@@ -291,7 +293,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CoursePage()));
+                                builder: (context) => CoursePage_Catagorywise(
+                                      paid: true,
+                                      title: 'All Paid Courses',
+                                    )));
                       },
                       child: Text('View All',
                           style: TextStyle(
@@ -343,6 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   )));
                                     },
                                     child: CourseWithPrice(
+                                      isFree: !data.coursePaid!,
                                       price: data.price!,
                                       level: data.competency!,
                                       duration: data.startDate.toString(),
@@ -400,8 +406,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Provider.of<HomepageController>(context, listen: false)
-                            .set_PageIndex(1);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CoursePage_Catagorywise(
+                                      paid: false,
+                                      title: 'All Free Courses',
+                                    )));
                       },
                       child: Text('View All',
                           style: TextStyle(
@@ -451,6 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   )));
                                     },
                                     child: CourseWithPrice(
+                                      isFree: !data.coursePaid!,
                                       price: data.price!,
                                       level: data.competency!,
                                       duration: data.startDate.toString(),

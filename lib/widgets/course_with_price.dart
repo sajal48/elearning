@@ -15,9 +15,11 @@ class CourseWithPrice extends StatelessWidget {
   final Color color;
   final String level;
   final String module;
+  final bool isFree;
   const CourseWithPrice({
     Key? key,
     required this.banner,
+    required this.isFree,
     required this.title,
     this.view = '',
     this.duration = '',
@@ -144,14 +146,23 @@ class CourseWithPrice extends StatelessWidget {
                   // ),
                   Row(
                     children: [
-                      Text(
-                        '\$$price',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontFamily: 'Roboto',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+                      isFree
+                          ? Text(
+                              'Free',
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Roboto',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : Text(
+                              '\$$price',
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Roboto',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
 
                       // SizedBox(
                       //   width: 20,
@@ -226,7 +237,7 @@ class CourseWithPrice extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '$duration',
+                        duration,
                         style: TextStyle(
                           color: Color(0xff747A92),
                           fontFamily: 'Roboto',

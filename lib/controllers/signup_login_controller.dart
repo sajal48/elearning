@@ -18,6 +18,12 @@ class SignUpLoginController extends ChangeNotifier {
   TextEditingController loginUsername = new TextEditingController();
   TextEditingController loginPassword = new TextEditingController();
   bool loading = false;
+  bool loggedin = false;
+
+  void setloginstatus(bool status) {
+    loggedin = status;
+    ChangeNotifier();
+  }
 
   TextEditingController verificationcode = new TextEditingController();
   late LoginResponse loginResponse;

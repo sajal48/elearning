@@ -134,11 +134,11 @@ class CourseDetailsScreen extends StatelessWidget {
                         height: 60,
                         width: 150,
                         decoration: BoxDecoration(
-                            color: Colors.redAccent,
+                            color: Colors.red,
                             borderRadius: BorderRadius.circular(10)),
                         child: TextButton(
                           child: Text(
-                            "Buy this course",
+                            "Enroll Now",
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'Milliard',
