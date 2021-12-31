@@ -156,7 +156,7 @@ class CourseWithPrice extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             )
                           : Text(
-                              '\$$price',
+                              'IDR $price',
                               style: TextStyle(
                                   color: Colors.red,
                                   fontFamily: 'Roboto',

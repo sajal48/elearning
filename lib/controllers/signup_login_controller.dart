@@ -22,7 +22,7 @@ class SignUpLoginController extends ChangeNotifier {
 
   void setloginstatus(bool status) {
     loggedin = status;
-    ChangeNotifier();
+    notifyListeners();
   }
 
   TextEditingController verificationcode = new TextEditingController();
@@ -147,8 +147,9 @@ class SignUpLoginController extends ChangeNotifier {
   Future<LoginResponse> logIn() async {
     loginResponse =
         await Services.login(loginUsername.text, loginPassword.text);
-    ChangeNotifier();
+    notifyListeners();
     if (loginResponse.result != null) {
+      setloginstatus(true);
       storeUserData(loginResponse.result!.userId);
     }
 
@@ -170,8 +171,9 @@ class SignUpLoginController extends ChangeNotifier {
         email: email.text);
 
     registerRespons = await Services.register(a);
-    ChangeNotifier();
+    notifyListeners();
     if (registerRespons.result != null) {
+      setloginstatus(true);
       storeUserData(registerRespons.result!.id!);
     }
     //signUp_Clear();
@@ -186,6 +188,7 @@ class SignUpLoginController extends ChangeNotifier {
   Future<bool> logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    setloginstatus(false);
     return true;
   }
 }

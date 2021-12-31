@@ -9,19 +9,71 @@ import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomepageController extends ChangeNotifier {
-  late CourseCategory courseCategory;
-  late coursedata.CourseData freeCourses;
+  CourseCategory courseCategory =
+      CourseCategory(statuscode: 0, message: 'not loaded yet', result: []);
+  coursedata.CourseData freeCourses = coursedata.CourseData(
+      statuscode: 0, message: 'not loaded yet', result: []);
   late coursedata.CourseData featuredCourses;
   late coursedata.CourseData allCourses;
   late List<coursedata.Result> myCourses = [];
   late UserDetails userDetails;
+  bool allCourseloaded = false;
+  bool paidCourseloaded = false;
+  bool freeCourseloaded = false;
+  List<coursedata.Result> selectedCourse = [];
+  int? selectedIndex;
+  bool resetbtnvisibility = false;
+
   String? userid;
   int page_index = 0;
+
+  bool isSelected({required int index, int? current}) {
+    if (current != null) {
+      if (current == index) {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+
+  void clearloaded() {
+    allCourseloaded = false;
+    paidCourseloaded = false;
+    freeCourseloaded = false;
+    notifyListeners();
+  }
+
+  void setselctedIndex(int? i) {
+    selectedIndex = i;
+    print('index now is $selectedIndex');
+    notifyListeners();
+  }
+
+  void setSelectedCourse(String catagory, int index) {
+    selectedCourse.clear();
+    allCourses.result!.forEach((element) {
+      if (element.category == catagory) {
+        selectedCourse.add(element);
+      }
+    });
+  }
+
+  List<coursedata.Result> getcatagorycourses(String catagory) {
+    List<coursedata.Result> a = [];
+    allCourses.result!.forEach((element) {
+      if (element.category == catagory) {
+        a.add(element);
+      }
+    });
+    print(
+        'getcatagory courses length for $catagory is ${a.length} and allcourses length is ${allCourses.result!.length}');
+    return a;
+  }
 
   void set_PageIndex(int a) {
     page_index = a;
     print('page index $page_index');
-    ChangeNotifier();
   }
 
   Future<CourseCategory> getCategory() async {
@@ -36,28 +88,24 @@ class HomepageController extends ChangeNotifier {
     String? id = pref.getString("RivguruUser");
     print("id got from sf  : $id");
     userDetails = await Services.getUserData(id!);
-
-    ChangeNotifier();
     return userDetails;
   }
 
   Future<coursedata.CourseData> getfeaturedcourse() async {
     featuredCourses = await Services.getFeaturedCourses();
-    ChangeNotifier();
+    paidCourseloaded = true;
     return featuredCourses;
   }
 
   Future<coursedata.CourseData> getfreecourse() async {
     freeCourses = await Services.getFreeCourses();
-    ChangeNotifier();
+    freeCourseloaded = true;
     return freeCourses;
   }
 
   Future<coursedata.CourseData> getallcourse() async {
     allCourses = await Services.getAllCourses();
-
-    ChangeNotifier();
-
+    allCourseloaded = true;
     return allCourses;
   }
 
@@ -101,11 +149,10 @@ class HomepageController extends ChangeNotifier {
     for (int i = 0; i < allCourses.result!.length; i++) {
       if (allCourses.result![i].students!.contains(id)) {
         myCourses.add(allCourses.result![i]);
-        ChangeNotifier();
       }
     }
     print("getMyCourse data = $myCourses");
-    ChangeNotifier();
+
     return myCourses;
   }
 }

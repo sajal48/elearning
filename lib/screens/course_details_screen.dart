@@ -58,7 +58,7 @@ class CourseDetailsScreen extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  result.courseName!,
+                  result.courseName ?? "No data",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 24,
@@ -89,13 +89,14 @@ class CourseDetailsScreen extends StatelessWidget {
             child: Column(
               children: [
                 CourseDetailsInfo(
-                    title: 'Overview', description: result.description!),
+                    title: 'Overview',
+                    description: result.description ?? 'No data'),
                 CourseDetailsInfo(
                     title: 'About This Course',
-                    description: result.aboutThisCourse!),
+                    description: result.aboutThisCourse ?? 'No data'),
                 CourseDetailsInfo(
                     title: 'Who this course is for',
-                    description: result.whoThisCourseIsFor!),
+                    description: result.whoThisCourseIsFor ?? 'No data'),
                 CourseDetailsInfo(
                   title: 'Requirements',
                   description:
@@ -103,28 +104,30 @@ class CourseDetailsScreen extends StatelessWidget {
                 ),
                 CourseDetailsInfo(
                   title: 'Why You Should Learn This Course',
-                  description: result.whyToLearn!,
+                  description: result.whyToLearn ?? 'No data',
                 ),
                 CourseDetailsInfo(
                     title: 'Skills You Will Learn',
-                    description: result.whoThisCourseIsFor!),
+                    description: result.whoThisCourseIsFor ?? 'No data'),
                 SizedBox(
                   height: 20,
                 ),
                 CourseDetailsInfo(title: "Modules"),
-                Container(
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: result.noOfModules,
-                      itemBuilder: (context, index) {
-                        ModuleClass? module =
-                            ModuleClass.fromJson(result.modules![index]);
+                result.noOfModules != null
+                    ? Container(
+                        child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: result.noOfModules,
+                            itemBuilder: (context, index) {
+                              ModuleClass? module =
+                                  ModuleClass.fromJson(result.modules![index]);
 
-                        return ModuleSection(
-                            moduleData: module, isPurchased: isPurchased);
-                      }),
-                ),
+                              return ModuleSection(
+                                  moduleData: module, isPurchased: isPurchased);
+                            }),
+                      )
+                    : Text('No Modules'),
                 SizedBox(
                   height: 20,
                 ),

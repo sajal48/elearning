@@ -7,11 +7,13 @@ class TopicCard extends StatelessWidget {
   final String title;
   final int quantity;
   final Color color;
+  final bool selected;
   TopicCard(
       {Key? key,
       this.image = 'assets/images/life_bg.png',
       this.title = '',
       this.color = const Color(0xff3C3B91),
+      this.selected = false,
       this.quantity = 0})
       : super(key: key);
 
@@ -29,7 +31,7 @@ class TopicCard extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.2), BlendMode.dstATop)),
-          color: color,
+          color: selected ? Colors.greenAccent : color,
           borderRadius: BorderRadius.circular(6),
         ),
         child: Column(

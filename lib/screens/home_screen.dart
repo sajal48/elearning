@@ -1,5 +1,7 @@
+import 'package:elearning/Data/coursedata.dart';
 import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/screens/screens.dart';
+import 'package:elearning/widgets/snack.dart';
 import 'package:elearning/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -98,6 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cont_home = Provider.of<HomepageController>(context);
+    final cont_home_btn =
+        Provider.of<HomepageController>(context, listen: false);
     return SafeArea(
       child: Container(
         alignment: Alignment.centerLeft,
@@ -139,32 +144,53 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 75,
                 child: FutureBuilder(
-                  future:
-                      Provider.of<HomepageController>(context).getCategory(),
+                  future: cont_home.getCategory(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      return Consumer<HomepageController>(
-                        builder: (context, orderData, child) =>
-                            ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount:
-                                    orderData.courseCategory.result.length,
-                                itemBuilder: (context, i) {
-                                  return TopicCard(
-                                    quantity: 1,
+                      return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: cont_home.courseCategory.result.length,
+                          itemBuilder: (context, i) {
+                            return GestureDetector(
+                              onTap: () async {
+                                if (cont_home_btn.allCourseloaded) {
+                                  List<Result> courselist = cont_home_btn
+                                      .getcatagorycourses(cont_home_btn
+                                          .courseCategory
+                                          .result[i]
+                                          .categoryName);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CoursePage_Catagorywise(
+                                                courselist: courselist,
+                                                title: cont_home_btn
+                                                    .courseCategory
+                                                    .result[i]
+                                                    .categoryName,
+                                              )));
+                                  print(courselist.length);
+                                } else {
+                                  createSnackBar(
+                                      'Wait data is loaging', context);
+                                }
+                              },
+                              child: TopicCard(
+                                quantity: 1,
 
-                                    color: widget.categoryColor[1],
-                                    // icon: widget.categoryIcon[1],
-                                    title: orderData
-                                        .courseCategory.result[i].categoryName,
-                                  );
-                                }),
-                      );
+                                color: widget.categoryColor[1],
+                                // icon: widget.categoryIcon[1],
+                                title: cont_home
+                                    .courseCategory.result[i].categoryName,
+                              ),
+                            );
+                          });
                     }
                   },
                 ),
@@ -290,13 +316,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CoursePage_Catagorywise(
-                                      paid: true,
+                        if (Provider.of<HomepageController>(context,
+                                listen: false)
+                            .paidCourseloaded) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CoursePage_Catagorywise(
                                       title: 'All Paid Courses',
-                                    )));
+                                      courselist:
+                                          Provider.of<HomepageController>(
+                                                  context,
+                                                  listen: false)
+                                              .featuredCourses
+                                              .result!)));
+                        } else {
+                          createSnackBar('Course loading', context);
+                        }
                       },
                       child: Text('View All',
                           style: TextStyle(
@@ -312,8 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 180,
                 child: FutureBuilder(
-                  future: Provider.of<HomepageController>(context)
-                      .getfeaturedcourse(),
+                  future: cont_home.getfeaturedcourse(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -324,48 +359,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           .featuredCourses
                           .result!
                           .length);
-                      return Consumer<HomepageController>(
-                        builder: (context, orderData, child) =>
-                            ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount:
-                                    orderData.featuredCourses.result!.length,
-                                itemBuilder: (context, i) {
-                                  var data =
-                                      orderData.featuredCourses.result![i];
-                                  // print('\n');
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CourseDetailsScreen(
-                                                    result: orderData
-                                                        .featuredCourses
-                                                        .result![i],
-                                                  )));
-                                    },
-                                    child: CourseWithPrice(
-                                      isFree: !data.coursePaid!,
-                                      price: data.price!,
-                                      level: data.competency!,
-                                      duration: data.startDate.toString(),
+                      return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: cont_home.featuredCourses.result!.length,
+                          itemBuilder: (context, i) {
+                            var data = cont_home.featuredCourses.result![i];
+                            // print('\n');
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CourseDetailsScreen(
+                                              result: cont_home_btn
+                                                  .featuredCourses.result![i],
+                                            )));
+                              },
+                              child: CourseWithPrice(
+                                isFree: !data.coursePaid!,
+                                price: data.price!,
+                                level: data.competency!,
+                                duration: data.startDate.toString(),
 
-                                      module: data.noOfModules.toString(),
+                                module: data.noOfModules.toString(),
 
-                                      // instractor: widget.cwpInstractor[i],
-                                      // offerPrice: widget.cwpOfferPrice[i],
-                                      // view: widget.cwpView[i],
-                                      banner: data.courseImage!.toString(),
-                                      title: data.courseName!,
-                                      // color: widget.cwpColor[i],
-                                      // avater: widget.cwpAvater[i],
-                                    ),
-                                  );
-                                }),
-                      );
+                                // instractor: widget.cwpInstractor[i],
+                                // offerPrice: widget.cwpOfferPrice[i],
+                                // view: widget.cwpView[i],
+                                banner: data.courseImage!.toString(),
+                                title: data.courseName!,
+                                // color: widget.cwpColor[i],
+                                // avater: widget.cwpAvater[i],
+                              ),
+                            );
+                          });
                     }
                   },
                 ),
@@ -406,13 +435,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CoursePage_Catagorywise(
-                                      paid: false,
+                        if (Provider.of<HomepageController>(context,
+                                listen: false)
+                            .freeCourseloaded) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CoursePage_Catagorywise(
                                       title: 'All Free Courses',
-                                    )));
+                                      courselist:
+                                          Provider.of<HomepageController>(
+                                                  context,
+                                                  listen: false)
+                                              .freeCourses
+                                              .result!)));
+                        } else {
+                          createSnackBar('Course loading', context);
+                        }
                       },
                       child: Text('View All',
                           style: TextStyle(
@@ -429,8 +468,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 180,
                 child: FutureBuilder(
-                  future:
-                      Provider.of<HomepageController>(context).getfreecourse(),
+                  future: cont_home.getfreecourse(),
                   builder: (context, data) {
                     if (data.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -441,45 +479,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           .freeCourses
                           .result!
                           .length);
-                      return Consumer<HomepageController>(
-                        builder: (context, orderData, child) =>
-                            ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: orderData.freeCourses.result!.length,
-                                itemBuilder: (context, i) {
-                                  var data = orderData.freeCourses.result![i];
-                                  // print('\n');
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CourseDetailsScreen(
-                                                    result: orderData
-                                                        .freeCourses.result![i],
-                                                  )));
-                                    },
-                                    child: CourseWithPrice(
-                                      isFree: !data.coursePaid!,
-                                      price: data.price!,
-                                      level: data.competency!,
-                                      duration: data.startDate.toString(),
+                      return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: cont_home.freeCourses.result!.length,
+                          itemBuilder: (context, i) {
+                            var data = cont_home.freeCourses.result![i];
+                            // print('\n');
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CourseDetailsScreen(
+                                              result: cont_home_btn
+                                                  .freeCourses.result![i],
+                                            )));
+                              },
+                              child: CourseWithPrice(
+                                isFree: !data.coursePaid!,
+                                price: data.price!,
+                                level: data.competency!,
+                                duration: data.startDate.toString(),
 
-                                      module: data.noOfModules.toString(),
+                                module: data.noOfModules.toString(),
 
-                                      // instractor: widget.cwpInstractor[i],
-                                      // offerPrice: widget.cwpOfferPrice[i],
-                                      // view: widget.cwpView[i],
-                                      banner: data.courseImage!.toString(),
-                                      title: data.courseName!,
-                                      // color: widget.cwpColor[i],
-                                      // avater: widget.cwpAvater[i],
-                                    ),
-                                  );
-                                }),
-                      );
+                                // instractor: widget.cwpInstractor[i],
+                                // offerPrice: widget.cwpOfferPrice[i],
+                                // view: widget.cwpView[i],
+                                banner: data.courseImage!.toString(),
+                                title: data.courseName!,
+                                // color: widget.cwpColor[i],
+                                // avater: widget.cwpAvater[i],
+                              ),
+                            );
+                          });
                     }
                   },
                 ),

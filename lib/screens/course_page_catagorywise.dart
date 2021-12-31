@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'screens.dart';
 
 class CoursePage_Catagorywise extends StatelessWidget {
-  final bool paid;
   final String title;
+  final List<Result> courselist;
   const CoursePage_Catagorywise(
-      {Key? key, required this.paid, required this.title})
+      {Key? key, required this.title, required this.courselist})
       : super(key: key);
 
   @override
@@ -36,67 +36,47 @@ class CoursePage_Catagorywise extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 25,
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  child: FutureBuilder<CourseData>(
-                    future: paid
-                        ? Provider.of<HomepageController>(context)
-                            .getfeaturedcourse()
-                        : Provider.of<HomepageController>(context)
-                            .getfreecourse(),
-                    builder: (context, data) {
-                      if (data.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return Consumer<HomepageController>(
-                          builder: (context, orderData, child) =>
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: data.data!.result!.length,
-                                  itemBuilder: (context, i) {
-                                    var item = data.data!.result![i];
-                                    // print('\n');
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CourseDetailsScreen(
-                                                        result: orderData
-                                                            .allCourses
-                                                            .result![i],
-                                                      )));
-                                        },
-                                        child: CourseWithPrice(
-                                          isFree: !item.coursePaid!,
-                                          price: item.price!,
-                                          level: item.competency!,
-                                          duration: item.startDate.toString(),
-                                          module: item.noOfModules.toString(),
-                                          banner: item.courseImage.toString(),
-                                          title: item.courseName!,
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                        );
-                      }
-                    },
-                  ),
-                ),
+                courselist.length == 0
+                    ? Container(
+                        height: MediaQuery.of(context).size.height / 1.3,
+                        child: Center(
+                          child: Text('No Courses available now'),
+                        ),
+                      )
+                    : Container(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: courselist.length,
+                            itemBuilder: (context, i) {
+                              var item = courselist[i];
+                              // print('\n');
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CourseDetailsScreen(
+                                                  result: courselist[i],
+                                                )));
+                                  },
+                                  child: CourseWithPrice(
+                                    isFree: !item.coursePaid!,
+                                    price: item.price!,
+                                    level: item.competency!,
+                                    duration: item.startDate.toString(),
+                                    module: item.noOfModules.toString(),
+                                    banner: item.courseImage.toString(),
+                                    title: item.courseName!,
+                                  ),
+                                ),
+                              );
+                            })),
               ],
             ),
           ),

@@ -18,6 +18,12 @@ class PaymentMethodScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cont_home = Provider.of<HomepageController>(context);
+    final cont_home_btn =
+        Provider.of<HomepageController>(context, listen: false);
+    final cont_sign = Provider.of<SignUpLoginController>(context);
+    final cont_sign_btn =
+        Provider.of<SignUpLoginController>(context, listen: false);
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -26,8 +32,7 @@ class PaymentMethodScreen extends StatelessWidget {
         height: double.infinity,
         color: Colors.white,
         child: Center(
-            child: Consumer<SignUpLoginController>(
-          builder: (BuildContext context, value, _) => value.loggedin
+          child: cont_sign.loggedin
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -80,7 +85,7 @@ class PaymentMethodScreen extends StatelessWidget {
                   ],
                 )
               : ReLogin(title: 'You need to log in first'),
-        )),
+        ),
       )),
     );
   }
