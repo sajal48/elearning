@@ -37,6 +37,15 @@ class HomepageController extends ChangeNotifier {
     return false;
   }
 
+  Future<String> enrollFree(String courseId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    String? id = pref.getString("RivguruUser");
+
+    String message = await Services.enrollFree(id!, courseId);
+    return message;
+  }
+
   void clearloaded() {
     allCourseloaded = false;
     paidCourseloaded = false;

@@ -73,7 +73,7 @@ class Result {
 
   final bool? coursePaid;
   final bool? courseFeatured;
-  final List<String>? students;
+  final List<dynamic>? students;
   final List<dynamic>? modules;
   final bool? quizPresent;
   final bool? isPrivate;
@@ -103,57 +103,48 @@ class Result {
   final String? quizId;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        coursePaid: json["course_paid"] == null ? null : json["course_paid"],
-        courseFeatured:
-            json["course_featured"] == null ? null : json["course_featured"],
+        coursePaid: json["course_paid"] ?? null,
+        courseFeatured: json["course_featured"] ?? null,
         students: json["students"] == null
             ? null
-            : List<String>.from(json["students"].map((x) => x)),
+            : List<dynamic>.from(json["students"].map((x) => x)),
         modules: json["modules"] == null
             ? null
             : List<dynamic>.from(json["modules"].map((x) => x)),
-        quizPresent: json["quiz_present"] == null ? null : json["quiz_present"],
-        isPrivate: json["is_private"] == null ? null : json["is_private"],
-        id: json["_id"] == null ? null : json["_id"],
-        courseName: json["course_name"] == null ? null : json["course_name"],
-        trainer: json["trainer"] == null ? null : json["trainer"],
-        competency: json["competency"] == null ? null : json["competency"],
-        description: json["description"] == null ? null : json["description"],
-        youtubeLink: json["youtube_link"] == null ? null : json["youtube_link"],
-        aboutThisCourse: json["about_this_course"] == null
-            ? null
-            : json["about_this_course"],
-        whoThisCourseIsFor: json["who_this_course_is_for"] == null
-            ? null
-            : json["who_this_course_is_for"],
-        requirements:
-            json["requirements"] == null ? null : json["requirements"],
-        whyToLearn: json["why_to_learn"] == null ? null : json["why_to_learn"],
-        skillsYouLearn:
-            json["skills_you_learn"] == null ? null : json["skills_you_learn"],
-        category: json["category"] == null ? null : json["category"],
-        university: json["university"] == null ? null : json["university"],
-        courseType: json["course_type"] == null ? null : json["course_type"],
-        courseImage: json["course_image"] == null ? null : json["course_image"],
+        quizPresent: json["quiz_present"] ?? null,
+        isPrivate: json["is_private"] ?? null,
+        id: json["_id"] ?? null,
+        courseName: json["course_name"] ?? null,
+        trainer: json["trainer"] ?? null,
+        competency: json["competency"] ?? null,
+        description: json["description"] ?? null,
+        youtubeLink: json["youtube_link"] ?? null,
+        aboutThisCourse: json["about_this_course"] ?? null,
+        whoThisCourseIsFor: json["who_this_course_is_for"] ?? null,
+        requirements: json["requirements"] ?? null,
+        whyToLearn: json["why_to_learn"] ?? null,
+        skillsYouLearn: json["skills_you_learn"] ?? null,
+        category: json["category"] ?? null,
+        university: json["university"] ?? null,
+        courseType: json["course_type"] ?? null,
+        courseImage: json["course_image"] ?? null,
         startDate: json["start_date"] == null
             ? null
             : df.format(DateTime.parse(json["start_date"])),
         endDate: json["end_date"] == null
             ? null
             : df.format(DateTime.parse(json["end_date"])),
-        timeDuration:
-            json["time_duration"] == null ? null : json["time_duration"],
-        price: json["price"] == null ? null : json["price"],
-        noOfModules:
-            json["no_of_modules"] == null ? null : json["no_of_modules"],
+        timeDuration: json["time_duration"] ?? null,
+        price: json["price"] ?? null,
+        noOfModules: json["no_of_modules"] ?? null,
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
-        v: json["__v"] == null ? null : json["__v"],
-        quizId: json["quiz_id"] == null ? null : json["quiz_id"],
+        v: json["__v"] ?? null,
+        quizId: json["quiz_id"] ?? null,
       );
 
   Map<String, dynamic> toJson() => {

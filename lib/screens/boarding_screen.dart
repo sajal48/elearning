@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:elearning/controllers/onboarding_controller.dart';
 import 'package:elearning/screens/login_screen.dart';
+import 'package:elearning/screens/nav_screen.dart';
 import 'package:elearning/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -45,7 +46,7 @@ class _BoardingPageState extends State<BoardingPage> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SignUpScreen()));
+                                        builder: (context) => NavScreen()));
                               },
                               child: Text(
                                 'Skip',
@@ -153,8 +154,7 @@ class _BoardingPageState extends State<BoardingPage> {
                           3) {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
+                          MaterialPageRoute(builder: (context) => NavScreen()),
                         );
                         // Navigator.pop(context);
                       }

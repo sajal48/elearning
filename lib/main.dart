@@ -2,6 +2,7 @@ import 'package:elearning/controllers/homepage_controller.dart';
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/boarding_screen.dart';
 import 'package:elearning/screens/login_screen.dart';
+import 'package:elearning/screens/my_courses_screen.dart';
 import 'package:elearning/screens/nav_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,7 @@ void main() async {
       routes: {
         '/': (context) => MyApp(prefs),
         '/home': (context) => NavScreen(),
+        '/myCoursePage': (context) => MyCourseScreen(),
       },
     ),
   ));

@@ -8,6 +8,7 @@ import 'package:elearning/screens/paymentmethod_screen.dart';
 import 'package:elearning/widgets/widgets.dart';
 
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:provider/provider.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
@@ -17,8 +18,11 @@ class CourseDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPurchased =
-        Provider.of<HomepageController>(context).CoursePaid(result.id!);
+    final cont_home = Provider.of<HomepageController>(context);
+    final cont_home_btn =
+        Provider.of<HomepageController>(context, listen: false);
+
+    bool isPurchased = cont_home.CoursePaid(result.id!);
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(
@@ -148,15 +152,43 @@ class CourseDetailsScreen extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PaymentMethodScreen(
-                                          course_id: result.id!,
-                                          course_name: result.courseName!,
-                                          course_price: result.price!,
-                                        )));
+                          onPressed: () async {
+                            if (result.coursePaid!) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PaymentMethodScreen(
+                                            course_id: result.id!,
+                                            course_name: result.courseName!,
+                                            course_price: result.price!,
+                                          )));
+                            } else {
+                              CustomProgressDialog? progressDialog =
+                                  CustomProgressDialog(context,
+                                      blur: 10,
+                                      dismissable:
+                                          false); //You can set Loading Widget using this function
+                              progressDialog.setLoadingWidget(
+                                  CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.blue)));
+                              progressDialog.show();
+                              String message =
+                                  await cont_home_btn.enrollFree(result.id!);
+                              progressDialog.dismiss();
+                              NAlertDialog(
+                                title: Text("Notice: "),
+                                content: Text(message),
+                                blur: 2,
+                              ).show(context,
+                                  transitionType: DialogTransitionType.Bubble);
+                              await Future.delayed(Duration(milliseconds: 500));
+                              if (message ==
+                                  "You have enrolled successfully.") {
+                                Navigator.popAndPushNamed(
+                                    context, '/myCoursePage');
+                              }
+                            }
                           },
                         ),
                       )

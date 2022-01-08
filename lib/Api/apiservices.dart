@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/coursedata.dart';
+import 'package:elearning/Data/freeenroll.dart';
 
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/purchase_response.dart';
@@ -29,6 +30,39 @@ class Services {
 
   static const String GET_USER_DETAILS_URL =
       "https://rivguru-university.herokuapp.com/user/";
+
+  static const String ENROLL_IN_FREECOURSE =
+      "https://rivguru-course.herokuapp.com/course/enroll-course";
+
+  static Future<dynamic> enrollFree(String userId, String courseId) async {
+    //Freeenroll param = Freeenroll(courseId: courseId, userId: [userId]);
+    final param = {
+      "course_id": "$courseId",
+      "user_id": [userId]
+    };
+    print(jsonEncode(param));
+    try {
+      // final response = await Dio().post(ENROLL_IN_FREECOURSE,
+      //     options: Options(headers: {
+      //       HttpHeaders.contentTypeHeader: "application/json",
+      //     }),
+      //     data: jsonEncode(param));
+
+      final response = await http.post(
+        Uri.parse(ENROLL_IN_FREECOURSE),
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(param),
+      );
+      print(response.body);
+      return "You have enrolled successfully.";
+    } catch (e) {
+      print("Error in EnrollCOurse Free: $e");
+      return "Something went wrong.";
+    }
+  }
 
   static Future<CourseCategory> getCourseCategory() async {
     print("getCourseCategory called");
