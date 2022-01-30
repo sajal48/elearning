@@ -3,7 +3,6 @@ import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/coursedata.dart' as coursedata;
 import 'package:elearning/Data/purchase_response.dart';
 import 'package:elearning/Data/userdetails.dart';
-import 'package:elearning/screens/my_courses_screen.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +56,13 @@ class HomepageController extends ChangeNotifier {
     selectedIndex = i;
     print('index now is $selectedIndex');
     notifyListeners();
+  }
+
+  void selectAllCourse() {
+    selectedCourse.clear();
+    allCourses.result!.forEach((element) {
+      selectedCourse.add(element);
+    });
   }
 
   void setSelectedCourse(String catagory, int index) {

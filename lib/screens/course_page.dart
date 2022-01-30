@@ -53,12 +53,23 @@ class CoursePage extends StatelessWidget {
                   height: 10,
                 ),
                 cont_home.resetbtnvisibility
-                    ? IconButton(
-                        onPressed: () {
-                          cont_home_btn.setselctedIndex(null);
-                          cont_home_btn.resetbtnvisibility = false;
-                        },
-                        icon: Icon(Icons.clear))
+                    ? Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.red)),
+                            onPressed: () {
+                              cont_home_btn.selectAllCourse();
+                              cont_home_btn.setselctedIndex(512);
+                              cont_home_btn.resetbtnvisibility = false;
+                            },
+                            child: Text("Clear filter"),
+                          ),
+                        ),
+                      )
                     : SizedBox.shrink(),
                 SizedBox(
                   height: 30,

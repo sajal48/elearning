@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:restart_app/restart_app.dart';
 import 'package:elearning/Api/apiservices.dart';
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/registerdata.dart';
@@ -122,6 +122,25 @@ class SignUpLoginController extends ChangeNotifier {
       return true;
   }
 
+  String validateEmailPassword() {
+    String? error;
+
+    if (RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email.text)) {
+      error = "allok";
+    } else {
+      return "Enter a valid email!";
+    }
+    if (RegExp(r'^(?=.*?[A-Za-z])(?=.*?[0-9]).{8,}$').hasMatch(password.text)) {
+      error = "allok";
+    } else {
+      return "Password must contains 8 alphanumerics!";
+    }
+
+    return error;
+  }
+
   bool get passwordvisibility => _passwordvisibility;
 
   void changeVisibility() {
@@ -172,7 +191,7 @@ class SignUpLoginController extends ChangeNotifier {
 
     registerRespons = await Services.register(a);
     notifyListeners();
-    if (registerRespons.result != null) {
+    if (registerRespons.result!.id != null) {
       setloginstatus(true);
       storeUserData(registerRespons.result!.id!);
     }
@@ -189,6 +208,7 @@ class SignUpLoginController extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     setloginstatus(false);
+    Restart.restartApp();
     return true;
   }
 }

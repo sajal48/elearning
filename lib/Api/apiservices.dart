@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:elearning/Data/coursecategory.dart';
 import 'package:elearning/Data/coursedata.dart';
-import 'package:elearning/Data/freeenroll.dart';
 
 import 'package:elearning/Data/loginresponse.dart';
 import 'package:elearning/Data/purchase_response.dart';
@@ -114,6 +112,7 @@ class Services {
         return UserDetails(statuscode: 400, message: "no data");
       }
     } catch (e) {
+      print(e);
       return UserDetails(statuscode: 500, message: "api error");
     }
   }
@@ -245,7 +244,7 @@ class Services {
         );
       }
     } catch (e) {
-      print(e.toString());
+      print(e);
       return RegisterRespons(
         message: "Server error",
         statuscode: 0,

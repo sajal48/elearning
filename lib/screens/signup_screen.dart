@@ -8,6 +8,7 @@ import 'package:elearning/styles/styles.dart';
 import 'package:elearning/widgets/login_input_field.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final signupCont = Provider.of<SignUpLoginController>(context);
+    final signupCont_btn =
+        Provider.of<SignUpLoginController>(context, listen: false);
+
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xff14181D),
@@ -56,6 +60,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   error: signupCont.nameerro,
                   labelText: "User Name",
                   controller: signupCont.username,
+                  myFormatter: [
+                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
+                  ],
                 ),
                 SizedBox(
                   height: 25.0,
@@ -65,6 +72,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   error: signupCont.emailerror,
                   type: TextInputType.emailAddress,
                   controller: signupCont.email,
+                  myFormatter: [
+                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9@.]')),
+                  ],
                 ),
                 SizedBox(
                   height: 25.0,
@@ -82,8 +92,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUpNext()));
+                    if (signupCont_btn.validateEmailPassword() == "allok") {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpNext()));
+                    } else {
+                      NAlertDialog(
+                        title: Text("Error"),
+                        content: Text(signupCont_btn.validateEmailPassword()),
+                        blur: 2,
+                      ).show(context,
+                          transitionType: DialogTransitionType.Bubble);
+                    }
                   },
                   child: Container(
                     height: 56,
@@ -178,28 +199,32 @@ class SignUpNext extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(30, 25, 100, 30),
+            padding: EdgeInsets.fromLTRB(30, 25, 90, 30),
             child: Column(
               children: [
                 Expanded(child: SizedBox.shrink()),
                 SizedBox(height: 20.0),
                 LoginInputField(
-                  error: Provider.of<SignUpLoginController>(context)
-                      .firstnameerror,
-                  labelText: "First Name",
-                  controller:
-                      Provider.of<SignUpLoginController>(context).firstname,
-                ),
+                    error: Provider.of<SignUpLoginController>(context)
+                        .firstnameerror,
+                    labelText: "First Name",
+                    controller:
+                        Provider.of<SignUpLoginController>(context).firstname,
+                    myFormatter: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                    ]),
                 SizedBox(
                   height: 20.0,
                 ),
                 LoginInputField(
-                  error: Provider.of<SignUpLoginController>(context)
-                      .lasttnameerror,
-                  labelText: "Last Name",
-                  controller:
-                      Provider.of<SignUpLoginController>(context).lastname,
-                ),
+                    error: Provider.of<SignUpLoginController>(context)
+                        .lasttnameerror,
+                    labelText: "Last Name",
+                    controller:
+                        Provider.of<SignUpLoginController>(context).lastname,
+                    myFormatter: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                    ]),
                 SizedBox(
                   height: 20.0,
                 ),
@@ -233,8 +258,9 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Male",
-                        groupValue:
-                            Provider.of<SignUpLoginController>(context).gender,
+                        groupValue: Provider.of<SignUpLoginController>(context,
+                                listen: false)
+                            .gender,
                         onChanged: (v) {
                           Provider.of<SignUpLoginController>(context,
                                   listen: false)
@@ -246,8 +272,9 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Female",
-                        groupValue:
-                            Provider.of<SignUpLoginController>(context).gender,
+                        groupValue: Provider.of<SignUpLoginController>(context,
+                                listen: false)
+                            .gender,
                         onChanged: (v) {
                           Provider.of<SignUpLoginController>(context,
                                   listen: false)
@@ -259,8 +286,9 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Other",
-                        groupValue:
-                            Provider.of<SignUpLoginController>(context).gender,
+                        groupValue: Provider.of<SignUpLoginController>(context,
+                                listen: false)
+                            .gender,
                         onChanged: (v) {
                           Provider.of<SignUpLoginController>(context,
                                   listen: false)
@@ -272,11 +300,12 @@ class SignUpNext extends StatelessWidget {
                   height: 25.0,
                 ),
                 LoginInputField(
+                  myFormatter: [FilteringTextInputFormatter.digitsOnly],
                   labelText: "Phone",
                   error: Provider.of<SignUpLoginController>(context).phnnoerror,
                   isPassword: false,
                   controller: Provider.of<SignUpLoginController>(context).phn,
-                  type: TextInputType.visiblePassword,
+                  type: TextInputType.phone,
                 ),
                 SizedBox(
                   height: 97.0,
@@ -308,10 +337,19 @@ class SignUpNext extends StatelessWidget {
                         ).show(context,
                             transitionType: DialogTransitionType.Bubble);
                       } else if (a.statuscode == 200) {
-                        Provider.of<SignUpLoginController>(context,
-                                listen: false)
-                            .clearController();
-                        Navigator.popAndPushNamed(context, '/home');
+                        if (a.result!.response != null) {
+                          NAlertDialog(
+                            title: Text("Error"),
+                            content: Text(a.result!.response!),
+                            blur: 2,
+                          ).show(context,
+                              transitionType: DialogTransitionType.Bubble);
+                        } else {
+                          Provider.of<SignUpLoginController>(context,
+                                  listen: false)
+                              .clearController();
+                          Navigator.popAndPushNamed(context, '/home');
+                        }
                       }
                     } else {
                       NAlertDialog(

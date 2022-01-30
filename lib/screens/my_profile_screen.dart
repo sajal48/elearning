@@ -50,60 +50,72 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               );
                             } else {
                               var udata = cont_home.userDetails;
-                              return Column(
-                                children: [
-                                  Container(
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.black12,
-                                      radius: 60,
-                                      child: Icon(
-                                        Icons.person,
-                                        size: 60,
-                                        color: Colors.white,
+                              if (udata.message == "") {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.black12,
+                                        radius: 60,
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 60,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      "Username : ${udata.result!.firstName}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Milliard',
-                                          color: Color(0xff3D4C59),
-                                          fontWeight: FontWeight.bold),
+                                    SizedBox(
+                                      height: 50,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      "Email : ${udata.result!.email} ",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Milliard',
-                                          color: Color(0xff3D4C59),
-                                          fontWeight: FontWeight.bold),
+                                    udata.result!.firstName != null
+                                        ? Container(
+                                            child: Text(
+                                              "Username : ${udata.result!.firstName}",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: 'Milliard',
+                                                  color: Color(0xff3D4C59),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                        : SizedBox.shrink(),
+                                    SizedBox(
+                                      height: 20,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      "Phone : ${udata.result!.phone}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Milliard',
-                                          color: Color(0xff3D4C59),
-                                          fontWeight: FontWeight.bold),
+                                    udata.result!.email != null
+                                        ? Container(
+                                            child: Text(
+                                              "Email : ${udata.result!.email} ",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: 'Milliard',
+                                                  color: Color(0xff3D4C59),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                        : SizedBox.shrink(),
+                                    SizedBox(
+                                      height: 20,
                                     ),
-                                  ),
-                                ],
-                              );
+                                    udata.result!.phone != null
+                                        ? Container(
+                                            child: Text(
+                                              "Phone : ${udata.result!.phone}",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: 'Milliard',
+                                                  color: Color(0xff3D4C59),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          )
+                                        : SizedBox.shrink(),
+                                  ],
+                                );
+                              } else {
+                                return Container(
+                                  child: Text(udata.message!),
+                                );
+                              }
                             }
                           },
                         ),

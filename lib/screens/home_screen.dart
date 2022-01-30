@@ -1,5 +1,6 @@
 import 'package:elearning/Data/coursedata.dart';
 import 'package:elearning/controllers/homepage_controller.dart';
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/screens.dart';
 import 'package:elearning/widgets/snack.dart';
 import 'package:elearning/widgets/widgets.dart';
@@ -300,7 +301,113 @@ class _HomeScreenState extends State<HomeScreen> {
               // SizedBox(
               //   height: 50,
               // ),
+
               Padding(
+                //Free Course section
+                padding: const EdgeInsets.symmetric(horizontal: 33.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Free Courses',
+                      style: TextStyle(
+                        fontFamily: 'Milliard',
+                        color: Color(0xff3D4C59),
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (Provider.of<HomepageController>(context,
+                                listen: false)
+                            .freeCourseloaded) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CoursePage_Catagorywise(
+                                      title: 'All Free Courses',
+                                      courselist:
+                                          Provider.of<HomepageController>(
+                                                  context,
+                                                  listen: false)
+                                              .freeCourses
+                                              .result!)));
+                        } else {
+                          createSnackBar('Course loading', context);
+                        }
+                      },
+                      child: Text('View All Free Courses',
+                          style: TextStyle(
+                            color: Color(0xff5467FF),
+                          )),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 17,
+              ),
+
+              Container(
+                height: 180,
+                child: FutureBuilder(
+                  future: cont_home.getfreecourse(),
+                  builder: (context, data) {
+                    if (data.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      print(Provider.of<HomepageController>(context)
+                          .freeCourses
+                          .result!
+                          .length);
+                      return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: cont_home.freeCourses.result!.length,
+                          itemBuilder: (context, i) {
+                            var data = cont_home.freeCourses.result![i];
+                            // print('\n');
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CourseDetailsScreen(
+                                              result: cont_home_btn
+                                                  .freeCourses.result![i],
+                                            )));
+                              },
+                              child: CourseWithPrice(
+                                isFree: !data.coursePaid!,
+                                price: data.price!,
+                                level: data.competency!,
+                                duration: data.startDate.toString(),
+
+                                module: data.noOfModules.toString(),
+
+                                // instractor: widget.cwpInstractor[i],
+                                // offerPrice: widget.cwpOfferPrice[i],
+                                // view: widget.cwpView[i],
+                                banner: data.courseImage!.toString(),
+                                title: data.courseName!,
+                                // color: widget.cwpColor[i],
+                                // avater: widget.cwpAvater[i],
+                              ),
+                            );
+                          });
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Padding(
+                //Paid Course section
                 padding: const EdgeInsets.symmetric(horizontal: 33.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -334,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           createSnackBar('Course loading', context);
                         }
                       },
-                      child: Text('View All',
+                      child: Text('View All Paid Courses',
                           style: TextStyle(
                             color: Color(0xff5467FF),
                           )),
@@ -416,109 +523,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //       );
                 //     }),
               ),
-              SizedBox(
-                height: 50,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 33.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Free Courses',
-                      style: TextStyle(
-                        fontFamily: 'Milliard',
-                        color: Color(0xff3D4C59),
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (Provider.of<HomepageController>(context,
-                                listen: false)
-                            .freeCourseloaded) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CoursePage_Catagorywise(
-                                      title: 'All Free Courses',
-                                      courselist:
-                                          Provider.of<HomepageController>(
-                                                  context,
-                                                  listen: false)
-                                              .freeCourses
-                                              .result!)));
-                        } else {
-                          createSnackBar('Course loading', context);
-                        }
-                      },
-                      child: Text('View All',
-                          style: TextStyle(
-                            color: Color(0xff5467FF),
-                          )),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 17,
-              ),
 
-              Container(
-                height: 180,
-                child: FutureBuilder(
-                  future: cont_home.getfreecourse(),
-                  builder: (context, data) {
-                    if (data.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      print(Provider.of<HomepageController>(context)
-                          .freeCourses
-                          .result!
-                          .length);
-                      return ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: cont_home.freeCourses.result!.length,
-                          itemBuilder: (context, i) {
-                            var data = cont_home.freeCourses.result![i];
-                            // print('\n');
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CourseDetailsScreen(
-                                              result: cont_home_btn
-                                                  .freeCourses.result![i],
-                                            )));
-                              },
-                              child: CourseWithPrice(
-                                isFree: !data.coursePaid!,
-                                price: data.price!,
-                                level: data.competency!,
-                                duration: data.startDate.toString(),
-
-                                module: data.noOfModules.toString(),
-
-                                // instractor: widget.cwpInstractor[i],
-                                // offerPrice: widget.cwpOfferPrice[i],
-                                // view: widget.cwpView[i],
-                                banner: data.courseImage!.toString(),
-                                title: data.courseName!,
-                                // color: widget.cwpColor[i],
-                                // avater: widget.cwpAvater[i],
-                              ),
-                            );
-                          });
-                    }
-                  },
-                ),
-              ),
               SizedBox(
                 height: 17,
               ),
@@ -544,9 +549,6 @@ class _HomeScreenState extends State<HomeScreen> {
               //   ),
               // ),
 
-              SizedBox(
-                height: 17,
-              ),
               // Container(
               //   height: 180,
               //   child: FutureBuilder(
@@ -629,6 +631,7 @@ class HomePageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cont_sign = Provider.of<SignUpLoginController>(context);
     return Stack(
       children: [
         Positioned(
@@ -644,6 +647,7 @@ class HomePageHeader extends StatelessWidget {
         //       width: 20,
         //       height: 20,
         //     )),
+
         Positioned(
             left: 33,
             top: 100,
@@ -655,30 +659,42 @@ class HomePageHeader extends StatelessWidget {
                   fontSize: 33,
                   fontWeight: FontWeight.bold),
             )),
-        Positioned(
-            left: 118,
-            top: 80,
-            child: SvgPicture.asset('assets/images/trial_icon.svg')),
-        Positioned(
-            left: 33,
-            top: 220,
-            child: Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Color(0xff5467FF),
-                  borderRadius: BorderRadius.circular(3)),
-              height: 35,
-              width: 96,
-              child: Text(
-                'START NOW',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Milliard',
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: .7),
-              ),
-            ))
+        cont_sign.loggedin
+            ? SizedBox.shrink()
+            : Positioned(
+                left: 118,
+                top: 80,
+                child: SvgPicture.asset('assets/images/trial_icon.svg')),
+        cont_sign.loggedin
+            ? SizedBox.shrink()
+            : Positioned(
+                left: 33,
+                top: 220,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpScreen()));
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Color(0xff5467FF),
+                        borderRadius: BorderRadius.circular(3)),
+                    height: 35,
+                    width: 96,
+                    child: Text(
+                      'START NOW',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Milliard',
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: .7),
+                    ),
+                  ),
+                ))
       ],
     );
   }

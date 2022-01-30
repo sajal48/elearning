@@ -1,5 +1,6 @@
 import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -8,10 +9,12 @@ class LoginInputField extends StatefulWidget {
   final TextEditingController? controller;
   final bool? isPassword;
   final String? error;
+  final List<TextInputFormatter>? myFormatter;
 
   final TextInputType? type;
   LoginInputField({
     Key? key,
+    this.myFormatter,
     this.labelText,
     this.controller,
     this.isPassword = false,
@@ -27,6 +30,7 @@ class _LoginInputFieldState extends State<LoginInputField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.myFormatter,
       autovalidateMode: AutovalidateMode.always,
       validator: RequiredValidator(errorText: 'this field is required'),
       key: widget.key,
@@ -48,16 +52,17 @@ class _LoginInputFieldState extends State<LoginInputField> {
                     Provider.of<SignUpLoginController>(context, listen: false)
                         .changeVisibility();
                   },
-                  icon: Provider.of<SignUpLoginController>(context)
-                          .passwordvisibility
-                      ? Icon(
-                          Icons.visibility_off,
-                          color: Colors.white,
-                        )
-                      : Icon(
-                          Icons.visibility,
-                          color: Colors.white,
-                        ),
+                  icon:
+                      Provider.of<SignUpLoginController>(context, listen: false)
+                              .passwordvisibility
+                          ? Icon(
+                              Icons.visibility_off,
+                              color: Colors.white,
+                            )
+                          : Icon(
+                              Icons.visibility,
+                              color: Colors.white,
+                            ),
                 )
               : Padding(padding: EdgeInsets.zero),
           labelText: widget.labelText,

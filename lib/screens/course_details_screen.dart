@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elearning/Data/coursedata.dart';
 import 'package:elearning/controllers/homepage_controller.dart';
+import 'package:elearning/controllers/signup_login_controller.dart';
 import 'package:elearning/screens/paymentmethod_screen.dart';
+import 'package:elearning/widgets/relogin.dart';
 
 import 'package:elearning/widgets/widgets.dart';
 
@@ -21,6 +23,8 @@ class CourseDetailsScreen extends StatelessWidget {
     final cont_home = Provider.of<HomepageController>(context);
     final cont_home_btn =
         Provider.of<HomepageController>(context, listen: false);
+    final cont_sign_btn =
+        Provider.of<SignUpLoginController>(context, listen: false);
 
     bool isPurchased = cont_home.CoursePaid(result.id!);
     return Scaffold(
@@ -154,39 +158,66 @@ class CourseDetailsScreen extends StatelessWidget {
                           ),
                           onPressed: () async {
                             if (result.coursePaid!) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PaymentMethodScreen(
-                                            course_id: result.id!,
-                                            course_name: result.courseName!,
-                                            course_price: result.price!,
-                                          )));
+                              cont_sign_btn.loggedin
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PaymentMethodScreen(
+                                                course_id: result.id!,
+                                                course_name: result.courseName!,
+                                                course_price: result.price!,
+                                              )))
+                                  : NAlertDialog(
+                                      title: Text(" "),
+                                      content: Container(
+                                          height: 150,
+                                          child: ReLogin(
+                                              title:
+                                                  "You need to login first!")),
+                                      blur: 2,
+                                    ).show(context,
+                                      transitionType:
+                                          DialogTransitionType.Bubble);
                             } else {
-                              CustomProgressDialog? progressDialog =
-                                  CustomProgressDialog(context,
-                                      blur: 10,
-                                      dismissable:
-                                          false); //You can set Loading Widget using this function
-                              progressDialog.setLoadingWidget(
-                                  CircularProgressIndicator(
-                                      valueColor:
-                                          AlwaysStoppedAnimation(Colors.blue)));
-                              progressDialog.show();
-                              String message =
-                                  await cont_home_btn.enrollFree(result.id!);
-                              progressDialog.dismiss();
-                              NAlertDialog(
-                                title: Text("Notice: "),
-                                content: Text(message),
-                                blur: 2,
-                              ).show(context,
-                                  transitionType: DialogTransitionType.Bubble);
-                              await Future.delayed(Duration(milliseconds: 500));
-                              if (message ==
-                                  "You have enrolled successfully.") {
-                                Navigator.popAndPushNamed(
-                                    context, '/myCoursePage');
+                              if (cont_sign_btn.loggedin) {
+                                CustomProgressDialog? progressDialog =
+                                    CustomProgressDialog(context,
+                                        blur: 10,
+                                        dismissable:
+                                            false); //You can set Loading Widget using this function
+                                progressDialog.setLoadingWidget(
+                                    CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                            Colors.blue)));
+                                progressDialog.show();
+                                String message =
+                                    await cont_home_btn.enrollFree(result.id!);
+                                progressDialog.dismiss();
+                                NAlertDialog(
+                                  title: Text(" "),
+                                  content: Text(message),
+                                  blur: 2,
+                                ).show(context,
+                                    transitionType:
+                                        DialogTransitionType.Bubble);
+                                await Future.delayed(
+                                    Duration(milliseconds: 500));
+                                if (message ==
+                                    "You have enrolled successfully.") {
+                                  Navigator.popAndPushNamed(context, '/home');
+                                }
+                              } else {
+                                NAlertDialog(
+                                  title: Text(" "),
+                                  content: Container(
+                                      height: 150,
+                                      child: ReLogin(
+                                          title: "You need to login first!")),
+                                  blur: 2,
+                                ).show(context,
+                                    transitionType:
+                                        DialogTransitionType.Bubble);
                               }
                             }
                           },

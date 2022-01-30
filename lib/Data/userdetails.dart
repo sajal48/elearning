@@ -74,7 +74,7 @@ class Result {
     this.v,
   });
 
-  final DateTime? joiningDate;
+  final String? joiningDate;
   final String? role;
   final String? designation;
   final List<dynamic>? events;
@@ -83,7 +83,7 @@ class Result {
   final String? firstName;
   final String? lastName;
   final String? username;
-  final DateTime? dateOfBirth;
+  final String? dateOfBirth;
   final String? gender;
   final String? phone;
   final String? email;
@@ -108,51 +108,52 @@ class Result {
   final String? recordingLink;
   final bool? recordingActive;
   final String? encryptedPassword;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final int? v;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        joiningDate: DateTime.parse(json["joining_date"]),
-        role: json["role"],
-        designation: json["designation"],
+        joiningDate: json["joining_date"] ?? DateTime.now().toString(),
+        role: json["role"] ?? "null value",
+        designation: json["designation"] ?? "null value",
         events: List<dynamic>.from(json["events"].map((x) => x)),
         courses: List<dynamic>.from(json["courses"].map((x) => x)),
-        id: json["_id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        username: json["username"],
-        dateOfBirth: DateTime.parse(json["date_of_birth"]),
-        gender: json["gender"],
-        phone: json["phone"],
-        email: json["email"],
-        department: json["department"],
-        profilePic: json["profile_pic"],
-        university: json["university"],
-        experience: json["experience"],
-        educationalQualification: json["educational_qualification"],
-        referralSource: json["referral_source"],
-        address: json["address"],
-        city: json["city"],
-        country: json["country"],
-        zip: json["zip"],
-        facebook: json["facebook"],
-        linkedin: json["linkedin"],
-        instagram: json["instagram"],
-        twitter: json["twitter"],
-        emergencyFirstName: json["emergency_first_name"],
-        emergencyLastName: json["emergency_last_name"],
-        emergencyPhone: json["emergency_phone"],
-        emergencyEmail: json["emergency_email"],
-        recordingLink: json["recording_link"],
-        recordingActive: json["recording_active"],
-        encryptedPassword: json["encrypted_password"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        v: json["__v"],
+        id: json["_id"] ?? "null value",
+        firstName: json["first_name"] ?? "null value",
+        lastName: json["last_name"] ?? "null value",
+        username: json["username"] ?? "null value",
+        dateOfBirth: json["date_of_birth"] ?? DateTime.now().toString(),
+        gender: json["gender"] ?? "null value",
+        phone: json["phone"] ?? "null value",
+        email: json["email"] ?? "null value",
+        department: json["department"] ?? "null value",
+        profilePic: json["profile_pic"] ?? "null value",
+        university: json["university"] ?? "null value",
+        experience: json["experience"] ?? 0,
+        educationalQualification:
+            json["educational_qualification"] ?? "null value",
+        referralSource: json["referral_source"] ?? "null value",
+        address: json["address"] ?? "null value",
+        city: json["city"] ?? "null value",
+        country: json["country"] ?? "null value",
+        zip: json["zip"] ?? 0,
+        facebook: json["facebook"] ?? "null value",
+        linkedin: json["linkedin"] ?? "null value",
+        instagram: json["instagram"] ?? "null value",
+        twitter: json["twitter"] ?? "null value",
+        emergencyFirstName: json["emergency_first_name"] ?? "null value",
+        emergencyLastName: json["emergency_last_name"] ?? "null value",
+        emergencyPhone: json["emergency_phone"] ?? "null value",
+        emergencyEmail: json["emergency_email"] ?? "null value",
+        recordingLink: json["recording_link"] ?? "null value",
+        recordingActive: json["recording_active"] ?? false,
+        encryptedPassword: json["encrypted_password"] ?? "null value",
+        createdAt: json["created_at"] ?? DateTime.now().toString(),
+        updatedAt: json["updated_at"] ?? DateTime.now().toString(),
+        v: json["__v"] ?? 0,
       );
   Map<String, dynamic> toJson() => {
-        "joining_date": joiningDate!.toIso8601String(),
+        "joining_date": joiningDate!,
         "role": role,
         "designation": designation,
         "events": List<dynamic>.from(events!.map((x) => x)),
@@ -161,7 +162,7 @@ class Result {
         "first_name": firstName,
         "last_name": lastName,
         "username": username,
-        "date_of_birth": dateOfBirth!.toIso8601String(),
+        "date_of_birth": dateOfBirth!,
         "gender": gender,
         "phone": phone,
         "email": email,
@@ -186,8 +187,8 @@ class Result {
         "recording_link": recordingLink,
         "recording_active": recordingActive,
         "encrypted_password": encryptedPassword,
-        "created_at": createdAt!.toIso8601String(),
-        "updated_at": updatedAt!.toIso8601String(),
+        "created_at": createdAt!,
+        "updated_at": updatedAt!,
         "__v": v,
       };
 }
