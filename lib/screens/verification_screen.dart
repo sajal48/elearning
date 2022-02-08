@@ -106,8 +106,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                             initialValue: phoneNumber,
-                            textFieldController:
-                                Provider.of<SignUpLoginController>(context).phn,
+                            // textFieldController:
+                            //     Provider.of<SignUpLoginController>(context).phn,
                             formatInput: false,
                             maxLength: 11,
                             textStyle: TextStyle(

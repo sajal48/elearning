@@ -6,21 +6,22 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginInputField extends StatefulWidget {
   final String? labelText;
-  final TextEditingController? controller;
+  final Function(String)? onChanged;
+
   final bool? isPassword;
   final String? error;
   final List<TextInputFormatter>? myFormatter;
 
   final TextInputType? type;
-  LoginInputField({
-    Key? key,
-    this.myFormatter,
-    this.labelText,
-    this.controller,
-    this.isPassword = false,
-    this.type = TextInputType.name,
-    this.error,
-  }) : super(key: key);
+  LoginInputField(
+      {Key? key,
+      this.myFormatter,
+      this.labelText,
+      this.isPassword = false,
+      this.type = TextInputType.name,
+      this.error,
+      this.onChanged})
+      : super(key: key);
 
   @override
   _LoginInputFieldState createState() => _LoginInputFieldState();
@@ -30,9 +31,8 @@ class _LoginInputFieldState extends State<LoginInputField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: widget.onChanged,
       inputFormatters: widget.myFormatter,
-      autovalidateMode: AutovalidateMode.always,
-      validator: RequiredValidator(errorText: 'this field is required'),
       key: widget.key,
       keyboardType: widget.type,
       style: TextStyle(
@@ -40,7 +40,6 @@ class _LoginInputFieldState extends State<LoginInputField> {
           fontSize: 22.0,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.bold),
-      controller: widget.controller,
       cursorColor: Color(0x4dE3E3E3),
       obscureText:
           Provider.of<SignUpLoginController>(context).passwordvisibility &&
@@ -65,6 +64,7 @@ class _LoginInputFieldState extends State<LoginInputField> {
                             ),
                 )
               : Padding(padding: EdgeInsets.zero),
+          errorText: widget.error,
           labelText: widget.labelText,
           labelStyle: TextStyle(
               color: Colors.white,

@@ -24,8 +24,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool? isChecked = false;
+
   @override
   Widget build(BuildContext context) {
+    final signupCont = Provider.of<SignUpLoginController>(context);
+    final signupCont_btn =
+        Provider.of<SignUpLoginController>(context, listen: false);
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xff14181D),
@@ -121,10 +125,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 // ),
                 LoginInputField(
                   labelText: "User Name",
-                  error: Provider.of<SignUpLoginController>(context).nameerro,
+                  error: signupCont.login_username.error,
                   type: TextInputType.emailAddress,
-                  controller:
-                      Provider.of<SignUpLoginController>(context).loginUsername,
+                  onChanged: (value) {
+                    signupCont.change_login_username(value);
+                  },
                 ),
                 SizedBox(
                   height: 25.0,
@@ -133,10 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: "Password",
                   type: TextInputType.visiblePassword,
                   isPassword: true,
-                  controller:
-                      Provider.of<SignUpLoginController>(context).loginPassword,
-                  error:
-                      Provider.of<SignUpLoginController>(context).passworderror,
+                  error: signupCont.login_password.error,
+                  onChanged: (value) {
+                    signupCont.change_login_password(value);
+                  },
                 ),
                 SizedBox(
                   height: 25.0,
@@ -219,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else {
                       NAlertDialog(
                         title: Text("Error"),
-                        content: Text("Empty Fields"),
+                        content: Text("Fill all fields correctly"),
                         blur: 2,
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);

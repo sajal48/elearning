@@ -57,42 +57,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(height: 25.0),
                 LoginInputField(
-                  error: signupCont.nameerro,
+                  error: signupCont.signup_username.error,
                   labelText: "User Name",
-                  controller: signupCont.username,
                   myFormatter: [
                     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                   ],
+                  onChanged: (value) =>
+                      signupCont.change_signup_username(value),
                 ),
                 SizedBox(
                   height: 25.0,
                 ),
                 LoginInputField(
-                  labelText: "Email",
-                  error: signupCont.emailerror,
-                  type: TextInputType.emailAddress,
-                  controller: signupCont.email,
-                  myFormatter: [
-                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9@.]')),
-                  ],
-                ),
+                    labelText: "Email",
+                    error: signupCont.sign_email.error,
+                    type: TextInputType.emailAddress,
+                    myFormatter: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp('[a-zA-Z0-9@.]')),
+                    ],
+                    onChanged: (value) =>
+                        signupCont.change_signup_email(value)),
                 SizedBox(
                   height: 25.0,
                 ),
                 LoginInputField(
-                  labelText: "Password",
-                  error: signupCont.passworderror,
-                  isPassword: true,
-                  controller: signupCont.password,
-                  type: TextInputType.visiblePassword,
-                ),
+                    labelText: "Password",
+                    error: signupCont.sign_password.error,
+                    isPassword: true,
+                    type: TextInputType.visiblePassword,
+                    onChanged: (value) =>
+                        signupCont.change_signup_password(value)),
                 SizedBox(
                   height: 97.0,
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () {
-                    if (signupCont_btn.validateEmailPassword() == "allok") {
+                    if (signupCont_btn.validator_Signup_1()) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -100,7 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     } else {
                       NAlertDialog(
                         title: Text("Error"),
-                        content: Text(signupCont_btn.validateEmailPassword()),
+                        content: Text("Fill all field correctly"),
                         blur: 2,
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);
@@ -185,6 +187,9 @@ class SignUpNext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final signupCont = Provider.of<SignUpLoginController>(context);
+    final signupCont_btn =
+        Provider.of<SignUpLoginController>(context, listen: false);
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xff14181D),
@@ -205,11 +210,10 @@ class SignUpNext extends StatelessWidget {
                 Expanded(child: SizedBox.shrink()),
                 SizedBox(height: 20.0),
                 LoginInputField(
-                    error: Provider.of<SignUpLoginController>(context)
-                        .firstnameerror,
+                    error: signupCont.sign_firstname.error,
                     labelText: "First Name",
-                    controller:
-                        Provider.of<SignUpLoginController>(context).firstname,
+                    onChanged: (value) =>
+                        signupCont.change_sign_firstname(value),
                     myFormatter: [
                       FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
                     ]),
@@ -217,11 +221,10 @@ class SignUpNext extends StatelessWidget {
                   height: 20.0,
                 ),
                 LoginInputField(
-                    error: Provider.of<SignUpLoginController>(context)
-                        .lasttnameerror,
+                    error: signupCont.sign_lastname.error,
                     labelText: "Last Name",
-                    controller:
-                        Provider.of<SignUpLoginController>(context).lastname,
+                    onChanged: (value) =>
+                        signupCont.change_sign_lastname(value),
                     myFormatter: [
                       FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
                     ]),
@@ -234,8 +237,7 @@ class SignUpNext extends StatelessWidget {
                   firstDate: DateTime(1950),
                   lastDate: DateTime.now(),
                   style: textfeild,
-                  controller:
-                      Provider.of<SignUpLoginController>(context).dateofbirth,
+                  onChanged: (value) => signupCont.change_sign_dob(value),
                   decoration: InputDecoration(
                     label: Text("Date of Birth"),
                     labelStyle: labelTextStyle,
@@ -258,13 +260,9 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Male",
-                        groupValue: Provider.of<SignUpLoginController>(context,
-                                listen: false)
-                            .gender,
+                        groupValue: signupCont_btn.gender,
                         onChanged: (v) {
-                          Provider.of<SignUpLoginController>(context,
-                                  listen: false)
-                              .selectGender(v.toString());
+                          signupCont_btn.selectGender(v.toString());
                         }),
                     Text(
                       "Female",
@@ -272,13 +270,9 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Female",
-                        groupValue: Provider.of<SignUpLoginController>(context,
-                                listen: false)
-                            .gender,
+                        groupValue: signupCont_btn.gender,
                         onChanged: (v) {
-                          Provider.of<SignUpLoginController>(context,
-                                  listen: false)
-                              .selectGender(v.toString());
+                          signupCont_btn.selectGender(v.toString());
                         }),
                     Text(
                       "Other",
@@ -286,13 +280,9 @@ class SignUpNext extends StatelessWidget {
                     ),
                     Radio(
                         value: "Other",
-                        groupValue: Provider.of<SignUpLoginController>(context,
-                                listen: false)
-                            .gender,
+                        groupValue: signupCont_btn.gender,
                         onChanged: (v) {
-                          Provider.of<SignUpLoginController>(context,
-                                  listen: false)
-                              .selectGender(v.toString());
+                          signupCont_btn.selectGender(v.toString());
                         }),
                   ],
                 ),
@@ -302,10 +292,10 @@ class SignUpNext extends StatelessWidget {
                 LoginInputField(
                   myFormatter: [FilteringTextInputFormatter.digitsOnly],
                   labelText: "Phone",
-                  error: Provider.of<SignUpLoginController>(context).phnnoerror,
+                  error: signupCont.sign_phn.error,
                   isPassword: false,
-                  controller: Provider.of<SignUpLoginController>(context).phn,
                   type: TextInputType.phone,
+                  onChanged: (value) => signupCont.change_sign_phn(value),
                 ),
                 SizedBox(
                   height: 97.0,
@@ -354,7 +344,7 @@ class SignUpNext extends StatelessWidget {
                     } else {
                       NAlertDialog(
                         title: Text("Error"),
-                        content: Text("Empty Fields"),
+                        content: Text("Fill all fields correctly"),
                         blur: 2,
                       ).show(context,
                           transitionType: DialogTransitionType.Bubble);
